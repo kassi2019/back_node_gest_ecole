@@ -3,7 +3,7 @@ const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 module.exports = {
  signUp : function (req, res){
-    console.log(models.Utilisateur);
+    
     //Sign up
     models.Utilisateur.findOne({ where: { email: req.body.email } }).then(result => {
         // console.log(result);
@@ -17,7 +17,8 @@ module.exports = {
                     const user = {
                         name: req.body.name,
                         email:req.body.email,
-                        password: hash
+                        password: hash,
+                        role_id:req.body.role_id
                     }
                 
                     models.Utilisateur.create(user).then(result => {
