@@ -13,12 +13,18 @@ export interface LoginCredentials {
   email: string;
   password: string;
 }
-interface districtStructure {
+interface dossierRole {
     id: number;
     code: string;
     libelle: string;
 }
-  
+ interface dossierUtilisateur {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+    role_id: string;
+} 
 export const useAuthStore = defineStore({
   id: "auth",
   state: () => ({
@@ -27,9 +33,9 @@ export const useAuthStore = defineStore({
     token: null as string | null,
     error_message: "" as string,
 
-    ListeDistricts: [] as districtStructure[],
-    stateModules: [] as districtStructure[],
-    stateRole: [] as districtStructure[],
+    ListeDistricts: [] as dossierRole[],
+    stateModules: [] as dossierRole[],
+    stateRole: [] as dossierRole[],
       
   }),
   getters: {
@@ -64,7 +70,7 @@ export const useAuthStore = defineStore({
                    
                 }
     },
-    async ajouterRole(infor: districtStructure){ //fonction d'ajout des information global du budget
+    async ajouterRole(infor: dossierRole){ //fonction d'ajout des information global du budget
                 try {
                     const response = await apiUrl.post("/enregistrementRole",
                         infor, // on lui passe l'interface de section
@@ -96,7 +102,44 @@ export const useAuthStore = defineStore({
             
             },
 
-
+ async modifierRole(credentials: dossierRole) {
+      try {
+        const response = await apiUrl.put(`/modification_Role/${credentials.id}`,
+          credentials, { headers: authHeader(), }
+        );
+        const index = this.stateRole.findIndex(
+          (item) => item.id === credentials.id
+        );
+        if (index !== -1) {
+          this.stateRole[index] = response.data;
+        }
+        this.getRole();
+        toast.success("Modification effectuée avec succès");
+      } catch (error) {
+        console.error("Erreur de mise à jour: ", error);
+        toast.error("Échec de la mise à jour de l'Sous budget");
+      }
+    },
+    //// fin gestion des role
+ 
+    // debut gestion des utilisateur
+ async ajouterUtilisateur(infor: dossierUtilisateur){ //fonction d'ajout des information global du budget
+                try {
+                    const response = await apiUrl.post("/sign-up",
+                        infor, // on lui passe l'interface de section
+                        {
+                        headers: authHeader(),
+                    });
+                    this.stateRole.push(response.data)
+                     toast.success(`Enregistrement effectuer avec succès`);
+                     this.getRole();
+                }
+                catch (error) {
+                    console.log('erreur survenue', error);
+                    toast.error(`Erreur lors de l'ajout : ${error}`);
+                }
+        },
+ // fin gestion utilisateur
     async getModule(){
                 try {
                     const response = await apiUrl.get("/liste_Module",{ 

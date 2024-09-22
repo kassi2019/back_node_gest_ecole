@@ -7,8 +7,13 @@ import Logout from "@/views/pageConnexion/Logout.vue";
 // import DefaultDashboard from "@/views/TableauBord/DefaultDashboard.vue";
 import structure from "@/views/pageParametrage/structure.vue";
  import role from '../views/pageConnexion/role.vue'
-
+import utilisateur from '../views/pageConnexion/utilisateur.vue'
 const AuthRoutes = [
+  {
+    path: "/utilisateur",
+    name: "utilisateur",
+    component: utilisateur,
+  },
   {
     path: "/role",
     name: "role",

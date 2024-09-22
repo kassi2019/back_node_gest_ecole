@@ -44,8 +44,8 @@
             >
           </li>
 
-          <li class="nav-item">
-            <a href="icons.html"
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/utilisateur')">
+            <a href=""
               ><i class="la la-user"></i
               ><span class="menu-title" data-i18n="">Utilisateur</span></a
             >

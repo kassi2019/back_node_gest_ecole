@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    liste des Rôles
+                    liste des utilisateurs
                   </h3>
                   <br />
                   <button
@@ -105,21 +105,43 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
+                  >name</label
                 >
-                <input type="text" class="form-control" v-model="form.code" />
+                <input type="text" class="form-control" v-model="form.name" />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Email</label
+                >
+                <input type="text" class="form-control" v-model="form.email" />
+              </div>
+              <label for="exampleFormControlInput1" class="form-label"
+                >Rôle</label
+              >
+              <fieldset class="form-group">
+                <select class="custom-select" id="customSelect" v-model="form.role_id">
+                  <option>Select Option</option>
+                  <option
+                    v-for="item in store.gettersRole"
+                    :key="item.id"
+                    :value="item.id"
+                  >
+                    {{ item.libelle }}
+                  </option>
+                </select>
+              </fieldset>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Mot de passe</label
                 >
                 <input
                   type="text"
                   class="form-control"
-                  v-model="form.libelle"
+                  v-model="form.password"
                 />
               </div>
             </div>
+
             <div class="modal-footer">
               <button
                 type="button"
@@ -141,34 +163,32 @@
       </div>
     </div>
 
-
-
     <!-- modal de modification -->
 
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-        ref="modalModification"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modifier Role</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form class="row g-3 needs-validation">
-               <div class="mb-3">
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+      ref="modalModification"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modifier Role</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form class="row g-3 needs-validation">
+              <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Code</label
                 >
@@ -184,28 +204,28 @@
                   v-model="form.libelle"
                 />
               </div>
-              </form>
-            </div>
-            <div class="modal-footer">
+            </form>
+          </div>
+          <div class="modal-footer">
             <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal"
-              >
-                Fermer
-              </button>
-              <button
-                type="button"
-                class="btn btn-success"
-                @click.prevent="modificationRole"
-              >
-                Modifier
-              </button>
-            </div>
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Fermer
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              @click.prevent="modificationRole"
+            >
+              Modifier
+            </button>
           </div>
         </div>
       </div>
-      <!-- fin du modal de modification -->
+    </div>
+    <!-- fin du modal de modification -->
   </div>
 </template>
 <script setup lang="ts">
@@ -226,29 +246,29 @@ const showModal = () => {
   }
 };
 const form: any = reactive({
-  code: "",
-  libelle: "",
+  email: "",
+  name: "",
+  password: "",
+  role_id: "",
 });
 
- function ViderChamps(){
- 
-  form.code ='',
-  form.libelle =''
- 
-  };
+function ViderChamps() {
+  (form.email = ""), (form.name = ""), (form.password = ""), (form.role_id = "");
+}
 function AjouterFonction() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
-      code: form.code,
-      libelle: form.libelle,
-      utilisateurId: id_utilisateur,
+      email: form.email,
+      name: form.name,
+      password: form.password,
+      role_id: form.role_id,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    store.ajouterRole(obj).then(() => {
-      ViderChamps()
+    store.ajouterUtilisateur(obj).then(() => {
+      ViderChamps();
       // isLoading.value = false;
     });
   } catch (error) {
@@ -280,26 +300,25 @@ const showModalDecision = (id: number) => {
 };
 function modificationRole() {
   //$v1.value.$touch();
- // if (!$v1.value.$invalid) {
-    form.id = form.id;
-    try {
-     // isLoading.value = true;
-      store.modifierRole(form).then(() => {
-        //isLoading.value = false;
-
-        // closeModal();
-      });
-      // Fermer le modal après modification
-      if (modalModification.value) {
-        const modalInstance = Modal.getInstance(modalModification.value);
-        if (modalInstance) {
-          modalInstance.hide();
-        }
+  // if (!$v1.value.$invalid) {
+  form.id = form.id;
+  try {
+    // isLoading.value = true;
+    store.modifierRole(form).then(() => {
+      //isLoading.value = false;
+      // closeModal();
+    });
+    // Fermer le modal après modification
+    if (modalModification.value) {
+      const modalInstance = Modal.getInstance(modalModification.value);
+      if (modalInstance) {
+        modalInstance.hide();
       }
-    } catch (error) {
-      console.error("Login failed:", error);
-     // isLoading.value = false;
     }
+  } catch (error) {
+    console.error("Login failed:", error);
+    // isLoading.value = false;
+  }
   // } else {
   //   console.log($v);
   // }
