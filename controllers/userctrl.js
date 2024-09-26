@@ -79,7 +79,20 @@ module.exports = {
             message: "un problème est survenu lors de la connection!",
         });
     });
-}
+    },
+ 
+ 
+ 
+ /// permet d afficher la liste des module
+    liste_utilisateur: function (req, res) {
+        models.Utilisateur.findAll().then(result => {
+            res.status(200).json(result);
+        }).catch(error => {
+            res.status(500).json({
+                message: "Un probleme est survenu lors de l'affichage!"
+            });
+        });
+    },
 }
 
 // module.exports = {
