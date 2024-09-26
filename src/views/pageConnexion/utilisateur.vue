@@ -32,8 +32,9 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-                            <th scope="col">Code</th>
-                            <th scope="col" style="width: 75%">Libelle</th>
+                            <th scope="col" style="width: 50%">Nom & prénoms</th>
+                            <th scope="col" style="width: 25%">Email</th>
+                           <th scope="col" style="width: 10%">Role</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -44,13 +45,14 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in store.gettersRole"
+                            v-for="(item, index) in store.gettersUtilisateur"
                             :key="item.id"
                           >
-                            <td>{{ index + 1 }}</td>
-                            <td>{{ item.code }}</td>
-                            <td>{{ item.libelle }}</td>
-                            <td>
+                            <td style="border: 1px solid #000;">{{ index + 1 }}</td>
+                            <td style="border: 1px solid #000;">{{ item.name }}</td>
+                            <td style="border: 1px solid #000;">{{ item.email }}</td>
+                            <td style="border: 1px solid #000;">{{ afficherLibelleRole(item.role_id) }}</td>
+                            <td style="border: 1px solid #000;">
                               <button
                                 type="button"
                                 class="btn btn-primary btn-sm"
@@ -66,6 +68,15 @@
                                 @click="supprimer(item.id)"
                               >
                                 <i class="la la-trash"></i>
+                              </button>
+
+                              <button
+                                type="button"
+                                class="btn btn-info btn-sm"
+                                title="Affectation module"
+                                @click="supprimer(item.id)"
+                              >
+                                <i class="la la-exchange"></i> 
                               </button>
                             </td>
                           </tr>
@@ -239,6 +250,17 @@ const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
 const store = useAuthStore();
 
+
+const afficherLibelleRole = (id: number) => {
+  const d_data = store.gettersRole.find(
+    (item) => item.id == id
+  );
+
+  if (d_data) {
+    return d_data.libelle;
+  }
+  return 'non renseigné';
+};
 const showModal = () => {
   if (modalRef.value) {
     const modalInstance = new Modal(modalRef.value);
@@ -341,6 +363,7 @@ function supprimer(id: any) {
 }
 onMounted(() => {
   store.getRole();
+  store.getUtilisateur()
 });
 </script>
 <style scoped></style>

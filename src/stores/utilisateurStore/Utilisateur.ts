@@ -23,7 +23,7 @@ interface dossierRole {
     name: string;
     email: string;
     password: string;
-    role_id: string;
+    role_id: number;
 } 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -36,7 +36,8 @@ export const useAuthStore = defineStore({
     ListeDistricts: [] as dossierRole[],
     stateModules: [] as dossierRole[],
     stateRole: [] as dossierRole[],
-      
+    stateUtilisateur: [] as dossierUtilisateur[],
+    
   }),
   getters: {
    errorMessage(): string {
@@ -50,7 +51,11 @@ export const useAuthStore = defineStore({
     },
     gettersRole(state){
             return state.stateRole;
-        }
+    },
+    gettersUtilisateur(state) {
+      return state.stateUtilisateur;
+    }
+    
   },
   actions: {
 
@@ -130,15 +135,30 @@ export const useAuthStore = defineStore({
                         {
                         headers: authHeader(),
                     });
-                    this.stateRole.push(response.data)
+                    this.stateUtilisateur.push(response.data)
                      toast.success(`Enregistrement effectuer avec succès`);
-                     this.getRole();
+                     this.getUtilisateur();
                 }
                 catch (error) {
                     console.log('erreur survenue', error);
                     toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
-        },
+    },
+ 
+ async getUtilisateur(){
+                try {
+                    const response = await apiUrl.get("/liste_utilisateur",{ 
+                      headers: authHeader(),
+                      
+                    });
+                  
+                  this.stateUtilisateur = response.data || [];
+                  
+                } catch (error) {
+                    console.log('erreur survenue', error);
+                   
+                }
+    },
  // fin gestion utilisateur
     async getModule(){
                 try {

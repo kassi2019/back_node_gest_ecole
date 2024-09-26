@@ -31,18 +31,30 @@
           <li class="active">
             <a href="index.html"
               ><i class="ft-home"></i
-              ><span class="menu-title" data-i18n="">Dashboard{{ moduleApp }}</span></a
+              ><span class="menu-title" data-i18n=""
+                >Dashboard{{ moduleApp }}</span
+              ></a
             >
           </li>
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/structure')">
+          <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/structure')"
+          >
             <a href=""
               ><i class="ft-pie-chart"></i
               ><span class="menu-title" data-i18n="">Charts</span></a
             >
           </li>
-          <li class="nav-item has-sub open"><a href="#"><i class="ft-layout"></i><span class="menu-title" data-i18n="">General</span></a>
+          <li class="nav-item has-sub open">
+            <a href="#"
+              ><i class="ft-layout"></i
+              ><span class="menu-title" data-i18n="">General</span></a
+            >
             <ul class="menu-content" style="">
-              <li class="is-shown"><a class="menu-item" href="documentation-starter-kit.html">Starter Kit</a>
+              <li class="is-shown">
+                <a class="menu-item" href="documentation-starter-kit.html"
+                  >Starter Kit</a
+                >
               </li>
             </ul>
           </li>
@@ -116,8 +128,6 @@ function activedOptionMenu(value: number, route_name: string) {
     window.location.reload();
   }, 5);
 }
-
-
 </script>
 
 <style scoped>

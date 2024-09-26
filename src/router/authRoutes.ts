@@ -8,7 +8,19 @@ import Logout from "@/views/pageConnexion/Logout.vue";
 import structure from "@/views/pageParametrage/structure.vue";
  import role from '../views/pageConnexion/role.vue'
 import utilisateur from '../views/pageConnexion/utilisateur.vue'
+import fonction from "@/views/pageParametrage/fonction.vue";
+import anneeScolaire from "@/views/pageParametrage/anneeScolaire.vue";
 const AuthRoutes = [
+  {
+    path: "/anneeScolaire",
+    name: "anneeScolaire",
+    component: anneeScolaire,
+  },
+   {
+    path: "/fonction",
+    name: "fonction",
+    component: fonction,
+  },
   {
     path: "/utilisateur",
     name: "utilisateur",

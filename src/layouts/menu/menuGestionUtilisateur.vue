@@ -14,7 +14,7 @@
                 alt="Chameleon admin logo"
                 src="../../../public/theme-assets/images/logo/logo.png"
               />
-              <h3 class="brand-text">Chameleon</h3></a
+              <h3 class="brand-text">PARAMETRAGE</h3></a
             >
           </li>
           <li class="nav-item d-md-none">
@@ -31,34 +31,118 @@
           <li class="active" @click.prevent="pagePrecedent">
             <a href="" @click.prevent="pagePrecedent"
               ><i class="la la-reply-all"></i
-              ><span class="menu-title" data-i18n="" @click.prevent="pagePrecedent">Retour Module</span></a
+              ><span
+                class="menu-title"
+                data-i18n=""
+                @click.prevent="pagePrecedent"
+                >Retour Module</span
+              ></a
+            >
+          </li>
+
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/anneeScolaire')">
+            <a href=""
+              ><i class="la la-list-ol"></i
+              ><span class="menu-title" data-i18n="">Année Scolaire</span></a
+            >
+          </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+            <a href=""
+              ><i class="la la-home"></i
+              ><span class="menu-title" data-i18n="">Etablissement</span></a
+            >
+          </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+            <a href=""
+              ><i class="la la-pencil-square"></i
+              ><span class="menu-title" data-i18n="">Barèmes </span></a
+            >
+          </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+            <a href=""
+              ><i class="la la-reorder"></i
+              ><span class="menu-title" data-i18n="">Cycle</span></a
+            >
+          </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+            <a href=""
+              ><i class="la la-university"></i
+              ><span class="menu-title" data-i18n="">Classe</span></a
+            >
+          </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+            <a href=""
+              ><i class="la la-book"></i
+              ><span class="menu-title" data-i18n="">Type matiere</span></a
+            >
+          </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+            <a href=""
+              ><i class="la la-pencil-square"></i
+              ><span class="menu-title" data-i18n="">Matiere</span></a
             >
           </li>
           <li
             class="nav-item"
-            @click.prevent="activedOptionMenu(2, '/role')"
+            @click.prevent="activedOptionMenu(2, '/fonction')"
           >
             <a href=""
-              ><i class="ft-pie-chart"></i
-              ><span class="menu-title" data-i18n="">Role</span></a
+              ><i class="la la-unsorted"></i
+              ><span class="menu-title" data-i18n="">Fonction</span></a
             >
           </li>
-
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/utilisateur')">
+          <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/fonction')"
+          >
             <a href=""
-              ><i class="la la-user"></i
-              ><span class="menu-title" data-i18n="">Utilisateur</span></a
+              ><i class="la la-unsorted"></i
+              ><span class="menu-title" data-i18n="">Emploi</span></a
+            >
+          </li>
+          <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/fonction')"
+          >
+            <a href=""
+              ><i class="la la-bars"></i
+              ><span class="menu-title" data-i18n="">Economique</span></a
+            >
+          </li>
+           <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/fonction')"
+          >
+            <a href=""
+              ><i class="la la-money"></i
+              ><span class="menu-title" data-i18n="">Budget</span></a
+            >
+          </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/role')">
+            <a href=""
+              ><i class="la la-thumbs-o-up"></i
+              ><span class="menu-title" data-i18n="">Rôle</span></a
             >
           </li>
 
-          <li class="nav-item">
+          <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/utilisateur')"
+          >
+            <a href=""
+              ><i class="la la-users"></i
+              ><span class="menu-title" data-i18n="">Acteur</span></a
+            >
+          </li>
+
+          <!-- <li class="nav-item">
             <a href="buttons.html"
               ><i class="la la-exchange"></i
               ><span class="menu-title" data-i18n=""
                 >Affectation Module</span
               ></a
             >
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

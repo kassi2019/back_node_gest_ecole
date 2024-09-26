@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    liste des Rôles
+                    liste des Fonctions
                   </h3>
                   <br />
                   <button
@@ -44,13 +44,19 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in store.gettersRole"
+                            v-for="(item, index) in storefonction.getterFonction"
                             :key="item.id"
                           >
-                            <td style="border: 1px solid #000;">{{ index + 1 }}</td>
-                            <td style="border: 1px solid #000;">{{ item.code }}</td>
-                            <td style="border: 1px solid #000;">{{ item.libelle }}</td>
-                            <td style="border: 1px solid #000;">
+                            <td style="border: 1px solid #000">
+                              {{ index + 1 }}
+                            </td>
+                            <td style="border: 1px solid #000">
+                              {{ item.code }}
+                            </td>
+                            <td style="border: 1px solid #000">
+                              {{ item.libelle }}
+                            </td>
+                            <td style="border: 1px solid #000">
                               <button
                                 type="button"
                                 class="btn btn-primary btn-sm"
@@ -93,7 +99,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistre Rôle
+                Enregistre Fonction
               </h5>
               <button
                 type="button"
@@ -131,7 +137,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="AjouterFonction"
+                @click.prevent="EnregistrementFonction"
               >
                 Enregistrer
               </button>
@@ -141,38 +147,36 @@
       </div>
     </div>
 
-
-
     <!-- modal de modification -->
 
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-        ref="modalModification"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modifier Role</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form class="row g-3 needs-validation">
-               <div class="mb-3">
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+      ref="modalModification"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modifier fonction</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form class="row g-3 needs-validation">
+              <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Code</label
                 >
-                <input type="text" class="form-control" v-model="form.code" />
+                <input type="text" class="form-control" v-model="formmod.code" />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
@@ -181,43 +185,43 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-model="form.libelle"
+                  v-model="formmod.libelle"
                 />
               </div>
-              </form>
-            </div>
-            <div class="modal-footer">
+            </form>
+          </div>
+          <div class="modal-footer">
             <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal"
-              >
-                Fermer
-              </button>
-              <button
-                type="button"
-                class="btn btn-success"
-                @click.prevent="modificationRole"
-              >
-                Modifier
-              </button>
-            </div>
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Fermer
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              @click.prevent="modificationFonction"
+            >
+              Modifier
+            </button>
           </div>
         </div>
       </div>
-      <!-- fin du modal de modification -->
+    </div>
+    <!-- fin du modal de modification -->
   </div>
 </template>
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import { useAuthStore } from "../../stores/utilisateurStore/Utilisateur";
-const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
+import { fonctionStore } from "../../stores/parametreStore/fonction";
+// const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
-const store = useAuthStore();
+const storefonction = fonctionStore();
 
 const showModal = () => {
   if (modalRef.value) {
@@ -230,26 +234,25 @@ const form: any = reactive({
   code: "",
   libelle: "",
 });
-
- function ViderChamps(){
- 
-  form.code ='',
-  form.libelle =''
- 
-  };
-function AjouterFonction() {
+const formmod: any = reactive({
+  code: "",
+  libelle: "",
+});
+function ViderChamps() {
+  (form.code = ""), (form.libelle = "");
+}
+function EnregistrementFonction() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
       code: form.code,
       libelle: form.libelle,
-      utilisateurId: id_utilisateur,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    store.ajouterRole(obj).then(() => {
-      ViderChamps()
+    storefonction.ajouterFonction(obj).then(() => {
+      ViderChamps();
       // isLoading.value = false;
     });
   } catch (error) {
@@ -264,13 +267,13 @@ function AjouterFonction() {
 //   store.SupprimerRole(id);
 // }
 const showModalDecision = (id: number) => {
-  const d_data = store.gettersRole.find(
+  const d_data = storefonction.getterFonction.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
-    form.code = d_data.code;
-    form.libelle = d_data.libelle;
-    form.id = d_data.id;
+    formmod.code = d_data.code;
+    formmod.libelle = d_data.libelle;
+    formmod.id = d_data.id;
     if (modalModification.value) {
       const modalInstance = new Modal(modalModification.value);
       modalInstance.show();
@@ -279,28 +282,27 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationRole() {
+function modificationFonction() {
   //$v1.value.$touch();
- // if (!$v1.value.$invalid) {
-    form.id = form.id;
-    try {
-     // isLoading.value = true;
-      store.modifierRole(form).then(() => {
-        //isLoading.value = false;
-
-        // closeModal();
-      });
-      // Fermer le modal après modification
-      if (modalModification.value) {
-        const modalInstance = Modal.getInstance(modalModification.value);
-        if (modalInstance) {
-          modalInstance.hide();
-        }
+  // if (!$v1.value.$invalid) {
+  formmod.id = formmod.id;
+  try {
+    // isLoading.value = true;
+    storefonction.modifierFonction(formmod).then(() => {
+      //isLoading.value = false;
+      // closeModal();
+    });
+    // Fermer le modal après modification
+    if (modalModification.value) {
+      const modalInstance = Modal.getInstance(modalModification.value);
+      if (modalInstance) {
+        modalInstance.hide();
       }
-    } catch (error) {
-      console.error("Login failed:", error);
-     // isLoading.value = false;
     }
+  } catch (error) {
+    console.error("Login failed:", error);
+    // isLoading.value = false;
+  }
   // } else {
   //   console.log($v);
   // }
@@ -317,12 +319,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      store.SupprimerRole(id);
+      storefonction.SupprimerFonction(id);
     }
   });
 }
 onMounted(() => {
-  store.getRole();
+  
+  storefonction.getFonction();
 });
 </script>
 <style scoped></style>

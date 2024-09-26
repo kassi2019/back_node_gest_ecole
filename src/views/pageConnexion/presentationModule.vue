@@ -20,7 +20,7 @@
 
           cursor: pointer;
         "
-        @click="goToModule(1)"
+        @click="goToModule(5)"
       >
         <div class="card-content ecom-card2 height-180">
           <h5
@@ -105,7 +105,7 @@
       </div>
     </div>
 
-    <div class="col-xl-4 col-lg-6 col-md-12">
+    <!-- <div class="col-xl-4 col-lg-6 col-md-12">
       <div
         class="card pull-up ecom-card-1 bg-white"
         style="
@@ -135,9 +135,9 @@
           <h3 style="font-weight: bold">GESTION DES RAPPORTS</h3>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="col-xl-4 col-lg-6 col-md-12">
+    <!-- <div class="col-xl-4 col-lg-6 col-md-12">
       <div
         class="card pull-up ecom-card-1 bg-white"
         style="
@@ -167,7 +167,7 @@
           <h3 style="font-weight: bold">GESTION DES UTILISATEURS</h3>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div
       class="modal fade"

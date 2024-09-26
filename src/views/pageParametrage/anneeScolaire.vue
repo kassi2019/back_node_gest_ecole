@@ -8,12 +8,12 @@
               <br />
               <div class="ecom-card-1 bg-white">
                 <div class="card-content ecom-card2 height-10000">
-                  <h3
+                  <h5
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    liste des Rôles
-                  </h3>
+                    Parametre : Année Scolaire
+                  </h5>
                   <br />
                   <button
                     type="button"
@@ -32,8 +32,8 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-                            <th scope="col">Code</th>
-                            <th scope="col" style="width: 75%">Libelle</th>
+                            <th scope="col" style="width: 85%">Année Scolaire</th>
+                            <th scope="col" style="width: 5%;">Statut</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -44,13 +44,24 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in store.gettersRole"
+                            v-for="(item, index) in anneeS.getterAnneeScolaire"
                             :key="item.id"
                           >
-                            <td style="border: 1px solid #000;">{{ index + 1 }}</td>
-                            <td style="border: 1px solid #000;">{{ item.code }}</td>
-                            <td style="border: 1px solid #000;">{{ item.libelle }}</td>
-                            <td style="border: 1px solid #000;">
+                            <td style="border: 1px solid #000">
+                              {{ index + 1 }}
+                            </td>
+                            <td style="border: 1px solid #000">
+                              {{ item.annee }}
+                            </td>
+                            <td style="border: 1px solid #000;text-align: center;" v-if="item.statut=='1'">
+                            
+                              <input class="form-check-input" type="checkbox" value={{item.annee}} id="flexCheckChecked" checked style="border: 1px #000 solid;">
+                            </td>
+                              <td style="border: 1px solid #000;text-align: center;" v-else>
+                            
+                              <input class="form-check-input" type="checkbox"  id="flexCheckChecked" style="border: 1px #000 solid;" @click="showModalDecision(item.id)">
+                            </td>
+                            <td style="border: 1px solid #000">
                               <button
                                 type="button"
                                 class="btn btn-primary btn-sm"
@@ -93,7 +104,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistre Rôle
+                Enrégistre Année Scolaire
               </h5>
               <button
                 type="button"
@@ -105,19 +116,21 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
+                  >Année Scolaire</label
                 >
-                <input type="text" class="form-control" v-model="form.code" />
+                <input type="text" class="form-control" v-model="form.annee" />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Statut{{ form.statut }}</label
                 >
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.libelle"
-                />
+               
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value=1 id="flexCheckChecked" checked  v-model="form.statut">
+  <label class="form-check-label" for="flexCheckChecked">
+    Checked checkbox
+  </label>
+</div>
               </div>
             </div>
             <div class="modal-footer">
@@ -131,7 +144,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="AjouterFonction"
+                @click.prevent="EnregistrementAnnee"
               >
                 Enregistrer
               </button>
@@ -141,83 +154,81 @@
       </div>
     </div>
 
-
-
     <!-- modal de modification -->
 
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-        ref="modalModification"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Modifier Role</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form class="row g-3 needs-validation">
-               <div class="mb-3">
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+      ref="modalModification"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modifier Année Scolaire</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form class="row g-3 needs-validation">
+              <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
+                  >Année Scolaire</label
                 >
-                <input type="text" class="form-control" v-model="form.code" />
+                <input type="text" class="form-control" v-model="formmod.annee" />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Statut</label
                 >
                 <input
                   type="text"
                   class="form-control"
-                  v-model="form.libelle"
+                  v-model="formmod.statut"
                 />
               </div>
-              </form>
-            </div>
-            <div class="modal-footer">
+            </form>
+          </div>
+          <div class="modal-footer">
             <button
-                type="button"
-                class="btn btn-danger"
-                data-bs-dismiss="modal"
-              >
-                Fermer
-              </button>
-              <button
-                type="button"
-                class="btn btn-success"
-                @click.prevent="modificationRole"
-              >
-                Modifier
-              </button>
-            </div>
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Fermer
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              @click.prevent="modificationAnnee"
+            >
+              Modifier
+            </button>
           </div>
         </div>
       </div>
-      <!-- fin du modal de modification -->
+    </div>
+    <!-- fin du modal de modification -->
   </div>
 </template>
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import { useAuthStore } from "../../stores/utilisateurStore/Utilisateur";
-const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
+import { anneeScolaireStore } from "../../stores/parametreStore/anneeScolaire";
+// const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
-const store = useAuthStore();
+const anneeS = anneeScolaireStore();
 
 const showModal = () => {
   if (modalRef.value) {
@@ -227,29 +238,28 @@ const showModal = () => {
 };
 
 const form: any = reactive({
-  code: "",
-  libelle: "",
+annee: "",
+  statut: "",
 });
-
- function ViderChamps(){
- 
-  form.code ='',
-  form.libelle =''
- 
-  };
-function AjouterFonction() {
+const formmod: any = reactive({
+  annee: "",
+  statut: "",
+});
+function ViderChamps() {
+  (form.annee = ""), (form.statut = "");
+}
+function EnregistrementAnnee() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
-      code: form.code,
-      libelle: form.libelle,
-      utilisateurId: id_utilisateur,
+      annee: form.annee,
+      statut: form.statut,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    store.ajouterRole(obj).then(() => {
-      ViderChamps()
+    anneeS.ajouterAnneeScolaire(obj).then(() => {
+      ViderChamps();
       // isLoading.value = false;
     });
   } catch (error) {
@@ -264,13 +274,13 @@ function AjouterFonction() {
 //   store.SupprimerRole(id);
 // }
 const showModalDecision = (id: number) => {
-  const d_data = store.gettersRole.find(
+  const d_data = anneeS.getterAnneeScolaire.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
-    form.code = d_data.code;
-    form.libelle = d_data.libelle;
-    form.id = d_data.id;
+    formmod.annee = d_data.annee;
+    formmod.statut = d_data.statut;
+    formmod.id = d_data.id;
     if (modalModification.value) {
       const modalInstance = new Modal(modalModification.value);
       modalInstance.show();
@@ -279,28 +289,27 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationRole() {
+function modificationAnnee() {
   //$v1.value.$touch();
- // if (!$v1.value.$invalid) {
-    form.id = form.id;
-    try {
-     // isLoading.value = true;
-      store.modifierRole(form).then(() => {
-        //isLoading.value = false;
-
-        // closeModal();
-      });
-      // Fermer le modal après modification
-      if (modalModification.value) {
-        const modalInstance = Modal.getInstance(modalModification.value);
-        if (modalInstance) {
-          modalInstance.hide();
-        }
+  // if (!$v1.value.$invalid) {
+  formmod.id = formmod.id;
+  try {
+    // isLoading.value = true;
+    anneeS.modifierAnneeScolaire(formmod).then(() => {
+      //isLoading.value = false;
+      // closeModal();
+    });
+    // Fermer le modal après modification
+    if (modalModification.value) {
+      const modalInstance = Modal.getInstance(modalModification.value);
+      if (modalInstance) {
+        modalInstance.hide();
       }
-    } catch (error) {
-      console.error("Login failed:", error);
-     // isLoading.value = false;
     }
+  } catch (error) {
+    console.error("Login failed:", error);
+    // isLoading.value = false;
+  }
   // } else {
   //   console.log($v);
   // }
@@ -317,12 +326,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      store.SupprimerRole(id);
+      anneeS.SupprimerAnneeScolaire(id);
     }
   });
 }
 onMounted(() => {
-  store.getRole();
+  
+  anneeS.getAnneeScolaire();
 });
 </script>
 <style scoped></style>
