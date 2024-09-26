@@ -32,8 +32,8 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-                            <th scope="col" style="width: 85%">Année Scolaire</th>
-                            <th scope="col" style="width: 5%;">Statut</th>
+                            <th scope="col" style="width: 80%">Année Scolaire</th>
+                            <th scope="col" style="width: 10%;">Année en cours</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -59,7 +59,7 @@
                             </td>
                               <td style="border: 1px solid #000;text-align: center;" v-else>
                             
-                              <input class="form-check-input" type="checkbox"  id="flexCheckChecked" style="border: 1px #000 solid;" @click="showModalDecision(item.id)">
+                              <input class="form-check-input" type="checkbox"  id="flexCheckChecked" style="border: 1px #000 solid;" @click="showModalBascule(item.id)">
                             </td>
                             <td style="border: 1px solid #000">
                               <button
@@ -217,6 +217,60 @@
       </div>
     </div>
     <!-- fin du modal de modification -->
+
+
+
+<div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+      ref="modalbascule"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modifier Année Scolaire</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+          <div style="text-align: center;">êtes-vous sûr de vouloir effectuer cette action ?</div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+              
+               @click="actualiser()"
+            >
+              Fermer
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              @click.prevent="faireBasculeAnnee"
+            >
+              Modifier
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
   </div>
 </template>
 <script setup lang="ts">
@@ -228,6 +282,8 @@ import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
+
+const modalbascule = ref<HTMLDivElement | null>(null);
 const anneeS = anneeScolaireStore();
 
 const showModal = () => {
@@ -248,6 +304,10 @@ const formmod: any = reactive({
 function ViderChamps() {
   (form.annee = ""), (form.statut = "");
 }
+function actualiser() {
+  anneeS.getAnneeScolaire();
+}
+
 function EnregistrementAnnee() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
@@ -315,6 +375,7 @@ function modificationAnnee() {
   // }
 }
 function supprimer(id: any) {
+  
   Swal.fire({
     title: "Suppression",
     text: "êtes-vous sûr de vouloir effectuer cette action ?",
@@ -330,6 +391,49 @@ function supprimer(id: any) {
     }
   });
 }
+function faireBasculeAnnee() {
+  //$v1.value.$touch();
+  // if (!$v1.value.$invalid) {
+  formmod.id = formmod.id;
+  try {
+    // isLoading.value = true;
+    anneeS.BasculeAnneeScolaire(formmod).then(() => {
+      //isLoading.value = false;
+      // closeModal();
+    });
+    // Fermer le modal après modification
+    if (modalbascule.value) {
+      const modalInstance = Modal.getInstance(modalbascule.value);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    }
+  } catch (error) {
+    console.error("Login failed:", error);
+    // isLoading.value = false;
+  }
+  // } else {
+  //   console.log($v);
+  // }
+}
+
+
+const showModalBascule = (id: number) => {
+  const d_data = anneeS.getterAnneeScolaire.find(
+    (item: { id: number }) => item.id === id
+  );
+  if (d_data) {
+    formmod.annee = d_data.annee;
+    formmod.statut = d_data.statut;
+    formmod.id = d_data.id;
+    if (modalbascule.value) {
+      const modalInstance = new Modal(modalbascule.value);
+      modalInstance.show();
+    }
+  } else {
+    console.error(`Data with id ${id} not found`);
+  }
+};
 onMounted(() => {
   
   anneeS.getAnneeScolaire();

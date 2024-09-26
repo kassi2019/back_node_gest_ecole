@@ -88,6 +88,27 @@ async ajouterAnneeScolaire(infor: dossierAnneeScolaire){ //AnneeScolaire d'ajout
         toast.error("Échec de la mise à jour de l'Sous budget");
       }
     },
+ 
+  async BasculeAnneeScolaire(credentials: dossierAnneeScolaire) {
+      try {
+        const response = await apiUrl.put(`/basculeAnnee/${credentials.id}`,
+          credentials, { headers: authHeader(), }
+        );
+        const index = this.stateAnneeScolaire.findIndex(
+          (item) => item.id === credentials.id
+        );
+        if (index !== -1) {
+          this.stateAnneeScolaire[index] = response.data;
+        }
+        this.getAnneeScolaire();
+        toast.success("Modification effectuée avec succès");
+      } catch (error) {
+        console.error("Erreur de mise à jour: ", error);
+        toast.error("Échec de la mise à jour de l'Sous budget");
+      }
+    },
+
+
   },
 
 
