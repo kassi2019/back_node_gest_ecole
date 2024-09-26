@@ -1,5 +1,6 @@
 const Validator = require('fastest-validator');
 var asynclib = require('async');
+const { Op } = require('sequelize');
 const models = require('../models');
 
 
@@ -106,22 +107,21 @@ enregistrementAnneeScolaire: function (req, res) {
      
      
      
-basculeAnnee: function (req, res) {
+    basculeAnnee: function (req, res) {
+        // const id = req.params.id;
+        // const project = models.anneeScolaire.findAll({ where: { id: id } });
+        // console.log(project.id);
+
         const id = req.params.id;
-        const id1 = req.params.id;
-        const stat=1
-       const test = models.anneeScolaire.findByPk(id)
         const updateanneeScolaire = {
-            annee: req.body.annee,
+            
             statut: 1,
         }
         const updateanneeScolaire1 = {
-            
+           
             statut: 0,
         }
-        if (!updateanneeScolaire.annee) {
-            return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
-        }
+        
                 models.anneeScolaire.update(updateanneeScolaire, {where: {id:id}}).then(result => {
                     res.status(201).json({
                         message: "modification effectue avec success",
@@ -132,16 +132,9 @@ basculeAnnee: function (req, res) {
                         message: "Un probleme est survenu lors de la modification!",
                     });
                 });
-         models.anneeScolaire.update(updateanneeScolaire, {where: {id:id}}).then(result => {
-                    res.status(201).json({
-                        message: "modification effectue avec success",
-                    });
-                }).catch(error => {
-                    console.log(error);
-                    res.status(500).json({
-                        message: "Un probleme est survenu lors de la modification!",
-                    });
-                });
+         models.anneeScolaire.update(updateanneeScolaire1, {where: {id:{
+                    [Op.ne]: id
+                }}})
          
       
     },

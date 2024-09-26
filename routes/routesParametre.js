@@ -57,6 +57,7 @@ router.get('/listeAnneeScolaire', checkAuthMiddleware.checkAuth, anneeScolaireCo
 router.put("/modificationAnneeScolaire/:id", checkAuthMiddleware.checkAuth, anneeScolaireController.modificationAnneeScolaire);
 router.delete("/supprimerAnneeScolaire/:id", checkAuthMiddleware.checkAuth, anneeScolaireController.supprimerAnneeScolaire);
 
+router.put("/basculeAnnee/:id", checkAuthMiddleware.checkAuth, anneeScolaireController.basculeAnnee);
 
 /// route gestion des bareme
 
