@@ -11,7 +11,7 @@ enregistrementAnneeScolaire: function (req, res) {
     //    console.log(req.userData.userId);
         const post = {
             annee: req.body.annee,
-            statut: req.body.statut,
+            statut: 0,
             utilisateurId:req.userData.userId
           
         }

@@ -14,7 +14,7 @@ const emploiController = require('../controllers/emploiCtrl');
 const etablissementController = require('../controllers/etablissementCtrl');
 const matiereController = require('../controllers/matiereCtrl');
 const typeMatiereController = require('../controllers/typeMatiereCtrl');
-
+const associeStructureController = require('../controllers/associeStructureCtrl');
 const router = express.Router();
 
 router.post('/enregistrementStructure', checkAuthMiddleware.checkAuth, structureController.enregistrementStructure);
@@ -129,5 +129,14 @@ router.post('/enregistrementtypeMatiere', checkAuthMiddleware.checkAuth, typeMat
 router.get('/listetypeMatiere', checkAuthMiddleware.checkAuth, typeMatiereController.listeTypeMatiere);
 router.put("/modificationtypeMatiere/:id", checkAuthMiddleware.checkAuth, typeMatiereController.modificationTypeMatiere);
 router.delete("/supprimertypeMatiere/:id", checkAuthMiddleware.checkAuth, typeMatiereController.supprimerTypeMatiere);
+
+
+
+/// route gestion des associe structure
+
+router.post('/enregistrementAssocieStructure', checkAuthMiddleware.checkAuth, associeStructureController.enregistrementAssocieStructure);
+router.get('/listeAssocieStructure', checkAuthMiddleware.checkAuth, associeStructureController.listeAssocieStructure);
+router.put("/modificationAssocieStructure/:id", checkAuthMiddleware.checkAuth, associeStructureController.modificationAssocieStructure);
+router.delete("/supprimerAssocieStructure/:id", checkAuthMiddleware.checkAuth, associeStructureController.supprimerAssocieStructure);
 
 module.exports = router;

@@ -6,26 +6,25 @@ const models = require('../models');
 module.exports = {
     
     // permet de faire des enregistrement
-    enregistrementMatiere: function (req, res) {
+    enregistrementAssocieStructure: function (req, res) {
     //    console.log(req.userData.userId);
         const post = {
+            montant: req.body.montant,
             libelle: req.body.libelle,
-            typematiereId: req.body.typematiereId,
-            code: req.body.code,
             utilisateurId:req.userData.userId
           
         }
       
-        if (!post.libelle || !post.code) {
+        if (!post.montant || !post.libelle) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
-        models.Matiere.findOne({ where: { libelle: post.libelle } }).then(result => {
+        models.AssocieStructure.findOne({ where: { libelle: post.libelle } }).then(result => {
             if (result) {
                 res.status(409).json({
-                    message: "libelle existe déja",
+                    message: "montant existe déja",
                 });
             } else {
-                models.Matiere.create(
+                models.AssocieStructure.create(
                     post
                 
                 ).then(result => {
@@ -50,8 +49,8 @@ module.exports = {
     },
     // permet d'afficher la liste
 
-    listeMatiere: function (req, res) {
-        models.Matiere.findAll().then(result => {
+    listeAssocieStructure: function (req, res) {
+        models.AssocieStructure.findAll().then(result => {
             res.status(200).json(result);
         }).catch(error => {
             res.status(500).json({
@@ -61,18 +60,17 @@ module.exports = {
     },
     // permet de faire des modification
  
-    modificationMatiere: function (req, res) {
+    modificationAssocieStructure: function (req, res) {
         const id = req.params.id;
     
-        const updateMatiere = {
+        const updateAssocieStructure = {
+            montant: req.body.montant,
             libelle: req.body.libelle,
-            code: req.body.code,
-            typematiereId: req.body.typematiereId,
         }
-        if (!updateMatiere.libelle || !updateMatiere.code) {
+        if (!updateAssocieStructure.montant) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
-                models.Matiere.update(updateMatiere, {where: {id:id}}).then(result => {
+                models.AssocieStructure.update(updateAssocieStructure, {where: {id:id}}).then(result => {
                     res.status(201).json({
                         message: "modification effectue avec success",
                     });
@@ -88,10 +86,10 @@ module.exports = {
 
     // permet de faire la suppression
     
-     supprimerMatiere:function (req, res){
+     supprimerAssocieStructure:function (req, res){
     const id = req.params.id;
 
-    models.Matiere.destroy({where:{id:id}}).then(result => {
+    models.AssocieStructure.destroy({where:{id:id}}).then(result => {
         res.status(200).json({
             message: "Suppression effectuer avec success"
         });

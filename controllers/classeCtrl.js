@@ -10,15 +10,16 @@ module.exports = {
     //    console.log(req.userData.userId);
         const post = {
             libelle: req.body.libelle,
-            cycleid: req.body.cycleid,
+            code: req.body.code,
+            cycleId: req.body.cycleId,
             utilisateurId:req.userData.userId
           
         }
       
-        if (!post.libelle || !post.cycleid) {
+        if (!post.libelle || !post.cycleId || !post.code) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
-        models.Classe.findOne({ where: { libelle: post.libelle } }).then(result => {
+        models.Classe.findOne({ where: { code: post.code } }).then(result => {
             if (result) {
                 res.status(409).json({
                     message: "libelle existe déja",
@@ -65,9 +66,10 @@ module.exports = {
     
         const updateClasse = {
             libelle: req.body.libelle,
-            cycleid: req.body.cycleid,
+            code: req.body.code,
+            cycleId: req.body.cycleId,
         }
-        if (!updateClasse.libelle) {
+        if (!updateClasse.libelle || !updateClasse.code  || !updateClasse.cycleId) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
                 models.Classe.update(updateClasse, {where: {id:id}}).then(result => {

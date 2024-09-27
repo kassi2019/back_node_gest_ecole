@@ -13,11 +13,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
         Classe.belongsTo(models.Utilisateur);
-        Classe.belongsTo(models.Cycle);
+        
     }
   }
   Classe.init({
     libelle: DataTypes.STRING,
+    code:DataTypes.STRING,
     cycleId: DataTypes.STRING,
     utilisateurId:DataTypes.INTEGER
   }, {
