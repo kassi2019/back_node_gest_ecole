@@ -10,7 +10,61 @@ import structure from "@/views/pageParametrage/structure.vue";
 import utilisateur from '../views/pageConnexion/utilisateur.vue'
 import fonction from "@/views/pageParametrage/fonction.vue";
 import anneeScolaire from "@/views/pageParametrage/anneeScolaire.vue";
+import etablissement from "@/views/pageParametrage/etablissement.vue";
+import bareme from "@/views/pageParametrage/bareme.vue";
+import cycle from "@/views/pageParametrage/cycle.vue";
+import classe from "@/views/pageParametrage/classe.vue";
+import typeMatiere from "@/views/pageParametrage/typeMatiere.vue";
+import matiere from "@/views/pageParametrage/matiere.vue";
+import emploi from "@/views/pageParametrage/emploi.vue";
+import economique from "@/views/pageParametrage/economique.vue";
+import associeStructure from "@/views/pageParametrage/associeStructure.vue";
 const AuthRoutes = [
+  {
+    path: "/associeStructure",
+    name: "associeStructure",
+    component: associeStructure,
+  },
+  {
+    path: "/economique",
+    name: "economique",
+    component: economique,
+  },
+   {
+    path: "/emploi",
+    name: "emploi",
+    component: emploi,
+  },
+   {
+    path: "/matiere",
+    name: "matiere",
+    component: matiere,
+  },
+  {
+    path: "/typeMatiere",
+    name: "typeMatiere",
+    component: typeMatiere,
+  },
+  {
+    path: "/classe",
+    name: "classe",
+    component: classe,
+  },
+   {
+    path: "/cycle",
+    name: "cycle",
+    component: cycle,
+  },
+  {
+    path: "/bareme",
+    name: "bareme",
+    component: bareme,
+  },
+   {
+    path: "/etablissement",
+    name: "etablissement",
+    component: etablissement,
+  },
   {
     path: "/anneeScolaire",
     name: "anneeScolaire",

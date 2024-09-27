@@ -46,37 +46,37 @@
               ><span class="menu-title" data-i18n="">Année Scolaire</span></a
             >
           </li>
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/etablissement')">
             <a href=""
               ><i class="la la-home"></i
               ><span class="menu-title" data-i18n="">Etablissement</span></a
             >
           </li>
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/bareme')">
             <a href=""
               ><i class="la la-pencil-square"></i
               ><span class="menu-title" data-i18n="">Barèmes </span></a
             >
           </li>
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/cycle')">
             <a href=""
               ><i class="la la-reorder"></i
               ><span class="menu-title" data-i18n="">Cycle</span></a
             >
           </li>
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/classe')">
             <a href=""
               ><i class="la la-university"></i
               ><span class="menu-title" data-i18n="">Classe</span></a
             >
           </li>
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/typeMatiere')">
             <a href=""
               ><i class="la la-book"></i
               ><span class="menu-title" data-i18n="">Type matiere</span></a
             >
           </li>
-          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/')">
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/matiere')">
             <a href=""
               ><i class="la la-pencil-square"></i
               ><span class="menu-title" data-i18n="">Matiere</span></a
@@ -93,7 +93,7 @@
           </li>
           <li
             class="nav-item"
-            @click.prevent="activedOptionMenu(2, '/fonction')"
+            @click.prevent="activedOptionMenu(2, '/emploi')"
           >
             <a href=""
               ><i class="la la-unsorted"></i
@@ -102,13 +102,23 @@
           </li>
           <li
             class="nav-item"
-            @click.prevent="activedOptionMenu(2, '/fonction')"
+            @click.prevent="activedOptionMenu(2, '/economique')"
           >
             <a href=""
               ><i class="la la-bars"></i
               ><span class="menu-title" data-i18n="">Economique</span></a
             >
           </li>
+          <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/associeStructure')"
+          >
+            <a href=""
+              ><i class="la la-bars"></i
+              ><span class="menu-title" data-i18n="">Associé structure</span></a
+            >
+          </li>
+          
            <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/fonction')"

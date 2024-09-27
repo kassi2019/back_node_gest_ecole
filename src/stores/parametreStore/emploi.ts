@@ -7,62 +7,62 @@ import { authHeader } from "@/config/authHeader";
 import apiUrl from "@/config/axios";
 
 
-interface dossierFonction {
+interface dossieremploi {
     id: number;
     code: string;
     libelle: string;
 }
   
-export const fonctionStore = defineStore("fonction",{
+export const emploiStore = defineStore("emploi",{
 
   state: () => ({
 
-    stateFonction: [] as dossierFonction[],
+    stateemploi: [] as dossieremploi[],
   }),
   getters: {
-    getterFonction(state){
-            return state.stateFonction;
+    getteremploi(state){
+            return state.stateemploi;
         }
   },
   actions: {
-     async getFonction(){
+     async getemploi(){
                 try {
-                    const response = await apiUrl.get("/listeFonction",{ 
+                    const response = await apiUrl.get("/listeemploi",{ 
                       headers: authHeader(),
                       
                     });
                   
-                  this.stateFonction = response.data || [];
+                  this.stateemploi = response.data || [];
                   
                 } catch (error) {
                     console.log('erreur survenue', error);
                    
                 }
             },
-async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des information global du budget
+async ajouteremploi(infor: dossieremploi){ //emploi d'ajout des information global du budget
                 try {
-                    const response = await apiUrl.post("/enregistrementFonction",
+                    const response = await apiUrl.post("/enregistrementemploi",
                         infor, // on lui passe l'interface de section
                         {
                         headers: authHeader(),
                     });
-                    this.stateFonction.push(response.data)
+                    this.stateemploi.push(response.data)
                    toast.success(`Enregistrement effectuer avec succès`);
-                    this.getFonction();
+                    this.getemploi();
                 } catch (error) {
                     console.log('erreur survenue', error);
                   //  toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
       },
         
- async SupprimerFonction(id: number){ //fonction de suppression
+ async Supprimeremploi(id: number){ //emploi de suppression
                 try {
-                    await apiUrl.delete(`/supprimerFonction/${id}`,{
+                    await apiUrl.delete(`/supprimeremploi/${id}`,{
                         headers: authHeader(),
                     });
-                    this.stateFonction = this.stateFonction.filter((item) => item.id !== id);
+                    this.stateemploi = this.stateemploi.filter((item) => item.id !== id);
                     toast.success("Suppression éffectuer avec succès");
-                    this.getFonction();
+                    this.getemploi();
                 } catch (error) {
                     console.error("Erreur de suppression: ", error);
                     toast.error("Échec de la suppression");
@@ -70,18 +70,18 @@ async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des informatio
             
             },
 
- async modifierFonction(credentials: dossierFonction) {
+ async modifieremploi(credentials: dossieremploi) {
       try {
-        const response = await apiUrl.put(`/modificationFonction/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationemploi/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateFonction.findIndex(
+        const index = this.stateemploi.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateFonction[index] = response.data;
+          this.stateemploi[index] = response.data;
         }
-        this.getFonction();
+        this.getemploi();
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);

@@ -7,62 +7,63 @@ import { authHeader } from "@/config/authHeader";
 import apiUrl from "@/config/axios";
 
 
-interface dossierFonction {
+interface dossierclasse {
     id: number;
-    code: string;
+    cycleId: number;
     libelle: string;
+    code: string;
 }
   
-export const fonctionStore = defineStore("fonction",{
+export const classeStore = defineStore("classe",{
 
   state: () => ({
 
-    stateFonction: [] as dossierFonction[],
+    stateclasse: [] as dossierclasse[],
   }),
   getters: {
-    getterFonction(state){
-            return state.stateFonction;
+    getterclasse(state){
+            return state.stateclasse;
         }
   },
   actions: {
-     async getFonction(){
+     async getclasse(){
                 try {
-                    const response = await apiUrl.get("/listeFonction",{ 
+                    const response = await apiUrl.get("/listeclasse",{ 
                       headers: authHeader(),
                       
                     });
                   
-                  this.stateFonction = response.data || [];
+                  this.stateclasse = response.data || [];
                   
                 } catch (error) {
                     console.log('erreur survenue', error);
                    
                 }
             },
-async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des information global du budget
+async ajouterclasse(infor: dossierclasse){ //classe d'ajout des information global du budget
                 try {
-                    const response = await apiUrl.post("/enregistrementFonction",
+                    const response = await apiUrl.post("/enregistrementclasse",
                         infor, // on lui passe l'interface de section
                         {
                         headers: authHeader(),
                     });
-                    this.stateFonction.push(response.data)
+                    this.stateclasse.push(response.data)
                    toast.success(`Enregistrement effectuer avec succès`);
-                    this.getFonction();
+                    this.getclasse();
                 } catch (error) {
                     console.log('erreur survenue', error);
                   //  toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
       },
         
- async SupprimerFonction(id: number){ //fonction de suppression
+ async Supprimerclasse(id: number){ //classe de suppression
                 try {
-                    await apiUrl.delete(`/supprimerFonction/${id}`,{
+                    await apiUrl.delete(`/supprimerclasse/${id}`,{
                         headers: authHeader(),
                     });
-                    this.stateFonction = this.stateFonction.filter((item) => item.id !== id);
+                    this.stateclasse = this.stateclasse.filter((item) => item.id !== id);
                     toast.success("Suppression éffectuer avec succès");
-                    this.getFonction();
+                    this.getclasse();
                 } catch (error) {
                     console.error("Erreur de suppression: ", error);
                     toast.error("Échec de la suppression");
@@ -70,18 +71,18 @@ async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des informatio
             
             },
 
- async modifierFonction(credentials: dossierFonction) {
+ async modifierclasse(credentials: dossierclasse) {
       try {
-        const response = await apiUrl.put(`/modificationFonction/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationclasse/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateFonction.findIndex(
+        const index = this.stateclasse.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateFonction[index] = response.data;
+          this.stateclasse[index] = response.data;
         }
-        this.getFonction();
+        this.getclasse();
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);

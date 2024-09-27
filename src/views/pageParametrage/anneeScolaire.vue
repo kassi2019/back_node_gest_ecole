@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    Parametre : Année Scolaire
+                    Année Scolaire
                   </h5>
                   <br />
                   <button
@@ -55,11 +55,11 @@
                             </td>
                             <td style="border: 1px solid #000;text-align: center;" v-if="item.statut=='1'">
                             
-                              <input class="form-check-input" type="checkbox" value={{item.annee}} id="flexCheckChecked" checked style="border: 1px #000 solid;">
+                              <input class="form-check-input" type="radio" value={{item.annee}} id="flexCheckChecked" checked style="border: 1px #000 solid;">
                             </td>
                               <td style="border: 1px solid #000;text-align: center;" v-else>
                             
-                              <input class="form-check-input" type="checkbox"  id="flexCheckChecked" style="border: 1px #000 solid;" @click="showModalBascule(item.id)">
+                              <input class="form-check-input" type="radio"  id="flexCheckChecked" style="border: 1px #000 solid;" @click="showModalBascule(item.id)">
                             </td>
                             <td style="border: 1px solid #000">
                               <button
@@ -120,18 +120,7 @@
                 >
                 <input type="text" class="form-control" v-model="form.annee" />
               </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Statut{{ form.statut }}</label
-                >
-               
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value=1 id="flexCheckChecked" checked  v-model="form.statut">
-  <label class="form-check-label" for="flexCheckChecked">
-    Checked checkbox
-  </label>
-</div>
-              </div>
+            
             </div>
             <div class="modal-footer">
               <button
@@ -185,16 +174,7 @@
                 >
                 <input type="text" class="form-control" v-model="formmod.annee" />
               </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Statut</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="formmod.statut"
-                />
-              </div>
+            
             </form>
           </div>
           <div class="modal-footer">

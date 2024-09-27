@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    Fonctions
+                    classe
                   </h3>
                   <br />
                   <button
@@ -31,9 +31,10 @@
                       <table class="table">
                         <thead class="thead-dark">
                           <tr>
+                            <th></th>
                             <th scope="col">N°</th>
                             <th scope="col">Code</th>
-                            <th scope="col" style="width: 75%">Libelle</th>
+                            <th scope="col" style="width: 80%" >Libelle</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -42,26 +43,31 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-for="(item,index) in storecycle.gettercycle"
+                            :key="item.id">
+                            <tr>
+                                <td style="background-color:#F6E497 !important;font-size: 16px!important;">{{ index+1 }}</td>
+                                <td style="background-color:#F6E497 !important;font-size: 16px!important;" colspan="4">{{ item.libelle }}</td>
+                            </tr>
                           <tr
-                            v-for="(item, index) in storefonction.getterFonction"
-                            :key="item.id"
+                            v-for="(data,index) in listeClasseParCycle(item.id)" :key="data.id"
                           >
+                          <td></td>
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
                             <td style="border: 1px solid #000">
-                              {{ item.code }}
+                              {{ data.code }}
                             </td>
                             <td style="border: 1px solid #000">
-                              {{ item.libelle }}
+                              {{ data.libelle }}
                             </td>
                             <td style="border: 1px solid #000">
                               <button
                                 type="button"
                                 class="btn btn-primary btn-sm"
                                 title="Modifier"
-                                @click="showModalDecision(item.id)"
+                                @click="showModalDecision(data.id)"
                               >
                                 <i class="la la-pencil-square"></i>
                               </button>
@@ -69,7 +75,7 @@
                                 type="button"
                                 class="btn btn-danger btn-sm"
                                 title="Supprimer"
-                                @click="supprimer(item.id)"
+                                @click="supprimer(data.id)"
                               >
                                 <i class="la la-trash"></i>
                               </button>
@@ -99,7 +105,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistrer Fonction
+                Enregistrer classe
               </h5>
               <button
                 type="button"
@@ -111,13 +117,36 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
+                  >Cycle</label
                 >
-                <input type="text" class="form-control" v-model="form.code" />
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  v-model="form.cycleId"
+                >
+                  <option selected>Veuillez selectionner le cycle SVP ?</option>
+                  <option
+                    v-for="item in storecycle.gettercycle"
+                    :key="item.id"
+                    :value="item.id"
+                  >
+                    {{ item.libelle }}
+                  </option>
+                </select>
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Code</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.code"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Classe</label
                 >
                 <input
                   type="text"
@@ -137,7 +166,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="EnregistrementFonction"
+                @click.prevent="Enregistrementclasse"
               >
                 Enregistrer
               </button>
@@ -162,7 +191,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier Fonction</h5>
+            <h5 class="modal-title">Modifier classe</h5>
             <button
               type="button"
               class="btn-close"
@@ -172,11 +201,34 @@
           </div>
           <div class="modal-body">
             <form class="row g-3 needs-validation">
+             <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Cycle</label
+                >
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  v-model="formmod.cycleId"
+                >
+                  <option selected>Veuillez selectionner le cycle SVP ?</option>
+                  <option
+                    v-for="item in storecycle.gettercycle"
+                    :key="item.id"
+                    :value="item.id"
+                  >
+                    {{ item.libelle }}
+                  </option>
+                </select>
+              </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Code</label
                 >
-                <input type="text" class="form-control" v-model="formmod.code" />
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="formmod.code"
+                />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
@@ -201,7 +253,7 @@
             <button
               type="button"
               class="btn btn-success"
-              @click.prevent="modificationFonction"
+              @click.prevent="modificationclasse"
             >
               Modifier
             </button>
@@ -215,14 +267,15 @@
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import { fonctionStore } from "../../stores/parametreStore/fonction";
+import { classeStore } from "../../stores/parametreStore/classe";
+import { cycleStore } from "../../stores/parametreStore/cycle";
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
-const storefonction = fonctionStore();
-
+const storeclasse = classeStore();
+const storecycle = cycleStore();
 const showModal = () => {
   if (modalRef.value) {
     const modalInstance = new Modal(modalRef.value);
@@ -231,27 +284,38 @@ const showModal = () => {
 };
 
 const form: any = reactive({
-  code: "",
+  cycleId: "",
   libelle: "",
+  code: "",
 });
 const formmod: any = reactive({
-  code: "",
+  cycleId: "",
   libelle: "",
+  code: "",
 });
 function ViderChamps() {
-  (form.code = ""), (form.libelle = "");
+    (form.cycleId = ""), (form.libelle = ""),(form.code="");
 }
-function EnregistrementFonction() {
+
+const listeClasseParCycle = (id: number) => {
+  return storeclasse.getterclasse.filter(
+    (item) => item.cycleId == id
+  );
+
+};
+function Enregistrementclasse() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
-      code: form.code,
-      libelle: form.libelle,
+        cycleId: form.cycleId,
+        libelle: form.libelle,
+        code: form.code,
+     
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    storefonction.ajouterFonction(obj).then(() => {
+    storeclasse.ajouterclasse(obj).then(() => {
       ViderChamps();
       // isLoading.value = false;
     });
@@ -267,12 +331,14 @@ function EnregistrementFonction() {
 //   store.SupprimerRole(id);
 // }
 const showModalDecision = (id: number) => {
-  const d_data = storefonction.getterFonction.find(
+  const d_data = storeclasse.getterclasse.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
-    formmod.code = d_data.code;
-    formmod.libelle = d_data.libelle;
+    formmod.cycleId = d_data.cycleId;
+      formmod.libelle = d_data.libelle;
+      formmod.code = d_data.code;
+    
     formmod.id = d_data.id;
     if (modalModification.value) {
       const modalInstance = new Modal(modalModification.value);
@@ -282,13 +348,13 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationFonction() {
+function modificationclasse() {
   //$v1.value.$touch();
   // if (!$v1.value.$invalid) {
   formmod.id = formmod.id;
   try {
     // isLoading.value = true;
-    storefonction.modifierFonction(formmod).then(() => {
+    storeclasse.modifierclasse(formmod).then(() => {
       //isLoading.value = false;
       // closeModal();
     });
@@ -319,13 +385,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storefonction.SupprimerFonction(id);
+      storeclasse.Supprimerclasse(id);
     }
   });
 }
 onMounted(() => {
-  
-  storefonction.getFonction();
+  storecycle.getcycle();
+  storeclasse.getclasse();
 });
 </script>
 <style scoped></style>

@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    Fonctions
+                    Associé de l'etablissement
                   </h3>
                   <br />
                   <button
@@ -32,8 +32,9 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-                            <th scope="col">Code</th>
+                            
                             <th scope="col" style="width: 75%">Libelle</th>
+                            <th scope="col">Montant</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -44,14 +45,14 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in storefonction.getterFonction"
+                            v-for="(item, index) in storeassocie.getterassocieStructure"
                             :key="item.id"
                           >
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
                             <td style="border: 1px solid #000">
-                              {{ item.code }}
+                              {{ item.montant }}
                             </td>
                             <td style="border: 1px solid #000">
                               {{ item.libelle }}
@@ -99,7 +100,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistrer Fonction
+                Enregistrer Associé Structure
               </h5>
               <button
                 type="button"
@@ -109,12 +110,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
-                >
-                <input type="text" class="form-control" v-model="form.code" />
-              </div>
+             
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Libelle</label
@@ -124,6 +120,12 @@
                   class="form-control"
                   v-model="form.libelle"
                 />
+              </div>
+               <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Montant</label
+                >
+                <input type="text" class="form-control" v-model="form.montant" />
               </div>
             </div>
             <div class="modal-footer">
@@ -137,7 +139,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="EnregistrementFonction"
+                @click.prevent="Enregistrementassocie"
               >
                 Enregistrer
               </button>
@@ -162,7 +164,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier Fonction</h5>
+            <h5 class="modal-title">Modifier Associé Structure</h5>
             <button
               type="button"
               class="btn-close"
@@ -172,12 +174,7 @@
           </div>
           <div class="modal-body">
             <form class="row g-3 needs-validation">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
-                >
-                <input type="text" class="form-control" v-model="formmod.code" />
-              </div>
+             
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Libelle</label
@@ -187,6 +184,12 @@
                   class="form-control"
                   v-model="formmod.libelle"
                 />
+              </div>
+               <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Montant</label
+                >
+                <input type="text" class="form-control" v-model="formmod.montant" />
               </div>
             </form>
           </div>
@@ -201,7 +204,7 @@
             <button
               type="button"
               class="btn btn-success"
-              @click.prevent="modificationFonction"
+              @click.prevent="modificationassocie"
             >
               Modifier
             </button>
@@ -215,13 +218,13 @@
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import { fonctionStore } from "../../stores/parametreStore/fonction";
+import { associeStructureStore } from "../../stores/parametreStore/associeStructure";
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
-const storefonction = fonctionStore();
+const storeassocie = associeStructureStore();
 
 const showModal = () => {
   if (modalRef.value) {
@@ -231,27 +234,27 @@ const showModal = () => {
 };
 
 const form: any = reactive({
-  code: "",
+  montant: "",
   libelle: "",
 });
 const formmod: any = reactive({
-  code: "",
+  montant: "",
   libelle: "",
 });
 function ViderChamps() {
-  (form.code = ""), (form.libelle = "");
+  (form.montant = ""), (form.libelle = "");
 }
-function EnregistrementFonction() {
+function Enregistrementassocie() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
-      code: form.code,
+      montant: form.montant,
       libelle: form.libelle,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    storefonction.ajouterFonction(obj).then(() => {
+    storeassocie.ajouterassocieStructure(obj).then(() => {
       ViderChamps();
       // isLoading.value = false;
     });
@@ -267,11 +270,11 @@ function EnregistrementFonction() {
 //   store.SupprimerRole(id);
 // }
 const showModalDecision = (id: number) => {
-  const d_data = storefonction.getterFonction.find(
+  const d_data = storeassocie.getterassocieStructure.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
-    formmod.code = d_data.code;
+    formmod.montant = d_data.montant;
     formmod.libelle = d_data.libelle;
     formmod.id = d_data.id;
     if (modalModification.value) {
@@ -282,13 +285,13 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationFonction() {
+function modificationassocie() {
   //$v1.value.$touch();
   // if (!$v1.value.$invalid) {
   formmod.id = formmod.id;
   try {
     // isLoading.value = true;
-    storefonction.modifierFonction(formmod).then(() => {
+    storeassocie.modifierassocieStructure(formmod).then(() => {
       //isLoading.value = false;
       // closeModal();
     });
@@ -319,13 +322,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storefonction.SupprimerFonction(id);
+      storeassocie.SupprimerassocieStructure(id);
     }
   });
 }
 onMounted(() => {
   
-  storefonction.getFonction();
+  storeassocie.getassocieStructure();
 });
 </script>
 <style scoped></style>

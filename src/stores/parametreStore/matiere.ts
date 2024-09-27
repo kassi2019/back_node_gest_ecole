@@ -7,62 +7,63 @@ import { authHeader } from "@/config/authHeader";
 import apiUrl from "@/config/axios";
 
 
-interface dossierFonction {
+interface dossiermatiere {
     id: number;
-    code: string;
+    typematiereId: number;
     libelle: string;
+    code: string;
 }
   
-export const fonctionStore = defineStore("fonction",{
+export const matiereStore = defineStore("matiere",{
 
   state: () => ({
 
-    stateFonction: [] as dossierFonction[],
+    statematiere: [] as dossiermatiere[],
   }),
   getters: {
-    getterFonction(state){
-            return state.stateFonction;
+    gettermatiere(state){
+            return state.statematiere;
         }
   },
   actions: {
-     async getFonction(){
+     async getmatiere(){
                 try {
-                    const response = await apiUrl.get("/listeFonction",{ 
+                    const response = await apiUrl.get("/listematiere",{ 
                       headers: authHeader(),
                       
                     });
                   
-                  this.stateFonction = response.data || [];
+                  this.statematiere = response.data || [];
                   
                 } catch (error) {
                     console.log('erreur survenue', error);
                    
                 }
             },
-async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des information global du budget
+async ajoutermatiere(infor: dossiermatiere){ //matiere d'ajout des information global du budget
                 try {
-                    const response = await apiUrl.post("/enregistrementFonction",
+                    const response = await apiUrl.post("/enregistrementmatiere",
                         infor, // on lui passe l'interface de section
                         {
                         headers: authHeader(),
                     });
-                    this.stateFonction.push(response.data)
+                    this.statematiere.push(response.data)
                    toast.success(`Enregistrement effectuer avec succès`);
-                    this.getFonction();
+                    this.getmatiere();
                 } catch (error) {
                     console.log('erreur survenue', error);
                   //  toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
       },
         
- async SupprimerFonction(id: number){ //fonction de suppression
+ async Supprimermatiere(id: number){ //matiere de suppression
                 try {
-                    await apiUrl.delete(`/supprimerFonction/${id}`,{
+                    await apiUrl.delete(`/supprimermatiere/${id}`,{
                         headers: authHeader(),
                     });
-                    this.stateFonction = this.stateFonction.filter((item) => item.id !== id);
+                    this.statematiere = this.statematiere.filter((item) => item.id !== id);
                     toast.success("Suppression éffectuer avec succès");
-                    this.getFonction();
+                    this.getmatiere();
                 } catch (error) {
                     console.error("Erreur de suppression: ", error);
                     toast.error("Échec de la suppression");
@@ -70,18 +71,18 @@ async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des informatio
             
             },
 
- async modifierFonction(credentials: dossierFonction) {
+ async modifiermatiere(credentials: dossiermatiere) {
       try {
-        const response = await apiUrl.put(`/modificationFonction/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationmatiere/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateFonction.findIndex(
+        const index = this.statematiere.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateFonction[index] = response.data;
+          this.statematiere[index] = response.data;
         }
-        this.getFonction();
+        this.getmatiere();
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);

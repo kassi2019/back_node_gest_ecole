@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    Fonctions
+                    Bareme
                   </h3>
                   <br />
                   <button
@@ -44,7 +44,7 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in storefonction.getterFonction"
+                            v-for="(item, index) in storebareme.getterbareme"
                             :key="item.id"
                           >
                             <td style="border: 1px solid #000">
@@ -99,7 +99,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistrer Fonction
+                Enregistrer bareme
               </h5>
               <button
                 type="button"
@@ -137,7 +137,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="EnregistrementFonction"
+                @click.prevent="Enregistrementbareme"
               >
                 Enregistrer
               </button>
@@ -162,7 +162,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier Fonction</h5>
+            <h5 class="modal-title">Modifier bareme</h5>
             <button
               type="button"
               class="btn-close"
@@ -201,7 +201,7 @@
             <button
               type="button"
               class="btn btn-success"
-              @click.prevent="modificationFonction"
+              @click.prevent="modificationbareme"
             >
               Modifier
             </button>
@@ -215,13 +215,13 @@
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import { fonctionStore } from "../../stores/parametreStore/fonction";
+import { baremeStore } from "../../stores/parametreStore/bareme";
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
-const storefonction = fonctionStore();
+const storebareme = baremeStore();
 
 const showModal = () => {
   if (modalRef.value) {
@@ -241,7 +241,7 @@ const formmod: any = reactive({
 function ViderChamps() {
   (form.code = ""), (form.libelle = "");
 }
-function EnregistrementFonction() {
+function Enregistrementbareme() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
@@ -251,7 +251,7 @@ function EnregistrementFonction() {
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    storefonction.ajouterFonction(obj).then(() => {
+    storebareme.ajouterbareme(obj).then(() => {
       ViderChamps();
       // isLoading.value = false;
     });
@@ -267,7 +267,7 @@ function EnregistrementFonction() {
 //   store.SupprimerRole(id);
 // }
 const showModalDecision = (id: number) => {
-  const d_data = storefonction.getterFonction.find(
+  const d_data = storebareme.getterbareme.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
@@ -282,13 +282,13 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationFonction() {
+function modificationbareme() {
   //$v1.value.$touch();
   // if (!$v1.value.$invalid) {
   formmod.id = formmod.id;
   try {
     // isLoading.value = true;
-    storefonction.modifierFonction(formmod).then(() => {
+    storebareme.modifierbareme(formmod).then(() => {
       //isLoading.value = false;
       // closeModal();
     });
@@ -319,13 +319,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storefonction.SupprimerFonction(id);
+      storebareme.Supprimerbareme(id);
     }
   });
 }
 onMounted(() => {
   
-  storefonction.getFonction();
+  storebareme.getbareme();
 });
 </script>
 <style scoped></style>

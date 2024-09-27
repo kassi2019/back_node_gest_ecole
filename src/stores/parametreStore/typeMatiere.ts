@@ -7,62 +7,61 @@ import { authHeader } from "@/config/authHeader";
 import apiUrl from "@/config/axios";
 
 
-interface dossierFonction {
+interface dossierTypeMatiere {
     id: number;
-    code: string;
     libelle: string;
 }
   
-export const fonctionStore = defineStore("fonction",{
+export const TypeMatiereStore = defineStore("TypeMatiere",{
 
   state: () => ({
 
-    stateFonction: [] as dossierFonction[],
+    stateTypeMatiere: [] as dossierTypeMatiere[],
   }),
   getters: {
-    getterFonction(state){
-            return state.stateFonction;
+    getterTypeMatiere(state){
+            return state.stateTypeMatiere;
         }
   },
   actions: {
-     async getFonction(){
+     async getTypeMatiere(){
                 try {
-                    const response = await apiUrl.get("/listeFonction",{ 
+                    const response = await apiUrl.get("/listetypeMatiere",{ 
                       headers: authHeader(),
                       
                     });
                   
-                  this.stateFonction = response.data || [];
+                  this.stateTypeMatiere = response.data || [];
                   
                 } catch (error) {
                     console.log('erreur survenue', error);
                    
                 }
             },
-async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des information global du budget
+async ajouterTypeMatiere(infor: dossierTypeMatiere){ //TypeMatiere d'ajout des information global du budget
                 try {
-                    const response = await apiUrl.post("/enregistrementFonction",
+                    const response = await apiUrl.post("/enregistrementtypeMatiere",
                         infor, // on lui passe l'interface de section
                         {
                         headers: authHeader(),
                     });
-                    this.stateFonction.push(response.data)
+                    this.stateTypeMatiere.push(response.data)
                    toast.success(`Enregistrement effectuer avec succès`);
-                    this.getFonction();
+                    this.getTypeMatiere();
                 } catch (error) {
                     console.log('erreur survenue', error);
                   //  toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
       },
         
- async SupprimerFonction(id: number){ //fonction de suppression
+ async SupprimerTypeMatiere(id: number){ //TypeMatiere de suppression
                 try {
-                    await apiUrl.delete(`/supprimerFonction/${id}`,{
+                    await apiUrl.delete(`/supprimertypeMatiere/${id}`,{
                         headers: authHeader(),
                     });
-                    this.stateFonction = this.stateFonction.filter((item) => item.id !== id);
+                    this.stateTypeMatiere = this.stateTypeMatiere.filter((item) => item.id !== id);
                     toast.success("Suppression éffectuer avec succès");
-                    this.getFonction();
+                    this.getTypeMatiere();
                 } catch (error) {
                     console.error("Erreur de suppression: ", error);
                     toast.error("Échec de la suppression");
@@ -70,18 +69,18 @@ async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des informatio
             
             },
 
- async modifierFonction(credentials: dossierFonction) {
+ async modifierTypeMatiere(credentials: dossierTypeMatiere) {
       try {
-        const response = await apiUrl.put(`/modificationFonction/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationtypeMatiere/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateFonction.findIndex(
+        const index = this.stateTypeMatiere.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateFonction[index] = response.data;
+          this.stateTypeMatiere[index] = response.data;
         }
-        this.getFonction();
+        this.getTypeMatiere();
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);

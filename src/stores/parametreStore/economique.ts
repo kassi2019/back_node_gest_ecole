@@ -7,62 +7,62 @@ import { authHeader } from "@/config/authHeader";
 import apiUrl from "@/config/axios";
 
 
-interface dossierFonction {
+interface dossiereconomique {
     id: number;
     code: string;
     libelle: string;
 }
   
-export const fonctionStore = defineStore("fonction",{
+export const economiqueStore = defineStore("economique",{
 
   state: () => ({
 
-    stateFonction: [] as dossierFonction[],
+    stateeconomique: [] as dossiereconomique[],
   }),
   getters: {
-    getterFonction(state){
-            return state.stateFonction;
+    gettereconomique(state){
+            return state.stateeconomique;
         }
   },
   actions: {
-     async getFonction(){
+     async geteconomique(){
                 try {
-                    const response = await apiUrl.get("/listeFonction",{ 
+                    const response = await apiUrl.get("/listeeconomique",{ 
                       headers: authHeader(),
                       
                     });
                   
-                  this.stateFonction = response.data || [];
+                  this.stateeconomique = response.data || [];
                   
                 } catch (error) {
                     console.log('erreur survenue', error);
                    
                 }
             },
-async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des information global du budget
+async ajoutereconomique(infor: dossiereconomique){ //economique d'ajout des information global du budget
                 try {
-                    const response = await apiUrl.post("/enregistrementFonction",
+                    const response = await apiUrl.post("/enregistrementeconomique",
                         infor, // on lui passe l'interface de section
                         {
                         headers: authHeader(),
                     });
-                    this.stateFonction.push(response.data)
+                    this.stateeconomique.push(response.data)
                    toast.success(`Enregistrement effectuer avec succès`);
-                    this.getFonction();
+                    this.geteconomique();
                 } catch (error) {
                     console.log('erreur survenue', error);
                   //  toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
       },
         
- async SupprimerFonction(id: number){ //fonction de suppression
+ async Supprimereconomique(id: number){ //economique de suppression
                 try {
-                    await apiUrl.delete(`/supprimerFonction/${id}`,{
+                    await apiUrl.delete(`/supprimereconomique/${id}`,{
                         headers: authHeader(),
                     });
-                    this.stateFonction = this.stateFonction.filter((item) => item.id !== id);
+                    this.stateeconomique = this.stateeconomique.filter((item) => item.id !== id);
                     toast.success("Suppression éffectuer avec succès");
-                    this.getFonction();
+                    this.geteconomique();
                 } catch (error) {
                     console.error("Erreur de suppression: ", error);
                     toast.error("Échec de la suppression");
@@ -70,18 +70,18 @@ async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des informatio
             
             },
 
- async modifierFonction(credentials: dossierFonction) {
+ async modifiereconomique(credentials: dossiereconomique) {
       try {
-        const response = await apiUrl.put(`/modificationFonction/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationeconomique/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateFonction.findIndex(
+        const index = this.stateeconomique.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateFonction[index] = response.data;
+          this.stateeconomique[index] = response.data;
         }
-        this.getFonction();
+        this.geteconomique();
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);

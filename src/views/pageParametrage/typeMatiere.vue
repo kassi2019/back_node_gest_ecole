@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    Fonctions
+                    Type de matière
                   </h3>
                   <br />
                   <button
@@ -32,8 +32,7 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-                            <th scope="col">Code</th>
-                            <th scope="col" style="width: 75%">Libelle</th>
+                            <th scope="col" style="width: 90%">Libelle</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -44,15 +43,13 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in storefonction.getterFonction"
+                            v-for="(item, index) in storetypematiere.getterTypeMatiere"
                             :key="item.id"
                           >
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
-                            <td style="border: 1px solid #000">
-                              {{ item.code }}
-                            </td>
+                           
                             <td style="border: 1px solid #000">
                               {{ item.libelle }}
                             </td>
@@ -99,7 +96,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistrer Fonction
+                Enregistrer Type matiere
               </h5>
               <button
                 type="button"
@@ -109,12 +106,6 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
-                >
-                <input type="text" class="form-control" v-model="form.code" />
-              </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Libelle</label
@@ -137,7 +128,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="EnregistrementFonction"
+                @click.prevent="Enregistrementtypematiere"
               >
                 Enregistrer
               </button>
@@ -162,7 +153,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier Fonction</h5>
+            <h5 class="modal-title">Modifier type matiere</h5>
             <button
               type="button"
               class="btn-close"
@@ -172,12 +163,7 @@
           </div>
           <div class="modal-body">
             <form class="row g-3 needs-validation">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
-                >
-                <input type="text" class="form-control" v-model="formmod.code" />
-              </div>
+              
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Libelle</label
@@ -201,7 +187,7 @@
             <button
               type="button"
               class="btn btn-success"
-              @click.prevent="modificationFonction"
+              @click.prevent="modificationtypematiere"
             >
               Modifier
             </button>
@@ -215,13 +201,13 @@
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import { fonctionStore } from "../../stores/parametreStore/fonction";
+import { TypeMatiereStore } from "../../stores/parametreStore/typeMatiere";
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
-const storefonction = fonctionStore();
+const storetypematiere = TypeMatiereStore();
 
 const showModal = () => {
   if (modalRef.value) {
@@ -231,27 +217,27 @@ const showModal = () => {
 };
 
 const form: any = reactive({
-  code: "",
+  
   libelle: "",
 });
 const formmod: any = reactive({
-  code: "",
+  
   libelle: "",
 });
 function ViderChamps() {
-  (form.code = ""), (form.libelle = "");
+   (form.libelle = "");
 }
-function EnregistrementFonction() {
+function Enregistrementtypematiere() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
-      code: form.code,
+     
       libelle: form.libelle,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    storefonction.ajouterFonction(obj).then(() => {
+    storetypematiere.ajouterTypeMatiere(obj).then(() => {
       ViderChamps();
       // isLoading.value = false;
     });
@@ -267,11 +253,11 @@ function EnregistrementFonction() {
 //   store.SupprimerRole(id);
 // }
 const showModalDecision = (id: number) => {
-  const d_data = storefonction.getterFonction.find(
+  const d_data = storetypematiere.getterTypeMatiere.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
-    formmod.code = d_data.code;
+    
     formmod.libelle = d_data.libelle;
     formmod.id = d_data.id;
     if (modalModification.value) {
@@ -282,13 +268,13 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationFonction() {
+function modificationtypematiere() {
   //$v1.value.$touch();
   // if (!$v1.value.$invalid) {
   formmod.id = formmod.id;
   try {
     // isLoading.value = true;
-    storefonction.modifierFonction(formmod).then(() => {
+    storetypematiere.modifierTypeMatiere(formmod).then(() => {
       //isLoading.value = false;
       // closeModal();
     });
@@ -319,13 +305,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storefonction.SupprimerFonction(id);
+      storetypematiere.SupprimerTypeMatiere(id);
     }
   });
 }
 onMounted(() => {
   
-  storefonction.getFonction();
+  storetypematiere.getTypeMatiere();
 });
 </script>
 <style scoped></style>

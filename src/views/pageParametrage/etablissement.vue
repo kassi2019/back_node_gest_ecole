@@ -8,12 +8,12 @@
               <br />
               <div class="ecom-card-1 bg-white">
                 <div class="card-content ecom-card2 height-10000">
-                  <h3
+                  <h5
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    Fonctions
-                  </h3>
+                    Etablissement
+                  </h5>
                   <br />
                   <button
                     type="button"
@@ -32,8 +32,12 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-                            <th scope="col">Code</th>
-                            <th scope="col" style="width: 75%">Libelle</th>
+                            <th scope="col" style="width: 45%">
+                              Nom établissement
+                            </th>
+                            <th scope="col" style="width: 15%">Boite postal</th>
+                            <th scope="col" style="width: 15%">Fondateur</th>
+                            <th scope="col" style="width: 15%">N° agrement</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -44,17 +48,25 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in storefonction.getterFonction"
+                            v-for="(
+                              item, index
+                            ) in docEtablissement.getteretablissement"
                             :key="item.id"
                           >
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
                             <td style="border: 1px solid #000">
-                              {{ item.code }}
+                              {{ item.libelle }}
                             </td>
                             <td style="border: 1px solid #000">
-                              {{ item.libelle }}
+                              {{ item.boite_postal }}
+                            </td>
+                            <td style="border: 1px solid #000">
+                              {{ item.fondateur }}
+                            </td>
+                            <td style="border: 1px solid #000">
+                              {{ item.numero_agrement }}
                             </td>
                             <td style="border: 1px solid #000">
                               <button
@@ -99,7 +111,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistrer Fonction
+                Enrégistrer Etablissement
               </h5>
               <button
                 type="button"
@@ -111,18 +123,44 @@
             <div class="modal-body">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
-                >
-                <input type="text" class="form-control" v-model="form.code" />
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Nom établissement</label
                 >
                 <input
                   type="text"
                   class="form-control"
                   v-model="form.libelle"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Boite postal</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.boite_postal"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Fondateur</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.fondateur"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >N° agrement</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="form.numero_agrement"
                 />
               </div>
             </div>
@@ -137,7 +175,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="EnregistrementFonction"
+                @click.prevent="EnregistrementEtablissement"
               >
                 Enregistrer
               </button>
@@ -162,7 +200,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier Fonction</h5>
+            <h5 class="modal-title">Modifier Etablissement</h5>
             <button
               type="button"
               class="btn-close"
@@ -171,21 +209,48 @@
             ></button>
           </div>
           <div class="modal-body">
+         
             <form class="row g-3 needs-validation">
-              <div class="mb-3">
+                <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Code</label
-                >
-                <input type="text" class="form-control" v-model="formmod.code" />
-              </div>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Nom établissement</label
                 >
                 <input
                   type="text"
                   class="form-control"
                   v-model="formmod.libelle"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Boite postal</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="formmod.boite_postal"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Fondateur</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="formmod.fondateur"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >N° agrement</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="formmod.numero_agrement"
                 />
               </div>
             </form>
@@ -201,7 +266,7 @@
             <button
               type="button"
               class="btn btn-success"
-              @click.prevent="modificationFonction"
+              @click.prevent="modificationEtablissement"
             >
               Modifier
             </button>
@@ -215,13 +280,15 @@
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
-import { fonctionStore } from "../../stores/parametreStore/fonction";
+import { etablissementStore } from "../../stores/parametreStore/etablissement";
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
-const storefonction = fonctionStore();
+
+const modalbascule = ref<HTMLDivElement | null>(null);
+const docEtablissement = etablissementStore();
 
 const showModal = () => {
   if (modalRef.value) {
@@ -231,27 +298,40 @@ const showModal = () => {
 };
 
 const form: any = reactive({
-  code: "",
   libelle: "",
+  boite_postal: "",
+  fondateur: "",
+  numero_agrement: "",
 });
 const formmod: any = reactive({
-  code: "",
   libelle: "",
+  boite_postal: "",
+  fondateur: "",
+  numero_agrement: "",
 });
 function ViderChamps() {
-  (form.code = ""), (form.libelle = "");
+  (form.libelle = ""),
+    (form.boite_postal = ""),
+    (form.fondateur = ""),
+    (form.numero_agrement = "");
 }
-function EnregistrementFonction() {
+function actualiser() {
+  docEtablissement.getetablissement();
+}
+
+function EnregistrementEtablissement() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
-      code: form.code,
       libelle: form.libelle,
+      boite_postal: form.boite_postal,
+      fondateur: form.fondateur,
+      numero_agrement: form.numero_agrement,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    storefonction.ajouterFonction(obj).then(() => {
+    docEtablissement.ajouteretablissement(obj).then(() => {
       ViderChamps();
       // isLoading.value = false;
     });
@@ -267,12 +347,14 @@ function EnregistrementFonction() {
 //   store.SupprimerRole(id);
 // }
 const showModalDecision = (id: number) => {
-  const d_data = storefonction.getterFonction.find(
+  const d_data = docEtablissement.getteretablissement.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
-    formmod.code = d_data.code;
     formmod.libelle = d_data.libelle;
+    formmod.boite_postal = d_data.boite_postal;
+    formmod.fondateur = d_data.fondateur;
+    formmod.numero_agrement = d_data.numero_agrement;
     formmod.id = d_data.id;
     if (modalModification.value) {
       const modalInstance = new Modal(modalModification.value);
@@ -282,13 +364,13 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationFonction() {
+function modificationEtablissement() {
   //$v1.value.$touch();
   // if (!$v1.value.$invalid) {
   formmod.id = formmod.id;
   try {
     // isLoading.value = true;
-    storefonction.modifierFonction(formmod).then(() => {
+    docEtablissement.modifieretablissement(formmod).then(() => {
       //isLoading.value = false;
       // closeModal();
     });
@@ -319,13 +401,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storefonction.SupprimerFonction(id);
+      docEtablissement.Supprimeretablissement(id);
     }
   });
 }
+
 onMounted(() => {
-  
-  storefonction.getFonction();
+  docEtablissement.getetablissement();
 });
 </script>
 <style scoped></style>

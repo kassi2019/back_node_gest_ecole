@@ -85,7 +85,7 @@ async ajouterAnneeScolaire(infor: dossierAnneeScolaire){ //AnneeScolaire d'ajout
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);
-        toast.error("Échec de la mise à jour de l'Sous budget");
+        toast.error("Échec de la mise à jour");
       }
     },
  
@@ -104,7 +104,7 @@ async ajouterAnneeScolaire(infor: dossierAnneeScolaire){ //AnneeScolaire d'ajout
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);
-        toast.error("Échec de la mise à jour de l'Sous budget");
+        toast.error("Échec de la mise à jour");
       }
     },
 

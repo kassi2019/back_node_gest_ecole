@@ -7,62 +7,62 @@ import { authHeader } from "@/config/authHeader";
 import apiUrl from "@/config/axios";
 
 
-interface dossierFonction {
+interface dossierassocieStructure {
     id: number;
-    code: string;
+    montant: string;
     libelle: string;
 }
   
-export const fonctionStore = defineStore("fonction",{
+export const associeStructureStore = defineStore("associeStructure",{
 
   state: () => ({
 
-    stateFonction: [] as dossierFonction[],
+    stateassocieStructure: [] as dossierassocieStructure[],
   }),
   getters: {
-    getterFonction(state){
-            return state.stateFonction;
+    getterassocieStructure(state){
+            return state.stateassocieStructure;
         }
   },
   actions: {
-     async getFonction(){
+     async getassocieStructure(){
                 try {
-                    const response = await apiUrl.get("/listeFonction",{ 
+                    const response = await apiUrl.get("/listeAssocieStructure",{ 
                       headers: authHeader(),
                       
                     });
                   
-                  this.stateFonction = response.data || [];
+                  this.stateassocieStructure = response.data || [];
                   
                 } catch (error) {
                     console.log('erreur survenue', error);
                    
                 }
             },
-async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des information global du budget
+async ajouterassocieStructure(infor: dossierassocieStructure){ //associeStructure d'ajout des information global du budget
                 try {
-                    const response = await apiUrl.post("/enregistrementFonction",
+                    const response = await apiUrl.post("/enregistrementAssoieStructure",
                         infor, // on lui passe l'interface de section
                         {
                         headers: authHeader(),
                     });
-                    this.stateFonction.push(response.data)
+                    this.stateassocieStructure.push(response.data)
                    toast.success(`Enregistrement effectuer avec succès`);
-                    this.getFonction();
+                    this.getassocieStructure();
                 } catch (error) {
                     console.log('erreur survenue', error);
                   //  toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
       },
         
- async SupprimerFonction(id: number){ //fonction de suppression
+ async SupprimerassocieStructure(id: number){ //associeStructure de suppression
                 try {
-                    await apiUrl.delete(`/supprimerFonction/${id}`,{
+                    await apiUrl.delete(`/supprimerAssoieStructure/${id}`,{
                         headers: authHeader(),
                     });
-                    this.stateFonction = this.stateFonction.filter((item) => item.id !== id);
+                    this.stateassocieStructure = this.stateassocieStructure.filter((item) => item.id !== id);
                     toast.success("Suppression éffectuer avec succès");
-                    this.getFonction();
+                    this.getassocieStructure();
                 } catch (error) {
                     console.error("Erreur de suppression: ", error);
                     toast.error("Échec de la suppression");
@@ -70,18 +70,18 @@ async ajouterFonction(infor: dossierFonction){ //fonction d'ajout des informatio
             
             },
 
- async modifierFonction(credentials: dossierFonction) {
+ async modifierassocieStructure(credentials: dossierassocieStructure) {
       try {
-        const response = await apiUrl.put(`/modificationFonction/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationAssoieStructure/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateFonction.findIndex(
+        const index = this.stateassocieStructure.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateFonction[index] = response.data;
+          this.stateassocieStructure[index] = response.data;
         }
-        this.getFonction();
+        this.getassocieStructure();
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);
