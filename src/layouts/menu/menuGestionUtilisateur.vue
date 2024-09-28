@@ -121,7 +121,7 @@
           
            <li
             class="nav-item"
-            @click.prevent="activedOptionMenu(2, '/fonction')"
+            @click.prevent="activedOptionMenu(2, '/budget')"
           >
             <a href=""
               ><i class="la la-money"></i

@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    Associé de l'etablissement
+                    budget
                   </h3>
                   <br />
                   <button
@@ -32,10 +32,8 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-
-                            <th scope="col" style="width: 75%">Libelle</th>
-                            <th scope="col">Montant</th>
-                            <th scope="col">Taux</th>
+                            <th scope="col" style="width: 75%">Nature Economique</th>
+                            <th scope="col" style="width: 10%">montant</th>
                             <th
                               scope="col"
                               style="text-align: center !important"
@@ -46,22 +44,17 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(
-                              item, index
-                            ) in storeassocie.getterassocieStructure"
+                            v-for="(item, index) in storebudget.getterbudget"
                             :key="item.id"
                           >
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
-                             <td style="border: 1px solid #000">
-                              {{ item.libelle }}
+                            <td style="border: 1px solid #000">
+                              {{ libelleNatureEconomique(item.economiqueId) }}
                             </td>
-                            <td style="border: 1px solid #000;text-align: right;">
+                            <td style="border: 1px solid #000">
                               {{ formatageMontant(parseFloat(item.montant)) }}
-                            </td>
-                            <td style="border: 1px solid #000;text-align: right;">
-                              {{ ((parseFloat(item.montant)/parseFloat(totalMontant))*100).toFixed(2) }} %
                             </td>
                             <td style="border: 1px solid #000">
                               <button
@@ -81,12 +74,6 @@
                                 <i class="la la-trash"></i>
                               </button>
                             </td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="background-color:#F6E497;text-align: right;">Total</td>
-                            <td style="background-color:#F6E497;text-align: right;">{{ formatageMontant(parseFloat(totalMontant)) }}</td>
-                            <td style="background-color:#F6E497;text-align: right;">100.00 %</td>
-                            <td style="background-color:#F6E497;text-align: right;"></td>
                           </tr>
                         </tbody>
                       </table>
@@ -112,7 +99,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistrer Associé Structure
+                Enregistrer budget
               </h5>
               <button
                 type="button"
@@ -122,19 +109,39 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
+                 <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Budget Global</label
                 >
                 <input
                   type="text"
                   class="form-control"
-                  v-model="form.libelle"
+                  :value="totalMontant"
+                  disabled
                 />
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Montant</label
+                  >Nature Economique</label
+                >
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  v-model="form.economiqueId"
+                >
+                  <option selected></option>
+                  <option
+                    v-for="item in storeeconomique.gettereconomique"
+                    :key="item.id"
+                    :value="item.id"
+                  >
+                    {{ item.code }}-{{ item.libelle }}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >montant</label
                 >
                 <input
                   type="text"
@@ -154,7 +161,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="Enregistrementassocie"
+                @click.prevent="Enregistrementbudget"
               >
                 Enregistrer
               </button>
@@ -179,7 +186,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier Associé Structure</h5>
+            <h5 class="modal-title">Modifier budget</h5>
             <button
               type="button"
               class="btn-close"
@@ -191,17 +198,26 @@
             <form class="row g-3 needs-validation">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Libelle</label
+                  >Nature Economique</label
                 >
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="formmod.libelle"
-                />
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  v-model="formmod.economiqueId"
+                >
+                  <option selected></option>
+                  <option
+                    v-for="item in storeeconomique.gettereconomique"
+                    :key="item.id"
+                    :value="item.id"
+                  >
+                    {{ item.code }}-{{ item.libelle }}
+                  </option>
+                </select>
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label"
-                  >Montant</label
+                  >montant</label
                 >
                 <input
                   type="text"
@@ -222,7 +238,7 @@
             <button
               type="button"
               class="btn btn-success"
-              @click.prevent="modificationassocie"
+              @click.prevent="modificationbudget"
             >
               Modifier
             </button>
@@ -236,15 +252,18 @@
 <script setup lang="ts">
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
+import { budgetStore } from "../../stores/parametreStore/budget";
+import { economiqueStore } from "../../stores/parametreStore/economique";
 import { associeStructureStore } from "../../stores/parametreStore/associeStructure";
+import {formatageMontant} from '@/dependenceGlobal/monFichier'
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
-import { ref, reactive, onMounted, computed } from "vue";
-import {formatageMontant} from '@/dependenceGlobal/monFichier'
+import { ref, reactive, onMounted,computed } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
+const storebudget = budgetStore();
+const storeeconomique = economiqueStore();
 const storeassocie = associeStructureStore();
-
 const showModal = () => {
   if (modalRef.value) {
     const modalInstance = new Modal(modalRef.value);
@@ -258,48 +277,51 @@ const totalMontant = computed(() => {
     .toFixed(0);
 });
 const form: any = reactive({
+  economiqueId: "",
   montant: "",
-  libelle: "",
 });
 const formmod: any = reactive({
+  economiqueId: "",
   montant: "",
-  libelle: "",
 });
 function ViderChamps() {
-  (form.montant = ""), (form.libelle = "");
+  (form.economiqueId = ""), (form.montant = "");
 }
-function Enregistrementassocie() {
+function libelleNatureEconomique(id: number) {
+  let data = storeeconomique.gettereconomique.find((item) => item.id == id);
+  if (data) {
+    return data.code.concat(' ',data.libelle);
+  }
+  return "";
+}
+function Enregistrementbudget() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
+      economiqueId: form.economiqueId,
       montant: form.montant,
-      libelle: form.libelle,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    storeassocie.ajouterassocieStructure(obj).then(() => {
+    storebudget.ajouterbudget(obj).then(() => {
       ViderChamps();
       // isLoading.value = false;
     });
   } catch (error) {
     console.error("Enregistrement échoué", error);
-    // isLoading.value = false;
+   
   }
-  //   } else {
-  //     console.log($v);
-  //   }
+
 }
-// function supprimer(id: any) {
-//   store.SupprimerRole(id);
-// }
+
 const showModalDecision = (id: number) => {
-  const d_data = storeassocie.getterassocieStructure.find(
+  const d_data = storebudget.getterbudget.find(
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
+    formmod.economiqueId = d_data.economiqueId;
     formmod.montant = d_data.montant;
-    formmod.libelle = d_data.libelle;
     formmod.id = d_data.id;
     if (modalModification.value) {
       const modalInstance = new Modal(modalModification.value);
@@ -309,13 +331,13 @@ const showModalDecision = (id: number) => {
     console.error(`Data with id ${id} not found`);
   }
 };
-function modificationassocie() {
+function modificationbudget() {
   //$v1.value.$touch();
   // if (!$v1.value.$invalid) {
   formmod.id = formmod.id;
   try {
     // isLoading.value = true;
-    storeassocie.modifierassocieStructure(formmod).then(() => {
+    storebudget.modifierbudget(formmod).then(() => {
       //isLoading.value = false;
       // closeModal();
     });
@@ -346,12 +368,14 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storeassocie.SupprimerassocieStructure(id);
+      storebudget.Supprimerbudget(id);
     }
   });
 }
 onMounted(() => {
+    storeeconomique.geteconomique();
   storeassocie.getassocieStructure();
+  storebudget.getbudget();
 });
 </script>
 <style scoped></style>

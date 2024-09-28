@@ -9,6 +9,7 @@ import TheNoSidebar from "@/layouts/TheNoSidebar.vue";
 import TheDefault from "@/layouts/TheDefault.vue";
 import router from "./router";
 import VueSweetalert2 from "vue-sweetalert2";
+import moment from 'moment';
 const app = createApp(App);
 const pinia = createPinia();
 
@@ -17,6 +18,6 @@ app.use(pinia);
 app.use(VueSweetalert2);
 app.component("default-layout", TheDefault);
 app.component("no-sidebar-layout", TheNoSidebar);
-
+app.config.globalProperties.$moment = moment;
 export const sidebarOpen = ref(false);
 app.mount('#app')

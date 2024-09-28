@@ -19,7 +19,13 @@ import matiere from "@/views/pageParametrage/matiere.vue";
 import emploi from "@/views/pageParametrage/emploi.vue";
 import economique from "@/views/pageParametrage/economique.vue";
 import associeStructure from "@/views/pageParametrage/associeStructure.vue";
+import budget from "@/views/pageParametrage/budget.vue";
 const AuthRoutes = [
+   {
+    path: "/budget",
+    name: "budget",
+    component: budget,
+  },
   {
     path: "/associeStructure",
     name: "associeStructure",

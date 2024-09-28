@@ -14,6 +14,7 @@
     "bootstrap": "^5.3.3",
     "front_gestion_scolaire": "file:",
     "jquery": "^3.7.1",
+    "moment": "^2.30.1",
     "pinia": "^2.1.4",
     "save": "^2.9.0",
     "vue": "^3.3.4",

@@ -7,62 +7,62 @@ import { authHeader } from "@/config/authHeader";
 import apiUrl from "@/config/axios";
 
 
-interface dossierassocieStructure {
+interface dossierbudget {
     id: number;
+    economiqueId: number;
     montant: string;
-    libelle: string;
 }
   
-export const associeStructureStore = defineStore("associeStructure",{
+export const budgetStore = defineStore("budget",{
 
   state: () => ({
 
-    stateassocieStructure: [] as dossierassocieStructure[],
+    statebudget: [] as dossierbudget[],
   }),
   getters: {
-    getterassocieStructure(state){
-            return state.stateassocieStructure;
+    getterbudget(state){
+            return state.statebudget;
         }
   },
   actions: {
-     async getassocieStructure(){
+     async getbudget(){
                 try {
-                    const response = await apiUrl.get("/listeAssocieStructure",{ 
+                    const response = await apiUrl.get("/listebudget",{ 
                       headers: authHeader(),
                       
                     });
                   
-                  this.stateassocieStructure = response.data || [];
+                  this.statebudget = response.data || [];
                   
                 } catch (error) {
                     console.log('erreur survenue', error);
                    
                 }
             },
-async ajouterassocieStructure(infor: dossierassocieStructure){ //associeStructure d'ajout des information global du budget
+async ajouterbudget(infor: dossierbudget){ //budget d'ajout des information global du budget
                 try {
-                    const response = await apiUrl.post("/enregistrementAssocieStructure",
+                    const response = await apiUrl.post("/enregistrementbudget",
                         infor, // on lui passe l'interface de section
                         {
                         headers: authHeader(),
                     });
-                    this.stateassocieStructure.push(response.data)
+                    this.statebudget.push(response.data)
                    toast.success(`Enregistrement effectuer avec succès`);
-                    this.getassocieStructure();
+                    this.getbudget();
                 } catch (error) {
                     console.log('erreur survenue', error);
                   //  toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
       },
         
- async SupprimerassocieStructure(id: number){ //associeStructure de suppression
+ async Supprimerbudget(id: number){ //budget de suppression
                 try {
-                    await apiUrl.delete(`/supprimerAssocieStructure/${id}`,{
+                    await apiUrl.delete(`/supprimerbudget/${id}`,{
                         headers: authHeader(),
                     });
-                    this.stateassocieStructure = this.stateassocieStructure.filter((item) => item.id !== id);
+                    this.statebudget = this.statebudget.filter((item) => item.id !== id);
                     toast.success("Suppression éffectuer avec succès");
-                    this.getassocieStructure();
+                    this.getbudget();
                 } catch (error) {
                     console.error("Erreur de suppression: ", error);
                     toast.error("Échec de la suppression");
@@ -70,18 +70,18 @@ async ajouterassocieStructure(infor: dossierassocieStructure){ //associeStructur
             
             },
 
- async modifierassocieStructure(credentials: dossierassocieStructure) {
+ async modifierbudget(credentials: dossierbudget) {
       try {
-        const response = await apiUrl.put(`/modificationAssocieStructure/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationbudget/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateassocieStructure.findIndex(
+        const index = this.statebudget.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateassocieStructure[index] = response.data;
+          this.statebudget[index] = response.data;
         }
-        this.getassocieStructure();
+        this.getbudget();
         toast.success("Modification effectuée avec succès");
       } catch (error) {
         console.error("Erreur de mise à jour: ", error);
