@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-    Affectation.belongsTo(models.Utilisateur);
+    //Affectation.belongsTo(models.Utilisateur);
     }
   }
   Affectation.init({
     utilisateur_id: DataTypes.INTEGER,
     code_module: DataTypes.INTEGER,
+    utilisateurId:DataTypes.INTEGER,
    
   }, {
     sequelize,

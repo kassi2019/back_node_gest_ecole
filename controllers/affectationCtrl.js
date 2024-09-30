@@ -5,22 +5,32 @@ const models = require('../models');
 
 module.exports = {
     
-    // permet de faire des enregistrement
-    enregistrementAffectation: function (req, res) {
+ listeAffecter: function (req, res) {
+        models.Affectation.findAll().then(result => {
+            res.status(200).json(result);
+        }).catch(error => {
+            res.status(500).json({
+                message: "Un probleme est survenu lors de l'enregistrement!"
+            });
+        });
+    },
+     enregistrementAffectation: function (req, res) {
     //    console.log(req.userData.userId);
         const post = {
-            utilisateur_id: req.body.utilisateur_id,
+             utilisateur_id: req.body.utilisateur_id,
             code_module: req.body.code_module,
             utilisateurId:req.userData.userId
           
         }
       
-        if (!post.code_module || !post.utilisateur_id) {
-            return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
-        }
-        models.AssociesStructure.then(result => {
-           
-                models.AssociesStructure.create(
+       
+        // models.Affectation.findOne({ where: { code_module: post.code_module } }).then(result => {
+        //     if (result) {
+        //         res.status(409).json({
+        //             message: "code existe déja",
+        //         });
+        //     } else {
+                models.Affectation.create(
                     post
                 
                 ).then(result => {
@@ -33,16 +43,13 @@ module.exports = {
                         message: "Un probleme est survenu lors de l'enregistrement!",
                     });
                 });
-            
-        }).catch(error => {
-            console.log(error);
-            res.status(500).json({
-                message: "Un probleme est survenu lors de l'enregistrement!",
-            });
-        });
+          //  }
+      
         
 
     },
+    // permet de faire des enregistrement
+  
     // permet d'afficher la liste
 
 
