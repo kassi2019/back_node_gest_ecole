@@ -43,30 +43,31 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr></tr>
-                          <!-- <tr
-                            v-for="(data, index) in listeClasseParCycle(
-                              item.id
-                            )"
-                            :key="data.id"
+                        <tbody v-for="(item,index) in storeUtilisateur.gettersUtilisateur"
+                            :key="item.id">
+                            <tr>
+                                <td style="background-color:#F6E497 !important;font-size: 16px!important;">{{ index+1 }}</td>
+                                <td style="background-color:#F6E497 !important;font-size: 16px!important;" colspan="4">{{ item.matricule }}-{{ item.name }}-{{ item.prenoms }}</td>
+                            </tr>
+                          <tr
+                            v-for="(data,index) in listePersonneAffecter(item.id)" :key="data.id"
                           >
-                            <td></td>
+                          <td></td>
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
                             <td style="border: 1px solid #000">
-                              {{ data.code }}
+                              {{ libelleModule(data.code_module) }}
                             </td>
-                            <td style="border: 1px solid #000">
+                            <!-- <td style="border: 1px solid #000">
                               {{ data.libelle }}
-                            </td>
-                            <td style="border: 1px solid #000"> -->
-                          <!-- <button
+                            </td> -->
+                            <td style="border: 1px solid #000">
+                              <button
                                 type="button"
                                 class="btn btn-primary btn-sm"
                                 title="Modifier"
-                                @click="showModalDecision(data.id)"
+                                
                               >
                                 <i class="la la-pencil-square"></i>
                               </button>
@@ -74,12 +75,12 @@
                                 type="button"
                                 class="btn btn-danger btn-sm"
                                 title="Supprimer"
-                                @click="supprimer(data.id)"
+                                
                               >
                                 <i class="la la-trash"></i>
-                              </button> -->
-                          <!-- </td>
-                          </tr> -->
+                              </button>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -139,19 +140,18 @@
                   <select
                     class="form-select form-select-lg mb-3"
                     aria-label=".form-select-lg example"
-                    v-model="FormDataDossier.module_id"
+                    v-model="form.code_module"
                   >
                     <option></option>
                     <option
                       v-for="item in storeUtilisateur.getterModule"
                       :key="item.id"
-                      :value="item.id"
+                      :value="item.code"
                     >
                       {{ item.libelle }}
                     </option>
                   </select>
                 </div>
-              
               </form>
             </div>
             <div class="modal-footer">
@@ -162,7 +162,11 @@
               >
                 Fermer
               </button>
-              <button type="button" class="btn btn-success" @click.prevent="">
+              <button
+                type="button"
+                class="btn btn-success"
+                @click.prevent="Enregistrementaffectation"
+              >
                 Enregistrer
               </button>
             </div>
@@ -219,10 +223,7 @@
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import { useAuthStore } from "../../stores/utilisateurStore/Utilisateur";
-import {
-  Affectation,
-  type BudgetParams,
-} from "../../stores/parametreStore/affectation";
+import { Affectation } from "../../stores/parametreStore/affectation";
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
@@ -230,6 +231,8 @@ const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
 const storeUtilisateur = useAuthStore();
 const storeAffectation = Affectation();
+
+
 
 const showModal = () => {
   if (modalRef.value) {
@@ -242,8 +245,7 @@ const FormDataDossier = reactive({
 });
 const form: any = reactive({
   utilisateur_id: "",
-  module_id: "",
-  FormDataDossier: [],
+  code_module: "",
 });
 const formmod: any = reactive({
   cycleId: "",
@@ -255,109 +257,50 @@ function deleteItem(item: number) {
     storeAffectation.tableauBudget.splice(item, 1);
   }
 }
-const libelleModule = (id: number) => {
-  const d_data = storeUtilisateur.getterModule.find((item) => item.id == id);
+const libelleModule = (code: number) => {
+  const d_data = storeUtilisateur.getterModule.find((item) => item.code == code);
 
   if (d_data) {
     return d_data.libelle;
   }
   return 0;
 };
-function AjouterData() {
-  const objet: BudgetParams = {
-    module_id: FormDataDossier.module_id,
-  };
-  storeAffectation.ajoutBudget(objet);
-  // ViderChamps1();
-}
-// function Enregistrementclasse() {
-//   // $v.value.$touch();
-//   //if (!$v.value.$invalid) {
-//   try {
-//     let obj: any = {
-//       cycleId: form.cycleId,
-//       libelle: form.libelle,
-//       code: form.code,
-//     };
-//     //   isLoading.value = true;
-//     //   console.log(obj)
-//     storeclasse.ajouterclasse(obj).then(() => {
-//       ViderChamps();
-//       // isLoading.value = false;
-//     });
-//   } catch (error) {
-//     console.error("Enregistrement échoué", error);
-//     // isLoading.value = false;
-//   }
-//   //   } else {
-//   //     console.log($v);
-//   //   }
-// }
-// function supprimer(id: any) {
-//   store.SupprimerRole(id);
-// }
-// const showModalDecision = (id: number) => {
-//   const d_data = storeclasse.getterclasse.find(
-//     (item: { id: number }) => item.id === id
-//   );
-//   if (d_data) {
-//     formmod.cycleId = d_data.cycleId;
-//     formmod.libelle = d_data.libelle;
-//     formmod.code = d_data.code;
+const listePersonneAffecter = (id: number) => {
+  return storeAffectation.getterAffectation.filter(
+    (item) => item.utilisateur_id == id
+  );
 
-//     formmod.id = d_data.id;
-//     if (modalModification.value) {
-//       const modalInstance = new Modal(modalModification.value);
-//       modalInstance.show();
-//     }
-//   } else {
-//     console.error(`Data with id ${id} not found`);
-//   }
-// };
-// function modificationclasse() {
-//   //$v1.value.$touch();
-//   // if (!$v1.value.$invalid) {
-//   formmod.id = formmod.id;
-//   try {
-//     // isLoading.value = true;
-//     storeclasse.modifierclasse(formmod).then(() => {
-//       //isLoading.value = false;
-//       // closeModal();
-//     });
-//     // Fermer le modal après modification
-//     if (modalModification.value) {
-//       const modalInstance = Modal.getInstance(modalModification.value);
-//       if (modalInstance) {
-//         modalInstance.hide();
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Login failed:", error);
-//     // isLoading.value = false;
-//   }
-//   // } else {
-//   //   console.log($v);
-//   // }
-// }
-// function supprimer(id: any) {
-//   Swal.fire({
-//     title: "Suppression",
-//     text: "êtes-vous sûr de vouloir effectuer cette action ?",
-//     icon: "warning",
-//     showCancelButton: true,
-//     confirmButtonText: "Oui, Supprimer",
-//     cancelButtonText: "Annuler !",
-//     confirmButtonColor: "#FF6150",
-//     cancelButtonColor: "#471A3",
-//   }).then((res) => {
-//     if (res.isConfirmed) {
-//       storeclasse.Supprimerclasse(id);
-//     }
-//   });
-// }
+};
+function ViderChamps() {
+  (form.code_module = "")
+}
+function Enregistrementaffectation() {
+  // $v.value.$touch();
+  //if (!$v.value.$invalid) {
+  try {
+    let obj: any = {
+      utilisateur_id: form.utilisateur_id,
+      code_module: form.code_module,
+    };
+    //   isLoading.value = true;
+    //   console.log(obj)
+    storeAffectation.ajouterAffectation(obj).then(() => {
+      ViderChamps();
+      // isLoading.value = false;
+    });
+  } catch (error) {
+    console.error("Enregistrement échoué", error);
+    // isLoading.value = false;
+  }
+  // } else {
+  //   console.log($v);
+  // }
+}
+
 onMounted(() => {
   storeUtilisateur.getModule();
   storeUtilisateur.getUtilisateur();
+  storeAffectation.getAffecter()
 });
 </script>
 <style scoped></style>

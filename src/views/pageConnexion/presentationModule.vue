@@ -3,12 +3,12 @@
   <br /><br />
   <!-- premiere ligne -->
   <div class="row" style="padding: 50px 20px 0px 0px">
+
     <div
       class="col-xl-4 col-lg-6 col-md-12"
-      data-bs-toggle="modal"
-      data-bs-target="#staticBackdrop"
+     
 
-
+v-if="codeModule(id_utilisateur)==1"
     >
       <div
         class="card pull-up ecom-card-1 bg-white"
@@ -41,7 +41,46 @@
       </div>
     </div>
 
-    <div class="col-xl-4 col-lg-6 col-md-12">
+    <div
+      class="col-xl-4 col-lg-6 col-md-12"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+
+v-else
+    >
+      <div
+        class="card pull-up ecom-card-1 bg-white"
+        style="
+          border-radius: 25px 20px 50px;
+          border-color: #fff !important;
+          border-style: solid;
+          box-shadow: 15px -10px #f9d531;
+
+          cursor: pointer;
+        "
+      
+      >
+        <div class="card-content ecom-card2 height-180">
+          <h5
+            class="text-muted danger position-absolute p-1"
+            style="
+              font-weight: bolder !important;
+              text-align: center !important;
+            "
+          ></h5>
+          <div>
+            <i class="la la-cog success font-large-1 float-right p-1"></i>
+          </div>
+          <br />
+          <br />
+          <br />
+          <h3 style="font-weight: bold">PARAMETRAGE</h3>
+        </div>
+      </div>
+    </div>
+
+
+     <div class="col-xl-4 col-lg-6 col-md-12" v-if="codeModule(id_utilisateur)==2">
       <div
         class="card pull-up ecom-card-1 bg-white"
         style="
@@ -73,7 +112,42 @@
       </div>
     </div>
 
-    <div class="col-xl-4 col-lg-6 col-md-12">
+    <div class="col-xl-4 col-lg-6 col-md-12" v-else>
+      <div
+        class="card pull-up ecom-card-1 bg-white"
+        style="
+          border-radius: 25px 20px 50px;
+          border-color: #fff !important;
+          border-style: solid;
+          box-shadow: 15px -10px #f9d531;
+
+          cursor: pointer;
+          
+        "
+        data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+        
+      >
+        <div class="card-content ecom-card2 height-180">
+          <h5
+            class="text-muted danger position-absolute p-1"
+            style="
+              font-weight: bolder !important;
+              text-align: center !important;
+            "
+          ></h5>
+          <div>
+            <i class="la la-book success font-large-1 float-right p-1"></i>
+          </div>
+          <br />
+          <br />
+          <br />
+          <h3 style="font-weight: bold">GESTION DES INSCRIPTIONS</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6 col-md-12" v-if="codeModule(id_utilisateur)==3">
       <div
         class="card pull-up ecom-card-1 bg-white"
         style="
@@ -105,6 +179,38 @@
       </div>
     </div>
 
+
+     <div class="col-xl-4 col-lg-6 col-md-12" v-else>
+      <div
+        class="card pull-up ecom-card-1 bg-white"
+        style="
+          border-radius: 25px 20px 50px;
+          border-color: #fff !important;
+          border-style: solid;
+          box-shadow: 15px -10px #f9d531;
+          cursor: pointer;
+        "
+        data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+      >
+        <div class="card-content ecom-card2 height-180">
+          <h5
+            class="text-muted danger position-absolute p-1"
+            style="
+              font-weight: bolder !important;
+              text-align: center !important;
+            "
+          ></h5>
+          <div>
+            <i class="la la-edit success font-large-1 float-right p-1"></i>
+          </div>
+          <br />
+          <br />
+          <br />
+          <h3 style="font-weight: bold">SUIVI DES MOYENNES</h3>
+        </div>
+      </div>
+    </div>
     <!-- <div class="col-xl-4 col-lg-6 col-md-12">
       <div
         class="card pull-up ecom-card-1 bg-white"
@@ -208,7 +314,10 @@ import { defineComponent, ref, computed, onMounted, watch } from "vue";
 import TheHeader from "../../layouts/TheHeader.vue";
 import { Modal } from "bootstrap";
 import { useRouter } from "vue-router";
+import { Affectation } from "../../stores/parametreStore/affectation";
+const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 const router = useRouter();
+const storeAffectation = Affectation();
 const modalRef = ref<HTMLDivElement | null>(null);
 const showModal = () => {
   if (modalRef.value) {
@@ -221,5 +330,16 @@ const goToModule = (id: number) => {
   localStorage.setItem("module_app", id.toString());
   router.push({ name: "interfaceAccueil", params: { id } });
 };
+const codeModule = (id: number) => {
+  const d_data = storeAffectation.getterAffectation.find((item) => item.utilisateur_id == id);
 
+  if (d_data) {
+    return d_data.code_module;
+  }
+  return 0;
+};
+onMounted(() => {
+  
+  storeAffectation.getAffecter()
+});
 </script>
