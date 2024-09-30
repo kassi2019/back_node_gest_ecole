@@ -141,18 +141,18 @@
           >
             <a href=""
               ><i class="la la-users"></i
-              ><span class="menu-title" data-i18n="">Acteur</span></a
+              ><span class="menu-title" data-i18n="">Personnel</span></a
             >
           </li>
 
-          <!-- <li class="nav-item">
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/Affectation')">
             <a href="buttons.html"
               ><i class="la la-exchange"></i
               ><span class="menu-title" data-i18n=""
-                >Affectation Module</span
+                >Affectation</span
               ></a
             >
-          </li> -->
+          </li>
         </ul>
       </div>
     </div>

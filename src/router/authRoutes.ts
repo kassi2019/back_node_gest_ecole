@@ -20,7 +20,13 @@ import emploi from "@/views/pageParametrage/emploi.vue";
 import economique from "@/views/pageParametrage/economique.vue";
 import associeStructure from "@/views/pageParametrage/associeStructure.vue";
 import budget from "@/views/pageParametrage/budget.vue";
+import Affectation from "@/views/pageParametrage/affectation.vue";
 const AuthRoutes = [
+  {
+    path: "/Affectation",
+    name: "Affectation",
+    component: Affectation,
+  },
    {
     path: "/budget",
     name: "budget",

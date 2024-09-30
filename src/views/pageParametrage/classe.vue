@@ -124,7 +124,7 @@
                   aria-label=".form-select-lg example"
                   v-model="form.cycleId"
                 >
-                  <option selected>Veuillez selectionner le cycle SVP ?</option>
+                  <option selected></option>
                   <option
                     v-for="item in storecycle.gettercycle"
                     :key="item.id"
@@ -210,7 +210,7 @@
                   aria-label=".form-select-lg example"
                   v-model="formmod.cycleId"
                 >
-                  <option selected>Veuillez selectionner le cycle SVP ?</option>
+                  <option selected></option>
                   <option
                     v-for="item in storecycle.gettercycle"
                     :key="item.id"

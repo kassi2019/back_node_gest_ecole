@@ -16,8 +16,8 @@
         <div class="login-form">
           <div class="sign-in-htm">
             <div class="group">
-              <label for="user" class="label">Username</label>
-              <input id="user" type="text" class="input" v-model="form.email" />
+              <label for="user" class="label">Matricule</label>
+              <input id="user" type="text" class="input" v-model="form.matricule" />
             </div>
             <div class="group">
               <label for="pass" class="label"
@@ -96,7 +96,7 @@ const store = useAuthStore();
 const router = useRouter();
 
 const form = reactive({
-  email: "",
+  matricule: "",
   password: "",
 });
  onMounted(() => {

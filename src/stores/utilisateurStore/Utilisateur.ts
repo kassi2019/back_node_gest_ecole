@@ -6,11 +6,11 @@ import "vue3-toastify/dist/index.css";
 import apiUrl from "@/config/axios";
 
 interface User {
-  email: string;
+  matricule: string;
 }
 
 export interface LoginCredentials {
-  email: string;
+  matricule: string;
   password: string;
 }
 interface dossierRole {
@@ -21,9 +21,17 @@ interface dossierRole {
  interface dossierUtilisateur {
     id: number;
     name: string;
-    email: string;
-    password: string;
-    role_id: number;
+  matricule: string;
+   password: string;
+   role_id: number;
+   email: string;
+   prenoms: string;
+   date_naissance: string;
+   lieu_naissance: string;
+   fonction_id: string;
+   emploi_id: string;
+   salaire: string;
+   date_entre: string;
 } 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -144,7 +152,38 @@ export const useAuthStore = defineStore({
                     toast.error(`Erreur lors de l'ajout : ${error}`);
                 }
     },
- 
+ async modifierUtilisateur(credentials: dossierRole) {
+      try {
+        const response = await apiUrl.put(`/modificationUtilisateur/${credentials.id}`,
+          credentials, { headers: authHeader(), }
+        );
+        const index = this.stateRole.findIndex(
+          (item) => item.id === credentials.id
+        );
+        if (index !== -1) {
+          this.stateRole[index] = response.data;
+        }
+        this.getUtilisateur();
+        toast.success("Modification effectuée avec succès");
+      } catch (error) {
+        console.error("Erreur de mise à jour: ", error);
+        toast.error("Échec de la mise à jour de l'Sous budget");
+      }
+    },
+  async SupprimerUtilisateur(id: number){ //fonction de suppression
+                try {
+                    await apiUrl.delete(`/supprimerUtilisateur/${id}`,{
+                        headers: authHeader(),
+                    });
+                    this.stateUtilisateur = this.stateUtilisateur.filter((item) => item.id !== id);
+                    toast.success("Suppression éffectuer avec succès");
+                    this.getUtilisateur();
+                } catch (error) {
+                    console.error("Erreur de suppression: ", error);
+                    toast.error("Échec de la suppression");
+                }
+            
+            },
  async getUtilisateur(){
                 try {
                     const response = await apiUrl.get("/liste_utilisateur",{ 
