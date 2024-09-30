@@ -18,13 +18,13 @@ module.exports = {
         if (!post.montant || !post.libelle) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
-        models.AssocieStructure.findOne({ where: { libelle: post.libelle } }).then(result => {
+        models.AssociesStructure.findOne({ where: { libelle: post.libelle } }).then(result => {
             if (result) {
                 res.status(409).json({
                     message: "montant existe déja",
                 });
             } else {
-                models.AssocieStructure.create(
+                models.AssociesStructure.create(
                     post
                 
                 ).then(result => {
@@ -50,7 +50,7 @@ module.exports = {
     // permet d'afficher la liste
 
     listeAssocieStructure: function (req, res) {
-        models.AssocieStructure.findAll().then(result => {
+        models.AssociesStructure.findAll().then(result => {
             res.status(200).json(result);
         }).catch(error => {
             res.status(500).json({
@@ -70,7 +70,7 @@ module.exports = {
         if (!updateAssocieStructure.montant) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
-                models.AssocieStructure.update(updateAssocieStructure, {where: {id:id}}).then(result => {
+                models.AssociesStructure.update(updateAssocieStructure, {where: {id:id}}).then(result => {
                     res.status(201).json({
                         message: "modification effectue avec success",
                     });
@@ -89,7 +89,7 @@ module.exports = {
      supprimerAssocieStructure:function (req, res){
     const id = req.params.id;
 
-    models.AssocieStructure.destroy({where:{id:id}}).then(result => {
+    models.AssociesStructure.destroy({where:{id:id}}).then(result => {
         res.status(200).json({
             message: "Suppression effectuer avec success"
         });
