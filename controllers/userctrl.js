@@ -21,12 +21,13 @@ module.exports = {
                         date_naissance: req.body.date_naissance,
                         lieu_naissance: req.body.lieu_naissance,
                         fonction_id: req.body.fonction_id,
-                        emploi_id: req.body.emploi_id,
+                       // emploi_id: req.body.emploi_id,
                         salaire: req.body.salaire,
                         email:req.body.email,
                         password: hash,
                         role_id: req.body.role_id,
-                        date_entre: req.body.date_entre
+                        date_entre: req.body.date_entre,
+                        statut: req.body.statut
                     }
                 
                     models.Utilisateur.create(user).then(result => {
@@ -61,11 +62,12 @@ module.exports = {
                         date_naissance: req.body.date_naissance,
                         lieu_naissance: req.body.lieu_naissance,
                         fonction_id: req.body.fonction_id,
-                        emploi_id: req.body.emploi_id,
+                       // emploi_id: req.body.emploi_id,
                         salaire: req.body.salaire,
                         email:req.body.email,
                         role_id: req.body.role_id,
-                        date_entre: req.body.date_entre
+            date_entre: req.body.date_entre,
+                        statut: req.body.statut
         }
         // if (!updateUtilisateur.libelle) {
         //     return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });

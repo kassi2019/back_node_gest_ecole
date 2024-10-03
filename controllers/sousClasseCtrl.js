@@ -1,34 +1,34 @@
 const Validator = require('fastest-validator');
 var asynclib = require('async');
+const db = require("../config/config");
 const models = require('../models');
 
 
 module.exports = {
     
     // permet de faire des enregistrement
-    enregistrementClasse: function (req, res) {
+    enregistrementSousClasse: function (req, res) {
     //    console.log(req.userData.userId);
         const post = {
-            libelle: req.body.libelle,
             code: req.body.code,
-            cycleId: req.body.cycleId,
+            classeId: req.body.classeId,
             utilisateurId: req.userData.userId,
-            montantscolarite: req.body.montantscolarite,
             nombreetudiant: req.body.nombreetudiant,
             statut:0
+           
           
         }
       
-        if (!post.libelle || !post.cycleId || !post.code) {
+        if (!post.classeId || !post.code || !post.nombreetudiant) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
-        models.Classe.findOne({ where: { code: post.code } }).then(result => {
+        models.SousClasse.findOne({ where: { code: post.code } }).then(result => {
             if (result) {
                 res.status(409).json({
                     message: "libelle existe déja",
                 });
             } else {
-                models.Classe.create(
+                models.SousClasse.create(
                     post
                 
                 ).then(result => {
@@ -53,8 +53,8 @@ module.exports = {
     },
     // permet d'afficher la liste
 
-    listeClasse: function (req, res) {
-        models.Classe.findAll().then(result => {
+    listeSousClasse: function (req, res) {
+        models.SousClasse.findAll().then(result => {
             res.status(200).json(result);
         }).catch(error => {
             res.status(500).json({
@@ -62,22 +62,37 @@ module.exports = {
             });
         });
     },
+
+
+    listeSousClasseGroupe: function (req, res) {
+        models.SousClasse.findAll({
+            attributes: ['classeId'],
+            
+            group: ['classeId']
+        }).then(result => {
+            res.status(200).json(result);
+        }).catch(error => {
+            res.status(500).json({
+                message: "Un probleme est survenu lors de l'enregistrement!"
+            });
+        });
+    },
+    
     // permet de faire des modification
  
-    modificationClasse: function (req, res) {
+    modificationSousClasse: function (req, res) {
         const id = req.params.id;
-        const updateClasse = {
-            libelle: req.body.libelle,
+        const updateSousClasse = {
             code: req.body.code,
-            cycleId: req.body.cycleId,
-            montantscolarite: req.body.montantscolarite,
+            classeId: req.body.classeId,
+            utilisateurId: req.userData.userId,
             nombreetudiant: req.body.nombreetudiant,
             statut:0
         }
-        if (!updateClasse.libelle || !updateClasse.code  || !updateClasse.cycleId || !updateClasse.montantscolarite) {
+        if ( !updateSousClasse.code  || !updateSousClasse.classeId || !updateSousClasse.nombreetudiant) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
-                models.Classe.update(updateClasse, {where: {id:id}}).then(result => {
+                models.SousClasse.update(updateSousClasse, {where: {id:id}}).then(result => {
                     res.status(201).json({
                         message: "modification effectue avec success",
                     });
@@ -93,10 +108,10 @@ module.exports = {
 
     // permet de faire la suppression
     
-     supprimerClasse:function (req, res){
+     supprimerSousClasse:function (req, res){
     const id = req.params.id;
 
-    models.Classe.destroy({where:{id:id}}).then(result => {
+    models.SousClasse.destroy({where:{id:id}}).then(result => {
         res.status(200).json({
             message: "Suppression effectuer avec success"
         });

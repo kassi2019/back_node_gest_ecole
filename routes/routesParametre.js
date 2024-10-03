@@ -15,6 +15,8 @@ const etablissementController = require('../controllers/etablissementCtrl');
 const matiereController = require('../controllers/matiereCtrl');
 const typeMatiereController = require('../controllers/typeMatiereCtrl');
 const associeStructureController = require('../controllers/associeStructureCtrl');
+const sousClasseController = require('../controllers/sousClasseCtrl');
+const affectationClasseController = require('../controllers/affectationClasseCtrl');
 const router = express.Router();
 
 router.post('/enregistrementStructure', checkAuthMiddleware.checkAuth, structureController.enregistrementStructure);
@@ -138,5 +140,23 @@ router.post('/enregistrementAssocieStructure', checkAuthMiddleware.checkAuth, as
 router.get('/listeAssocieStructure', checkAuthMiddleware.checkAuth, associeStructureController.listeAssocieStructure);
 router.put("/modificationAssocieStructure/:id", checkAuthMiddleware.checkAuth, associeStructureController.modificationAssocieStructure);
 router.delete("/supprimerAssocieStructure/:id", checkAuthMiddleware.checkAuth, associeStructureController.supprimerAssocieStructure);
+
+
+/// route gestion des sous classe
+
+router.post('/enregistrementSousClasse', checkAuthMiddleware.checkAuth, sousClasseController.enregistrementSousClasse);
+router.get('/listeSousClasse', checkAuthMiddleware.checkAuth, sousClasseController.listeSousClasse);
+router.put("/modificationSousClasse/:id", checkAuthMiddleware.checkAuth, sousClasseController.modificationSousClasse);
+router.delete("/supprimerSousClasse/:id", checkAuthMiddleware.checkAuth, sousClasseController.supprimerSousClasse);
+router.get('/listeSousClasseGroupe', checkAuthMiddleware.checkAuth, sousClasseController.listeSousClasseGroupe);
+
+
+/// route gestion des affectation classe
+
+router.post('/enregistrementAffectationClasse', checkAuthMiddleware.checkAuth, affectationClasseController.enregistrementAffectationClasse);
+router.get('/listeAffectationClasse', checkAuthMiddleware.checkAuth, affectationClasseController.listeAffectationClasse);
+router.put("/modificationAffectationClasse/:id", checkAuthMiddleware.checkAuth, affectationClasseController.modificationAffectationClasse);
+router.delete("/supprimerAffectationClasse/:id", checkAuthMiddleware.checkAuth, affectationClasseController.supprimerAffectationClasse);
+router.get('/listeAffectationClasseGroupe', checkAuthMiddleware.checkAuth, affectationClasseController.listeAffectationClasseGroupe);
 
 module.exports = router;

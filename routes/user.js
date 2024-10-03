@@ -12,5 +12,7 @@ router.delete("/supprimerUtilisateur/:id", checkAuthMiddleware.checkAuth, userCo
 router.put("/modificationUtilisateur/:id", checkAuthMiddleware.checkAuth, userController.modificationUtilisateur);
 router.post("/enregistrementAffectation", checkAuthMiddleware.checkAuth, affectationController.enregistrementAffectation);
 router.get("/listeAffecter", checkAuthMiddleware.checkAuth, affectationController.listeAffecter);
+router.put("/modificationAffectation/:id", checkAuthMiddleware.checkAuth, affectationController.modificationAffectation);
+router.delete("/supprimerAffectation/:id", checkAuthMiddleware.checkAuth, affectationController.supprimerAffectation);
 
 module.exports = router;

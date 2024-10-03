@@ -28,9 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     lieu_naissance: DataTypes.STRING,
     fonction_id: DataTypes.STRING,
     matricule: DataTypes.STRING,
-    emploi_id: DataTypes.STRING,
+    //emploi_id: DataTypes.STRING,
     salaire: DataTypes.STRING,
-    date_entre:DataTypes.DATE,
+    date_entre: DataTypes.DATE,
+    statut: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Utilisateur',
