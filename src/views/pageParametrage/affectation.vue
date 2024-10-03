@@ -43,16 +43,40 @@
                             </th>
                           </tr>
                         </thead>
-                        <tbody v-for="(item,index) in storeUtilisateur.gettersUtilisateur"
-                            :key="item.id">
-                            <tr>
-                                <td style="background-color:#F6E497 !important;font-size: 16px!important;">{{ index+1 }}</td>
-                                <td style="background-color:#F6E497 !important;font-size: 16px!important;" colspan="4">{{ item.matricule }}-{{ item.name }}-{{ item.prenoms }}</td>
-                            </tr>
+                        <tbody
+                          v-for="(
+                            item, index
+                          ) in storeUtilisateur.gettersUtilisateur"
+                          :key="item.id"
+                        >
+                          <tr>
+                            <td
+                              style="
+                                background-color: #f6e497 !important;
+                                font-size: 16px !important;
+                              "
+                            >
+                              {{ index + 1 }}
+                            </td>
+                            <td
+                              style="
+                                background-color: #f6e497 !important;
+                                font-size: 16px !important;
+                              "
+                              colspan="4"
+                            >
+                              {{ item.matricule }}-{{ item.name }}-{{
+                                item.prenoms
+                              }}
+                            </td>
+                          </tr>
                           <tr
-                            v-for="(data,index) in listePersonneAffecter(item.id)" :key="data.id"
+                            v-for="(data, index) in listePersonneAffecter(
+                              item.id
+                            )"
+                            :key="data.id"
                           >
-                          <td></td>
+                            <td></td>
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
@@ -67,7 +91,7 @@
                                 type="button"
                                 class="btn btn-primary btn-sm"
                                 title="Modifier"
-                                
+                                @click="showModalDecision(data.id)"
                               >
                                 <i class="la la-pencil-square"></i>
                               </button>
@@ -75,7 +99,7 @@
                                 type="button"
                                 class="btn btn-danger btn-sm"
                                 title="Supprimer"
-                                
+                                @click="supprimer(data.id)"
                               >
                                 <i class="la la-trash"></i>
                               </button>
@@ -187,10 +211,10 @@
       aria-hidden="true"
       ref="modalModification"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier classe</h5>
+            <h5 class="modal-title">Modifier Affectation</h5>
             <button
               type="button"
               class="btn-close"
@@ -199,7 +223,46 @@
             ></button>
           </div>
           <div class="modal-body">
-            <form class="row g-3 needs-validation"></form>
+            <form class="row g-3 needs-validation">
+              <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Utilisateur</label
+                >
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  v-model="formmod.utilisateur_id"
+                >
+                  <option selected></option>
+                  <option
+                    v-for="item in storeUtilisateur.gettersUtilisateur"
+                    :key="item.id"
+                    :value="item.id"
+                  >
+                    {{ item.matricule }}/{{ item.name }}/{{ item.prenoms }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Module</label
+                >
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  v-model="formmod.code_module"
+                >
+                  <option></option>
+                  <option
+                    v-for="item in storeUtilisateur.getterModule"
+                    :key="item.id"
+                    :value="item.code"
+                  >
+                    {{ item.libelle }}
+                  </option>
+                </select>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button
@@ -209,7 +272,7 @@
             >
               Fermer
             </button>
-            <button type="button" class="btn btn-success" @click.prevent="">
+            <button type="button" class="btn btn-success" @click.prevent="modificationAffectation">
               Modifier
             </button>
           </div>
@@ -232,8 +295,22 @@ const modalModification = ref<HTMLDivElement | null>(null);
 const storeUtilisateur = useAuthStore();
 const storeAffectation = Affectation();
 
-
-
+const showModalDecision = (id: number) => {
+  const d_data = storeAffectation.getterAffectation.find(
+    (item: { id: number }) => item.id === id
+  );
+  if (d_data) {
+    formmod.utilisateur_id = d_data.utilisateur_id;
+    formmod.code_module = d_data.code_module;
+    formmod.id = d_data.id;
+    if (modalModification.value) {
+      const modalInstance = new Modal(modalModification.value);
+      modalInstance.show();
+    }
+  } else {
+    console.error(`Data with id ${id} not found`);
+  }
+};
 const showModal = () => {
   if (modalRef.value) {
     const modalInstance = new Modal(modalRef.value);
@@ -248,9 +325,8 @@ const form: any = reactive({
   code_module: "",
 });
 const formmod: any = reactive({
-  cycleId: "",
-  libelle: "",
-  code: "",
+  utilisateur_id: "",
+  code_module: "",
 });
 function deleteItem(item: number) {
   if (item > -1) {
@@ -258,7 +334,9 @@ function deleteItem(item: number) {
   }
 }
 const libelleModule = (code: number) => {
-  const d_data = storeUtilisateur.getterModule.find((item) => item.code == code);
+  const d_data = storeUtilisateur.getterModule.find(
+    (item) => item.code == code
+  );
 
   if (d_data) {
     return d_data.libelle;
@@ -269,10 +347,34 @@ const listePersonneAffecter = (id: number) => {
   return storeAffectation.getterAffectation.filter(
     (item) => item.utilisateur_id == id
   );
-
 };
 function ViderChamps() {
-  (form.code_module = "")
+  form.code_module = "";
+}
+function modificationAffectation() {
+  //$v1.value.$touch();
+  // if (!$v1.value.$invalid) {
+  formmod.id = formmod.id;
+  try {
+    // isLoading.value = true;
+    storeAffectation.modifierAffectation(formmod).then(() => {
+      //isLoading.value = false;
+      // closeModal();
+    });
+    // Fermer le modal après modification
+    if (modalModification.value) {
+      const modalInstance = Modal.getInstance(modalModification.value);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    }
+  } catch (error) {
+    console.error("Login failed:", error);
+    // isLoading.value = false;
+  }
+  // } else {
+  //   console.log($v);
+  // }
 }
 function Enregistrementaffectation() {
   // $v.value.$touch();
@@ -296,11 +398,26 @@ function Enregistrementaffectation() {
   //   console.log($v);
   // }
 }
-
+function supprimer(id: any) {
+  Swal.fire({
+    title: "Suppression",
+    text: "êtes-vous sûr de vouloir effectuer cette action ?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Oui, Supprimer",
+    cancelButtonText: "Annuler !",
+    confirmButtonColor: "#FF6150",
+    cancelButtonColor: "#471A3",
+  }).then((res) => {
+    if (res.isConfirmed) {
+      storeAffectation.SupprimerAffectation(id);
+    }
+  });
+}
 onMounted(() => {
   storeUtilisateur.getModule();
   storeUtilisateur.getUtilisateur();
-  storeAffectation.getAffecter()
+  storeAffectation.getAffecter();
 });
 </script>
 <style scoped></style>

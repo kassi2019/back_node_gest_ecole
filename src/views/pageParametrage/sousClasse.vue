@@ -12,7 +12,7 @@
                     class="text-muted danger position-absolute p-1"
                     style="color: black !important"
                   >
-                    classe
+                    Sous Classe
                   </h3>
                   <br />
                   <button
@@ -33,11 +33,7 @@
                           <tr>
                             <th></th>
                             <th scope="col">N°</th>
-                            <th scope="col">Code</th>
-                            <th scope="col" style="width: 60%">Libelle</th>
-                            <th scope="col" style="width: 22%">
-                              Montant Scolarité
-                            </th>
+                            <th scope="col">Sous Classe</th>
                             <th scope="col" style="width: 10%">Nombre éleve</th>
                             <th
                               scope="col"
@@ -48,14 +44,17 @@
                           </tr>
                         </thead>
                         <tbody
-                          v-for="(item, index) in storecycle.gettercycle"
-                          :key="item.id"
+                          v-for="(
+                            item, index
+                          ) in storeSousClasse.getterSousclasseGroup"
+                          :key="item.classeId"
                         >
                           <tr>
                             <td
                               style="
                                 background-color: #f6e497 !important;
                                 font-size: 16px !important;
+                                border: 1px solid #000;
                               "
                             >
                               {{ index + 1 }}
@@ -64,36 +63,42 @@
                               style="
                                 background-color: #f6e497 !important;
                                 font-size: 16px !important;
+                                border: 1px solid #000;
                               "
-                              colspan="7"
+                              colspan="2"
                             >
-                              {{ item.libelle }}
+                              Classe : {{ libelleClasse(item.classeId) }}
                             </td>
+                            <td
+                              style="
+                                border: 1px solid #000;
+                                background-color: #f6e497 !important;
+                                text-align: right;
+                              "
+                            >
+                              {{ toutEtudiant(item.classeId) }}
+                            </td>
+                            <td
+                              style="
+                                border: 1px solid #000;
+                                background-color: #f6e497 !important;
+                                text-align: right;
+                              "
+                            ></td>
                           </tr>
+
                           <tr
-                            v-for="(data, index) in listeClasseParCycle(
-                              item.id
+                            v-for="(data, index) in listeSousClasse(
+                              item.classeId
                             )"
                             :key="data.id"
                           >
-                            <td></td>
+                            <td style="border: 1px solid #000"></td>
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
                             </td>
                             <td style="border: 1px solid #000">
                               {{ data.code }}
-                            </td>
-                            <td style="border: 1px solid #000">
-                              {{ data.libelle }}
-                            </td>
-                            <td
-                              style="border: 1px solid #000; text-align: right"
-                            >
-                              {{
-                                formatageMontant(
-                                  parseFloat(data.montantscolarite)
-                                )
-                              }}
                             </td>
                             <td
                               style="border: 1px solid #000; text-align: right"
@@ -139,11 +144,11 @@
         aria-hidden="true"
         ref="modalRef"
       >
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
-                Enregistrer classe
+                Enregistrer Sous classe
               </h5>
               <button
                 type="button"
@@ -156,16 +161,16 @@
               <form class="row g-3 needs-validation">
                 <div class="col-md-12">
                   <label for="exampleFormControlInput1" class="form-label"
-                    >Cycle</label
+                    >Classe</label
                   >
                   <select
                     class="form-select form-select-lg mb-3"
                     aria-label=".form-select-lg example"
-                    v-model="form.cycleId"
+                    v-model="form.classeId"
                   >
                     <option selected></option>
                     <option
-                      v-for="item in storecycle.gettercycle"
+                      v-for="item in storeclasse.getterclasse"
                       :key="item.id"
                       :value="item.id"
                     >
@@ -173,31 +178,60 @@
                     </option>
                   </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                   <label for="exampleFormControlInput1" class="form-label"
-                    >Code</label
-                  >
-                  <input type="text" class="form-control" v-model="form.code" />
-                </div>
-                <div class="col-md-9">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Classe</label
+                    >Nbre total de place (
+                    {{ codeClasse(form.classeId) }} )</label
                   >
                   <input
                     type="text"
                     class="form-control"
-                    v-model="form.libelle"
+                    :value="toutEtudiant(form.classeId)"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Nbre de place attribue aux sous classe
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    :value="placeActribuer(form.classeId)"
+                    disabled
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Nbre de place restante (
+                    {{ codeClasse(form.classeId) }} )</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                      parseFloat(toutEtudiant(form.classeId)) -
+                      parseFloat(placeActribuer(form.classeId))
+                    "
+                    disabled
+                    v-if="placeActribuer(form.classeId)!='0'"
+                  />
+
+                   <input
+                   v-else
+                    type="text"
+                    class="form-control"
+                    :value="
+                      0
+                    "
+                    disabled
                   />
                 </div>
                 <div class="col-md-6">
                   <label for="exampleFormControlInput1" class="form-label"
-                    >Montant Scolarité</label
+                    >Code</label
                   >
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="form.montantscolarite"
-                  />
+                  <input type="text" class="form-control" v-model="form.code" />
                 </div>
                 <div class="col-md-6">
                   <label for="exampleFormControlInput1" class="form-label"
@@ -208,6 +242,17 @@
                     class="form-control"
                     v-model="form.nombreetudiant"
                   />
+                  <span
+                    style="color: red"
+                    v-if="
+                      parseFloat(
+                        parseFloat(toutEtudiant(form.classeId)) -
+                          parseFloat(placeActribuer(form.classeId))
+                      ) < parseFloat(form.nombreetudiant)
+                    "
+                    >Le nombre saisi est supperieure au nbre de place
+                    restante</span
+                  >
                 </div>
               </form>
             </div>
@@ -223,6 +268,13 @@
                 type="button"
                 class="btn btn-success"
                 @click.prevent="Enregistrementclasse"
+
+                v-if="
+                      parseFloat(
+                        parseFloat(toutEtudiant(form.classeId)) -
+                          parseFloat(placeActribuer(form.classeId))
+                      ) >= parseFloat(form.nombreetudiant)
+                    "
               >
                 Enregistrer
               </button>
@@ -247,7 +299,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modifier classe</h5>
+            <h5 class="modal-title">Modifier Sous Classe</h5>
             <button
               type="button"
               class="btn-close"
@@ -256,63 +308,47 @@
             ></button>
           </div>
           <div class="modal-body">
-             <form class="row g-3 needs-validation">
-                <div class="col-md-12">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Cycle</label
+            <form class="row g-3 needs-validation">
+              <div class="col-md-12">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Classe</label
+                >
+                <select
+                  class="form-select form-select-lg mb-3"
+                  aria-label=".form-select-lg example"
+                  v-model="formmod.classeId"
+                >
+                  <option selected></option>
+                  <option
+                    v-for="item in storeclasse.getterclasse"
+                    :key="item.id"
+                    :value="item.id"
                   >
-                  <select
-                    class="form-select form-select-lg mb-3"
-                    aria-label=".form-select-lg example"
-                    v-model="formmod.cycleId"
-                  >
-                    <option selected></option>
-                    <option
-                      v-for="item in storecycle.gettercycle"
-                      :key="item.id"
-                      :value="item.id"
-                    >
-                      {{ item.libelle }}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Code</label
-                  >
-                  <input type="text" class="form-control" v-model="formmod.code" />
-                </div>
-                <div class="col-md-9">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Classe</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formmod.libelle"
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Montant Scolarité</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="formmod.montantscolarite"
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Nombre éleve/Etudiant</label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model="formmod.nombreetudiant"
-                  />
-                </div>
-              </form>
+                    {{ item.libelle }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Code</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="formmod.code"
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Nombre éleve/Etudiant</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  v-model="formmod.nombreetudiant"
+                />
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
             <button
@@ -340,15 +376,15 @@
 // import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import { classeStore } from "../../stores/parametreStore/classe";
-import { cycleStore } from "../../stores/parametreStore/cycle";
-import { formatageMontant } from "@/dependenceGlobal/monFichier";
+import { SousclasseStore } from "../../stores/parametreStore/sousClasse";
+// import { formatageMontant } from "@/dependenceGlobal/monFichier";
 // const id_utilisateur = JSON.parse(localStorage.getItem("userid"));
 import Swal from "sweetalert2";
 import { ref, reactive, onMounted } from "vue";
 const modalRef = ref<HTMLDivElement | null>(null);
 const modalModification = ref<HTMLDivElement | null>(null);
 const storeclasse = classeStore();
-const storecycle = cycleStore();
+const storeSousClasse = SousclasseStore();
 const showModal = () => {
   if (modalRef.value) {
     const modalInstance = new Modal(modalRef.value);
@@ -357,17 +393,16 @@ const showModal = () => {
 };
 
 const form: any = reactive({
-  cycleId: "",
-  libelle: "",
+  classeId: "",
+
   code: "",
-  montantscolarite: "",
+
   nombreetudiant: "",
 });
 const formmod: any = reactive({
-  cycleId: "",
-  libelle: "",
+  classeId: "",
   code: "",
-  montantscolarite: "",
+
   nombreetudiant: "",
 });
 function ViderChamps() {
@@ -377,24 +412,50 @@ function ViderChamps() {
     (form.montantscolarite = "");
   form.nombreetudiant = "";
 }
-
-const listeClasseParCycle = (id: number) => {
-  return storeclasse.getterclasse.filter((item) => item.cycleId == id);
+function libelleClasse(id: number) {
+  let data = storeclasse.getterclasse.find((item) => item.id == id);
+  if (data) {
+    return data.code.concat(" - ", data.libelle);
+  }
+  return "";
+}
+function codeClasse(id: number) {
+  let data = storeclasse.getterclasse.find((item) => item.id == id);
+  if (data) {
+    return data.code;
+  }
+  return "";
+}
+function toutEtudiant(id: number) {
+  let data = storeclasse.getterclasse.find((item) => item.id == id);
+  if (data) {
+    return data.nombreetudiant;
+  }
+  return "";
+}
+function placeActribuer(id: number) {
+  return storeSousClasse.getterSousclasse
+    .filter((data) => data.classeId == id)
+    .reduce((prec, cur) => parseFloat(prec) + parseFloat(cur.nombreetudiant), 0)
+    .toFixed(0);
+}
+const listeSousClasse = (id: number) => {
+  return storeSousClasse.getterSousclasse.filter((item) => item.classeId == id);
 };
 function Enregistrementclasse() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
-      cycleId: form.cycleId,
-      libelle: form.libelle,
+      classeId: form.classeId,
+
       code: form.code,
-      montantscolarite: form.montantscolarite,
+
       nombreetudiant: form.nombreetudiant,
     };
     //   isLoading.value = true;
     //   console.log(obj)
-    storeclasse.ajouterclasse(obj).then(() => {
+    storeSousClasse.ajouterSousclasse(obj).then(() => {
       ViderChamps();
       // isLoading.value = false;
     });
@@ -435,7 +496,7 @@ function modificationclasse() {
   formmod.id = formmod.id;
   try {
     // isLoading.value = true;
-    storeclasse.modifierclasse(formmod).then(() => {
+    storeSousClasse.modifierSousclasse(formmod).then(() => {
       //isLoading.value = false;
       // closeModal();
     });
@@ -466,12 +527,13 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storeclasse.Supprimerclasse(id);
+      storeSousClasse.SupprimerSousclasse(id);
     }
   });
 }
 onMounted(() => {
-  storecycle.getcycle();
+  storeSousClasse.getSousclasse();
+  storeSousClasse.getSousclasseGroup();
   storeclasse.getclasse();
 });
 </script>

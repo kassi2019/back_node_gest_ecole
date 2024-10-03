@@ -80,7 +80,7 @@ v-else
     </div>
 
 
-     <div class="col-xl-4 col-lg-6 col-md-12" v-if="codeModule(id_utilisateur)==2">
+     <div class="col-xl-4 col-lg-6 col-md-12" v-if="codeModule2(id_utilisateur)==1">
       <div
         class="card pull-up ecom-card-1 bg-white"
         style="
@@ -147,7 +147,7 @@ v-else
       </div>
     </div>
 
-    <div class="col-xl-4 col-lg-6 col-md-12" v-if="codeModule(id_utilisateur)==3">
+    <div class="col-xl-4 col-lg-6 col-md-12" v-if="codeModule3(id_utilisateur)==1">
       <div
         class="card pull-up ecom-card-1 bg-white"
         style="
@@ -331,10 +331,26 @@ const goToModule = (id: number) => {
   router.push({ name: "interfaceAccueil", params: { id } });
 };
 const codeModule = (id: number) => {
-  const d_data = storeAffectation.getterAffectation.find((item) => item.utilisateur_id == id);
+  const d_data = storeAffectation.getterAffectation.find((item) => item.utilisateur_id == id && item.code_module==1);
 
   if (d_data) {
-    return d_data.code_module;
+    return 1;
+  }
+  return 0;
+};
+const codeModule2 = (id: number) => {
+  const d_data = storeAffectation.getterAffectation.find((item) => item.utilisateur_id == id && item.code_module==2);
+
+  if (d_data) {
+    return 1;
+  }
+  return 0;
+};
+const codeModule3 = (id: number) => {
+  const d_data = storeAffectation.getterAffectation.find((item) => item.utilisateur_id == id && item.code_module==3);
+
+  if (d_data) {
+    return 1;
   }
   return 0;
 };

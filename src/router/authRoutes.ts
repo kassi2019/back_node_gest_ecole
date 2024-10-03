@@ -21,7 +21,19 @@ import economique from "@/views/pageParametrage/economique.vue";
 import associeStructure from "@/views/pageParametrage/associeStructure.vue";
 import budget from "@/views/pageParametrage/budget.vue";
 import Affectation from "@/views/pageParametrage/affectation.vue";
+import SousClasse from "@/views/pageParametrage/sousClasse.vue";
+import affectationClasse from "@/views/pageParametrage/affectationClasse.vue";
 const AuthRoutes = [
+   {
+    path: "/affectationClasse",
+    name: "affectationClasse",
+    component: affectationClasse,
+  },
+   {
+    path: "/SousClasse",
+    name: "SousClasse",
+    component: SousClasse,
+  },
   {
     path: "/Affectation",
     name: "Affectation",

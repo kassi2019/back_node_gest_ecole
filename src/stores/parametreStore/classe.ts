@@ -11,7 +11,10 @@ interface dossierclasse {
     id: number;
     cycleId: number;
     libelle: string;
-    code: string;
+  code: string;
+  montantscolarite: string;
+  nombreetudiant: string
+ statut:number
 }
   
 export const classeStore = defineStore("classe",{

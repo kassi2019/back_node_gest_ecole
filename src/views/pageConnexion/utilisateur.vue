@@ -195,27 +195,7 @@
                     </select>
                   </fieldset>
                 </div>
-                <div class="col-md-4">
-                  <label for="exampleFormControlInput1" class="form-label"
-                    >Emploi</label
-                  >
-                  <fieldset class="form-group">
-                    <select
-                      class="custom-select"
-                      id="customSelect"
-                      v-model="form.emploi_id"
-                    >
-                      <option></option>
-                      <option
-                        v-for="item in emploi.getteremploi"
-                        :key="item.id"
-                        :value="item.id"
-                      >
-                        {{ item.libelle }}
-                      </option>
-                    </select>
-                  </fieldset>
-                </div>
+                
                 <div class="col-md-4">
                   <label for="exampleFormControlInput1" class="form-label"
                     >Rôle</label
@@ -234,6 +214,22 @@
                       >
                         {{ item.libelle }}
                       </option>
+                    </select>
+                  </fieldset>
+                </div>
+                <div class="col-md-4">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Êtes-vous enseignant ou professeur ?</label
+                  >
+                  <fieldset class="form-group">
+                    <select
+                      class="custom-select"
+                      id="customSelect"
+                      v-model="form.statut"
+                    >
+                    <option ></option>
+                      <option value="1">Oui</option>
+                      <option value="0">Non</option>
                     </select>
                   </fieldset>
                 </div>
@@ -389,27 +385,7 @@
                   </select>
                 </fieldset>
               </div>
-              <div class="col-md-4">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Emploi</label
-                >
-                <fieldset class="form-group">
-                  <select
-                    class="custom-select"
-                    id="customSelect"
-                    v-model="form.emploi_id"
-                  >
-                    <option></option>
-                    <option
-                      v-for="item in emploi.getteremploi"
-                      :key="item.id"
-                      :value="item.id"
-                    >
-                      {{ item.libelle }}
-                    </option>
-                  </select>
-                </fieldset>
-              </div>
+              
               <div class="col-md-4">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Rôle</label
@@ -431,6 +407,22 @@
                   </select>
                 </fieldset>
               </div>
+              <div class="col-md-4">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Êtes-vous enseignant ou professeur ?</label
+                  >
+                  <fieldset class="form-group">
+                    <select
+                      class="custom-select"
+                      id="customSelect"
+                      v-model="form.statut"
+                    >
+                    <option ></option>
+                      <option value="1">Oui</option>
+                      <option value="0">Non</option>
+                    </select>
+                  </fieldset>
+                </div>
               <div class="col-md-3">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Salaire</label
@@ -528,6 +520,7 @@ const form: any = reactive({
   emploi_id: "",
   salaire: "",
   date_entre: "",
+  statut:""
 });
 
 function ViderChamps() {

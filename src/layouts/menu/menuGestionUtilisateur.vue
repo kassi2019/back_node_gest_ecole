@@ -70,6 +70,12 @@
               ><span class="menu-title" data-i18n="">Classe</span></a
             >
           </li>
+          <li class="nav-item" @click.prevent="activedOptionMenu(2, '/SousClasse')">
+            <a href=""
+              ><i class="la la-university"></i
+              ><span class="menu-title" data-i18n="">Sous Classe</span></a
+            >
+          </li>
           <li class="nav-item" @click.prevent="activedOptionMenu(2, '/typeMatiere')">
             <a href=""
               ><i class="la la-book"></i
@@ -91,7 +97,7 @@
               ><span class="menu-title" data-i18n="">Fonction</span></a
             >
           </li>
-          <li
+          <!-- <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/emploi')"
           >
@@ -99,7 +105,7 @@
               ><i class="la la-unsorted"></i
               ><span class="menu-title" data-i18n="">Emploi</span></a
             >
-          </li>
+          </li> -->
           <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/economique')"
@@ -148,8 +154,16 @@
           <li class="nav-item" @click.prevent="activedOptionMenu(2, '/Affectation')">
             <a href="buttons.html"
               ><i class="la la-exchange"></i
-              ><span class="menu-title" data-i18n=""
-                >Affectation</span
+              ><span class="menu-title" data-i18n="" style="font-size: 13px;"
+                >Affectation module</span
+              ></a
+            >
+          </li>
+           <li class="nav-item" @click.prevent="activedOptionMenu(2, '/affectationClasse')">
+            <a href="buttons.html"
+              ><i class="la la-exchange"></i
+              ><span class="menu-title" data-i18n="" style="font-size: 13px;"
+                >Affectation Classe</span
               ></a
             >
           </li>

@@ -32,6 +32,7 @@ interface dossierRole {
    emploi_id: string;
    salaire: string;
    date_entre: string;
+   statut:number
 } 
 export const useAuthStore = defineStore({
   id: "auth",
