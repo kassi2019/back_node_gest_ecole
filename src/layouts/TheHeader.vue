@@ -140,7 +140,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/utilisateurStore/Utilisateur";
+import { useAuthStore } from "../stores/utilisateurStore/Utilisateur";
 
 const authStore = useAuthStore();
 // const user_Token = localStorage.getItem("token");

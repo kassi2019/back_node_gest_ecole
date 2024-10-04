@@ -5,25 +5,32 @@ import Logout from "@/views/pageConnexion/Logout.vue";
 // import Homepage from "@/views/authPages/HomepageView.vue";
 // import defaultInterface from "@/views/interfaces/defaultInterface.vue";
 // import DefaultDashboard from "@/views/TableauBord/DefaultDashboard.vue";
-import structure from "@/views/pageParametrage/structure.vue";
+import structure from "@/views/mesPages/structure.vue";
  import role from '../views/pageConnexion/role.vue'
 import utilisateur from '../views/pageConnexion/utilisateur.vue'
-import fonction from "@/views/pageParametrage/fonction.vue";
-import anneeScolaire from "@/views/pageParametrage/anneeScolaire.vue";
-import etablissement from "@/views/pageParametrage/etablissement.vue";
-import bareme from "@/views/pageParametrage/bareme.vue";
-import cycle from "@/views/pageParametrage/cycle.vue";
-import classe from "@/views/pageParametrage/classe.vue";
-import typeMatiere from "@/views/pageParametrage/typeMatiere.vue";
-import matiere from "@/views/pageParametrage/matiere.vue";
-import emploi from "@/views/pageParametrage/emploi.vue";
-import economique from "@/views/pageParametrage/economique.vue";
-import associeStructure from "@/views/pageParametrage/associeStructure.vue";
-import budget from "@/views/pageParametrage/budget.vue";
-import Affectation from "@/views/pageParametrage/affectation.vue";
-import SousClasse from "@/views/pageParametrage/sousClasse.vue";
-import affectationClasse from "@/views/pageParametrage/affectationClasse.vue";
+import fonction from "@/views/mesPages/fonction.vue";
+import anneeScolaire from "@/views/mesPages/anneeScolaire.vue";
+import etablissement from "@/views/mesPages/etablissement.vue";
+import bareme from "@/views/mesPages/bareme.vue";
+import cycle from "@/views/mesPages/cycle.vue";
+import classe from "@/views/mesPages/classe.vue";
+import typeMatiere from "@/views/mesPages/typeMatiere.vue";
+import matiere from "@/views/mesPages/matiere.vue";
+import emploi from "@/views/mesPages/emploi.vue";
+import economique from "@/views/mesPages/economique.vue";
+import associeStructure from "@/views/mesPages/associeStructure.vue";
+import budget from "@/views/mesPages/budget.vue";
+import Affectation from "@/views/mesPages/affectation.vue";
+import SousClasse from "@/views/mesPages/sousClasse.vue";
+import affectationClasse from "@/views/mesPages/affectationClasse.vue";
+import inscriprion from "@/views/mesPages/inscriprion.vue";
+
 const AuthRoutes = [
+  {
+    path: "/inscriprion",
+    name: "inscriprion",
+    component: inscriprion,
+  },
    {
     path: "/affectationClasse",
     name: "affectationClasse",

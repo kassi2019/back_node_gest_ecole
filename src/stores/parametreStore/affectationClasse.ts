@@ -14,7 +14,7 @@ export interface affectationClasse {
     personnelid: number;
 }
   interface dossierSousclasseGroup {
-   
+   personnelid: number;
     classeId: number;
   
 
@@ -35,6 +35,26 @@ export const AffectationClasse = defineStore("affectationClasse",{
         }
   },
   actions: {
+
+
+async AffectationClasse(infor: affectationClasse){ //cycle d'ajout des information global du budget
+                try {
+                    const response = await apiUrl.post("/AffectationClasse",
+                        infor, // on lui passe l'interface de section
+                        {
+                        headers: authHeader(),
+                    });
+                  this.stateAffectationClasse.push(response.data)
+                  
+                  toast.success(`Enregistrement effectuer avec succès`);
+                    //this.getcycle();
+                } catch (error) {
+                    console.log('erreur survenue', error);
+                  //  toast.error(`Erreur lors de l'ajout : ${error}`);
+                }
+      },
+
+
 async getAffectationClasseGroup(){
                 try {
                     const response = await apiUrl.get("/listeAffectationClasseGroupe",{ 

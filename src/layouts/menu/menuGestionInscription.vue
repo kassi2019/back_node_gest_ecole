@@ -14,7 +14,9 @@
                 alt="Chameleon admin logo"
                 src="../../../public/theme-assets/images/logo/logo.png"
               />
-              <h3 class="brand-text" style="font-size: 16px">PARAMETRAGE</h3></a
+              <h3 class="brand-text" style="font-size: 16px">
+                MENU INSCRIPTION
+              </h3></a
             >
           </li>
           <li class="nav-item d-md-none">
@@ -42,14 +44,14 @@
 
           <li
             class="nav-item"
-            @click.prevent="activedOptionMenu(2, '/anneeScolaire')"
+            @click.prevent="activedOptionMenu(2, '/inscriprion')"
           >
             <a href=""
               ><i class="la la-list-ol"></i
-              ><span class="menu-title" data-i18n="">Année Scolaire</span></a
+              ><span class="menu-title" data-i18n="">Inscription</span></a
             >
           </li>
-          <li
+          <!-- <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/etablissement')"
           >
@@ -111,7 +113,7 @@
               ><i class="la la-unsorted"></i
               ><span class="menu-title" data-i18n="">Fonction</span></a
             >
-          </li>
+          </li> -->
           <!-- <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/emploi')"
@@ -121,7 +123,7 @@
               ><span class="menu-title" data-i18n="">Emploi</span></a
             >
           </li> -->
-          <li
+          <!-- <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/economique')"
           >
@@ -184,7 +186,7 @@
                 >Affectation Classe</span
               ></a
             >
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

@@ -15,7 +15,7 @@ export interface LoginCredentials {
 }
 interface dossierRole {
     id: number;
-    code: string;
+    code: number;
     libelle: string;
 }
  interface dossierUtilisateur {
@@ -267,18 +267,18 @@ export const useAuthStore = defineStore({
     },
 
 
-    //  async logout() {
-    //   try {
-    //     await apiUrl.post("/logout");
-    //     this.isAuthenticated = false;
-    //     this.user = null;
-    //     this.token = null;
-    //     localStorage.removeItem("token");
-    //     localStorage.removeItem("user");
-    //   } catch (error) {
-    //     console.error("Logout failed:", error);
-    //   }
-    // },
+     async logout() {
+      try {
+        await apiUrl.post("/logout");
+        this.isAuthenticated = false;
+        this.user = null;
+        this.token = null;
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      } catch (error) {
+        console.error("Logout failed:", error);
+      }
+    },
   },
 
 

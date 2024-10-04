@@ -33,8 +33,9 @@
                           <tr>
                             <th></th>
                             <th scope="col">N°</th>
+                            <th scope="col">Classe</th>
                             <th scope="col">Sous Classe</th>
-                            <th scope="col" style="width: 10%">Nombre éleve</th>
+                            <!-- <th scope="col" style="width: 10%">Nombre éleve</th> -->
                             <th
                               scope="col"
                               style="text-align: center !important; width: 10%"
@@ -43,10 +44,10 @@
                             </th>
                           </tr>
                         </thead>
-                        <!-- <tbody
+                        <tbody
                           v-for="(
                             item, index
-                          ) in storeSousClasse.getterSousclasseGroup"
+                          ) in storeAffectationClasse.getterAffectationClasseGpe"
                           :key="item.classeId"
                         >
                           <tr>
@@ -59,7 +60,7 @@
                             >
                               {{ index + 1 }}
                             </td>
-                            <td
+                            <!-- <td
                               style="
                                 background-color: #f6e497 !important;
                                 font-size: 16px !important;
@@ -68,15 +69,16 @@
                               colspan="2"
                             >
                               Classe : {{ libelleClasse(item.classeId) }}
-                            </td>
+                            </td> -->
                             <td
                               style="
                                 border: 1px solid #000;
                                 background-color: #f6e497 !important;
-                                text-align: right;
+                               
                               "
+                              colspan="3"
                             >
-                              {{ toutEtudiant(item.classeId) }}
+                            ENSEIGNANT :  {{ toutEtudiant(item.personnelid) }}
                             </td>
                             <td
                               style="
@@ -88,22 +90,25 @@
                           </tr>
 
                           <tr
-                            v-for="(data, index) in listeSousClasse(
-                              item.classeId
+                            v-for="(data) in afficherUtilisateur(
+                              item.personnelid
                             )"
                             :key="data.id"
                           >
                             <td style="border: 1px solid #000"></td>
                             <td style="border: 1px solid #000">
-                              {{ index + 1 }}
+                             
                             </td>
-                            <td style="border: 1px solid #000">
-                              {{ data.code }}
+                            
+                            <td
+                              style="border: 1px solid #000; text-align: "
+                            >
+                             {{  libelleClasse(data.classeId) }} ( {{  codeClasse(data.classeId) }} )
                             </td>
                             <td
-                              style="border: 1px solid #000; text-align: right"
+                              style="border: 1px solid #000; text-align: "
                             >
-                              {{ data.nombreetudiant }}
+                              {{ codeSousClasse(data.sousclassesId) }}
                             </td>
                             <td style="border: 1px solid #000">
                               <button
@@ -124,7 +129,7 @@
                               </button>
                             </td>
                           </tr>
-                        </tbody> -->
+                        </tbody>
                       </table>
                     </div>
                   </div>
@@ -170,7 +175,7 @@
                   >
                     <option selected></option>
                     <option
-                      v-for="item in storeclasse.getterclasse"
+                      v-for="item in afficherClasseNonAffecter()"
                       :key="item.id"
                       :value="item.id"
                     >
@@ -230,7 +235,7 @@
               <button
                 type="button"
                 class="btn btn-success"
-                @click.prevent="Enregistrementclasse"
+                @click.prevent="Enregistrementaffectationclasse"
               >
                 Enregistrer
               </button>
@@ -360,18 +365,19 @@ const form: any = reactive({
   sousclassesId: 0,
 });
 const formmod: any = reactive({
-  classeId: "",
-  personnelid: "",
-  sousclassesId: "",
+  classeId: 0,
+  personnelid: 0,
+  sousclassesId: 0,
 });
 function ViderChamps() {
-  (form.classeId = ""), (form.personnelid = "");
-  form.sousclassesId = "";
+  (form.classeId = 0), (form.personnelid = 0);
+  form.sousclassesId = 0;
 }
-function libelleClasse(id: number) {
-  let data = storeclasse.getterclasse.find((item) => item.id == id);
+
+function codeSousClasse(id: number) {
+  let data = storeSousClasse.getterSousclasse.find((item) => item.id == id);
   if (data) {
-    return data.code.concat(" - ", data.libelle);
+    return data.code;
   }
   return "";
 }
@@ -382,10 +388,17 @@ function codeClasse(id: number) {
   }
   return "";
 }
-function toutEtudiant(id: number) {
+function libelleClasse(id: number) {
   let data = storeclasse.getterclasse.find((item) => item.id == id);
   if (data) {
-    return data.nombreetudiant;
+    return data.libelle;
+  }
+  return "";
+}
+function toutEtudiant(id: number) {
+  let data = storeutilisateur.gettersUtilisateur.find((item) => item.id == id);
+  if (data) {
+    return data.matricule.concat(' ',data.name.concat(' ',data.prenoms));
   }
   return "";
 }
@@ -398,38 +411,80 @@ function placeActribuer(id: number) {
 const afficherProfesseur = () => {
   return storeutilisateur.gettersUtilisateur.filter((item) => item.statut == 1);
 };
+const afficherClasseNonAffecter = () => {
+  return storeclasse.getterclasse.filter((item) => item.statut != 1);
+};
 const listeSousClasse = (id: number) => {
   return storeSousClasse.getterSousclasse.filter(
     (item) => item.classeId == id && item.statut != 1
   );
 };
+const afficherUtilisateur = (id: number) => {
+  return storeAffectationClasse.getterAffectationClasse.filter(
+    (item) => item.personnelid == id
+  );
+};
+const nbreSousClasse = (id: number) => {
+  return storeSousClasse.getterSousclasse.filter((item) => item.classeId == id)
+    .length;
+};
+const nbreAffectationSousClasse = (id: number) => {
+  return storeAffectationClasse.getterAffectationClasse.filter(
+    (item) => item.classeId == id
+  ).length;
+};
 
-function Enregistrementclasse() {
+function Enregistrementaffectationclasse() {
   // $v.value.$touch();
   //if (!$v.value.$invalid) {
-  try {
-    let obj: any = {
-      classeId: form.classeId,
+  if (
+    nbreSousClasse(form.classeId) ==
+    nbreAffectationSousClasse(form.classeId) + 1
+  ) {
+    try {
+      let obj: any = {
+        classeId: form.classeId,
 
-      sousclassesId: form.sousclassesId,
+        sousclassesId: form.sousclassesId,
 
-      personnelid: form.personnelid,
-    };
-    //   isLoading.value = true;
-    //   console.log(obj)
-    storeAffectationClasse.ajouterAffectationClasse(obj).then(() => {
-      storeclasse.getclasse();
-      storeSousClasse.getSousclasse();
-      ViderChamps();
+        personnelid: form.personnelid,
+      };
+      //   isLoading.value = true;
+      //   console.log(obj)
+      storeAffectationClasse.ajouterAffectationClasse(obj).then(() => {
+        storeclasse.getclasse();
+        storeSousClasse.getSousclasse();
+        ViderChamps();
+        // isLoading.value = false;
+      });
+      storeAffectationClasse.AffectationClasse(obj).then(() => {
+        // isLoading.value = false;
+      });
+    } catch (error) {
+      console.error("Enregistrement échoué", error);
       // isLoading.value = false;
-    });
-  } catch (error) {
-    console.error("Enregistrement échoué", error);
-    // isLoading.value = false;
+    }
+  } else {
+    try {
+      let obj: any = {
+        classeId: form.classeId,
+
+        sousclassesId: form.sousclassesId,
+
+        personnelid: form.personnelid,
+      };
+      //   isLoading.value = true;
+      //   console.log(obj)
+      storeAffectationClasse.ajouterAffectationClasse(obj).then(() => {
+        storeclasse.getclasse();
+        storeSousClasse.getSousclasse();
+        ViderChamps();
+        // isLoading.value = false;
+      });
+    } catch (error) {
+      console.error("Enregistrement échoué", error);
+    }
   }
-  //   } else {
-  //     console.log($v);
-  //   }
 }
 // function supprimer(id: any) {
 //   store.SupprimerRole(id);
@@ -497,7 +552,7 @@ function supprimer(id: any) {
 }
 onMounted(() => {
   storeSousClasse.getSousclasse();
-  //   storeAffectationClasse.getAffectationClasseGroup();
+  storeAffectationClasse.getAffectationClasseGroup();
   storeutilisateur.getUtilisateur();
   storeclasse.getclasse();
   storeAffectationClasse.getAffectationClasse();

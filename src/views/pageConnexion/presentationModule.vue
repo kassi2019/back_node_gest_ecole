@@ -1,5 +1,5 @@
 <template>
-  <TheHeader />
+  <TheHeader1 />
   <br /><br />
   <!-- premiere ligne -->
   <div class="row" style="padding: 50px 20px 0px 0px">
@@ -311,7 +311,7 @@ v-else
 <script lang="ts" setup>
 import { defineComponent, ref, computed, onMounted, watch } from "vue";
 
-import TheHeader from "../../layouts/TheHeader.vue";
+import TheHeader1 from "../../layouts/TheHeader.vue";
 import { Modal } from "bootstrap";
 import { useRouter } from "vue-router";
 import { Affectation } from "../../stores/parametreStore/affectation";
