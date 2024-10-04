@@ -30,7 +30,7 @@ module.exports = {
                         statut: req.body.statut
                     }
                 
-                    models.Utilisateur.create(user).then(result => {
+                  models.Utilisateur.create(user).then(result => {
                         res.status(201).json({
                             message: "Utilisateur crée avec sucess",
                         });
@@ -51,6 +51,56 @@ module.exports = {
  });
 },
 
+    
+    
+ enregistrementEtudiant : function (req, res){
+    
+    //Sign up
+    models.Utilisateur.findOne({ where: { matricule: req.body.matricule } }).then(result => {
+        // console.log(result);
+         if(result){
+            res.status(409).json({
+                message: "Email existe déja!",
+            });
+         } else {
+            bcryptjs.genSalt(10, function(err, salt){
+                bcryptjs.hash(req.body.password, salt, function(err, hash){
+                    const user = {
+                        name: req.body.name,
+                        matricule: req.body.matricule,
+                        prenoms: req.body.prenoms,
+                        date_naissance: req.body.date_naissance,
+                        lieu_naissance: req.body.lieu_naissance,
+                        fonction_id: req.body.fonction_id,
+                       // emploi_id: req.body.emploi_id,
+                        salaire: req.body.salaire,
+                        email:req.body.email,
+                        password: hash,
+                        role_id: req.body.role_id,
+                        date_entre: req.body.date_entre,
+                        statut: req.body.statut
+                    }
+                
+                 $valeur= models.Utilisateur.create(user).then(result => {
+                        res.status(201).json({
+                            message: "Utilisateur crée avec sucess",
+                        });
+                    }).catch(error => {
+                        console.log(error);
+                        res.status(500).json({
+                            message: "un problème est survenu lors de l'enregistrement52!",
+                        });
+                    });
+                });
+            });
+        }
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({
+            message: "un problème est survenu lors de l'enregistrement!",
+        });
+ });
+},
     
      modificationUtilisateur: function (req, res) {
         const id = req.params.id;

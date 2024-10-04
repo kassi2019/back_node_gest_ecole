@@ -54,10 +54,9 @@ module.exports = {
         });
     },
  listeAffectationClasseGroupe: function (req, res) {
-        models.SousClasse.findAll({
+        models.AffectationClasse.findAll({
             attributes: ['personnelid'],
-            
-            group: ['personnelid']
+            group: ['personnelid']  
         }).then(result => {
             res.status(200).json(result);
         }).catch(error => {
@@ -146,4 +145,16 @@ module.exports = {
 
 
 
+
+     AffectationClasse: function (req, res) {
+            const id=req.body.classeId
+        const updateClasse = {
+                     statut:1
+        }
+    
+            models.Classe.update(updateClasse, {where: {id:{
+                    [Op.eq]: id
+                }}})
+
+    },
 }

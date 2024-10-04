@@ -159,4 +159,5 @@ router.put("/modificationAffectationClasse/:id", checkAuthMiddleware.checkAuth, 
 router.delete("/supprimerAffectationClasse/:id", checkAuthMiddleware.checkAuth, affectationClasseController.supprimerAffectationClasse);
 router.get('/listeAffectationClasseGroupe', checkAuthMiddleware.checkAuth, affectationClasseController.listeAffectationClasseGroupe);
 
+router.post('/AffectationClasse', checkAuthMiddleware.checkAuth, affectationClasseController.AffectationClasse);
 module.exports = router;
