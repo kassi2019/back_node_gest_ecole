@@ -23,13 +23,13 @@ import budget from "@/views/mesPages/budget.vue";
 import Affectation from "@/views/mesPages/affectation.vue";
 import SousClasse from "@/views/mesPages/sousClasse.vue";
 import affectationClasse from "@/views/mesPages/affectationClasse.vue";
-import inscriprion from "@/views/mesPages/inscriprion.vue";
+import etudiant from "@/views/mesPages/etudiant.vue";
 
 const AuthRoutes = [
   {
-    path: "/inscriprion",
-    name: "inscriprion",
-    component: inscriprion,
+    path: "/etudiant",
+    name: "etudiant",
+    component: etudiant,
   },
    {
     path: "/affectationClasse",

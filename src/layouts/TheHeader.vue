@@ -98,7 +98,7 @@
               >
                 <span class="avatar avatar-online"
                   ><img
-                    src="../../public/theme-assets/images/portrait/small/avatar-s-19.png"
+                    src="/theme-assets/images/portrait/small/avatar-s-19.png"
                     alt="avatar" /><i></i></span
               ></a>
               <div class="dropdown-menu dropdown-menu-right">
@@ -106,7 +106,7 @@
                   <a class="dropdown-item" href="#"
                     ><span class="avatar avatar-online"
                       ><img
-                        src="../../public/theme-assets/images/portrait/small/avatar-s-19.png"
+                        src="/theme-assets/images/portrait/small/avatar-s-19.png"
                         alt="avatar"
                       /><span class="user-name text-bold-700 ml-1">{{
                         nom_utilisateur

@@ -38,7 +38,7 @@
                             <!-- <th scope="col" style="width: 10%">Nombre éleve</th> -->
                             <th
                               scope="col"
-                              style="text-align: center !important; width: 10%"
+                              style="text-align: center !important; width: 5%"
                             >
                               Action
                             </th>
@@ -111,14 +111,14 @@
                               {{ codeSousClasse(data.sousclassesId) }}
                             </td>
                             <td style="border: 1px solid #000">
-                              <button
+                              <!-- <button
                                 type="button"
                                 class="btn btn-primary btn-sm"
                                 title="Modifier"
                                 @click="showModalDecision(data.id)"
                               >
                                 <i class="la la-pencil-square"></i>
-                              </button>
+                              </button> -->
                               <button
                                 type="button"
                                 class="btn btn-danger btn-sm"
@@ -175,7 +175,7 @@
                   >
                     <option selected></option>
                     <option
-                      v-for="item in afficherClasseNonAffecter()"
+                      v-for="item in storeclasse.getterclasse"
                       :key="item.id"
                       :value="item.id"
                     >
@@ -396,7 +396,7 @@ function libelleClasse(id: number) {
   return "";
 }
 function toutEtudiant(id: number) {
-  let data = storeutilisateur.gettersUtilisateur.find((item) => item.id == id);
+  let data = storeutilisateur.gettersPersonnel.find((item) => item.id == id);
   if (data) {
     return data.matricule.concat(' ',data.name.concat(' ',data.prenoms));
   }
@@ -409,14 +409,14 @@ function placeActribuer(id: number) {
     .toFixed(0);
 }
 const afficherProfesseur = () => {
-  return storeutilisateur.gettersUtilisateur.filter((item) => item.statut == 1);
+  return storeutilisateur.gettersPersonnel.filter((item) => item.statut == 1);
 };
 const afficherClasseNonAffecter = () => {
   return storeclasse.getterclasse.filter((item) => item.statut != 1);
 };
 const listeSousClasse = (id: number) => {
   return storeSousClasse.getterSousclasse.filter(
-    (item) => item.classeId == id && item.statut != 1
+    (item) => item.classeId == id
   );
 };
 const afficherUtilisateur = (id: number) => {
@@ -546,14 +546,14 @@ function supprimer(id: any) {
     cancelButtonColor: "#471A3",
   }).then((res) => {
     if (res.isConfirmed) {
-      storeSousClasse.SupprimerSousclasse(id);
+      storeAffectationClasse.SupprimerAffectationClasse(id);
     }
   });
 }
 onMounted(() => {
   storeSousClasse.getSousclasse();
   storeAffectationClasse.getAffectationClasseGroup();
-  storeutilisateur.getUtilisateur();
+  storeutilisateur.getPersonnel();
   storeclasse.getclasse();
   storeAffectationClasse.getAffectationClasse();
 });

@@ -12,7 +12,7 @@
               ><img
                 class="brand-logo"
                 alt="Chameleon admin logo"
-                src="../../../public/theme-assets/images/logo/logo.png"
+                src="/theme-assets/images/logo/logo.png"
               />
               <h3 class="brand-text" style="font-size: 16px">PARAMETRAGE</h3></a
             >
@@ -162,7 +162,6 @@
               ><span class="menu-title" data-i18n="">Personnel</span></a
             >
           </li>
-
           <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/Affectation')"

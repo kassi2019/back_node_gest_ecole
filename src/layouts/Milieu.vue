@@ -32,7 +32,7 @@
                 <div
                   class="progress-stats-container ct-golden-section height-75 position-relative pt-3"
                 >
-               ddddddddddddddddd
+                  ddddddddddddddddd
                 </div>
               </div>
             </div>
@@ -54,19 +54,19 @@
                 <div class="heading-elements">
                   <span class="avatar">
                     <img
-                      src="../../public/theme-assets/portrait/small/avatar-s-2.png"
+                      src="/theme-assets/portrait/small/avatar-s-2.png"
                       alt="avatar"
                     />
                   </span>
                   <span class="avatar">
                     <img
-                      src="../../public/theme-assets/images/portrait/small/avatar-s-3.png"
+                      src="/theme-assets/images/portrait/small/avatar-s-3.png"
                       alt="avatar"
                     />
                   </span>
                   <span class="avatar">
                     <img
-                      src="../../public/theme-assets/images/portrait/small/avatar-s-4.png"
+                      src="/theme-assets/images/portrait/small/avatar-s-4.png"
                       alt="avatar"
                     />
                   </span>
@@ -120,21 +120,21 @@
                   <div class="carousel-inner" role="listbox">
                     <div class="carousel-item active">
                       <img
-                        src="../../public/theme-assets/images/carousel/08.jpg"
+                        src="/theme-assets/images/carousel/08.jpg"
                         class="d-block w-100"
                         alt="First slide"
                       />
                     </div>
                     <div class="carousel-item">
                       <img
-                        src="../../public/theme-assets/images/carousel/03.jpg"
+                        src="/theme-assets/images/carousel/03.jpg"
                         class="d-block w-100"
                         alt="Second slide"
                       />
                     </div>
                     <div class="carousel-item">
                       <img
-                        src="../../public/theme-assets/images/carousel/01.jpg"
+                        src="/theme-assets/images/carousel/01.jpg"
                         class="d-block w-100"
                         alt="Third slide"
                       />
@@ -202,7 +202,7 @@
                       <span class="avatar avatar-md avatar-online">
                         <img
                           class="media-object rounded-circle"
-                          src="../../public/theme-assets/images/portrait/small/avatar-s-7.png"
+                          src="/theme-assets/images/portrait/small/avatar-s-7.png"
                           alt="Generic placeholder image"
                         />
                         <i></i>
@@ -221,7 +221,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-1.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-1.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -233,7 +233,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-2.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-2.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -245,7 +245,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-4.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-4.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -262,7 +262,7 @@
                       <span class="avatar avatar-md avatar-away">
                         <img
                           class="media-object rounded-circle"
-                          src="../../public/theme-assets/images/portrait/small/avatar-s-8.png"
+                          src="/theme-assets/images/portrait/small/avatar-s-8.png"
                           alt="Generic placeholder image"
                         />
                         <i></i>
@@ -281,7 +281,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-5.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-5.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -293,7 +293,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-6.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-6.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -310,7 +310,7 @@
                       <span class="avatar avatar-md avatar-busy">
                         <img
                           class="media-object rounded-circle"
-                          src="../../public/theme-assets/images/portrait/small/avatar-s-9.png"
+                          src="/theme-assets/images/portrait/small/avatar-s-9.png"
                           alt="Generic placeholder image"
                         />
                         <i></i>
@@ -327,7 +327,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-2.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-2.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -339,7 +339,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-5.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-5.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -356,7 +356,7 @@
                       <span class="avatar avatar-md avatar-online">
                         <img
                           class="media-object rounded-circle"
-                          src="../../public/theme-assets/images/portrait/small/avatar-s-10.png"
+                          src="/theme-assets/images/portrait/small/avatar-s-10.png"
                           alt="Generic placeholder image"
                         />
                         <i></i>
@@ -373,7 +373,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-6.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-6.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -385,7 +385,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-1.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-1.jpg"
                             alt="Avatar"
                           />
                         </li>
@@ -402,7 +402,7 @@
                       <span class="avatar avatar-md avatar-online">
                         <img
                           class="media-object rounded-circle"
-                          src="../../public/theme-assets/images/portrait/small/avatar-s-11.png"
+                          src="/theme-assets/images/portrait/small/avatar-s-11.png"
                           alt="Generic placeholder image"
                         />
                         <i></i>
@@ -421,7 +421,7 @@
                         >
                           <img
                             class="media-object rounded-circle no-border-top-radius no-border-bottom-radius"
-                            src="../../public/theme-assets/images/portfolio/portfolio-5.jpg"
+                            src="/theme-assets/images/portfolio/portfolio-5.jpg"
                             alt="Avatar"
                           />
                         </li>

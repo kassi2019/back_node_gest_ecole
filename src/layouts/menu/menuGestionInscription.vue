@@ -12,7 +12,7 @@
               ><img
                 class="brand-logo"
                 alt="Chameleon admin logo"
-                src="../../../public/theme-assets/images/logo/logo.png"
+                src="/theme-assets/images/logo/logo.png"
               />
               <h3 class="brand-text" style="font-size: 16px">
                 MENU INSCRIPTION
@@ -42,6 +42,15 @@
             >
           </li>
 
+          <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/etudiant')"
+          >
+            <a href=""
+              ><i class="la la-list-ol"></i
+              ><span class="menu-title" data-i18n="">Création étudiant</span></a
+            >
+          </li>
           <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/inscriprion')"

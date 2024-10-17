@@ -12,7 +12,7 @@
               ><img
                 class="brand-logo"
                 alt="Chameleon admin logo"
-                src="../../public/theme-assets/images/logo/logo.png"
+                src="/theme-assets/images/logo/logo.png"
               />
               <h3 class="brand-text">Chameleon</h3></a
             >

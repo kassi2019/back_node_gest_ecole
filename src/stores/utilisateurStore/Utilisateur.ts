@@ -19,20 +19,22 @@ interface dossierRole {
     libelle: string;
 }
  interface dossierUtilisateur {
-    id: number;
-    name: string;
-  matricule: string;
+   id: number;
+   name: string;
+   matricule: string;
    password: string;
    role_id: number;
    email: string;
    prenoms: string;
    date_naissance: string;
    lieu_naissance: string;
-   fonction_id: string;
-   emploi_id: string;
+   fonction_id: number;
    salaire: string;
    date_entre: string;
-   statut:number
+   statut: number,
+   civilite: string,
+   nationalite: string,
+   lieu_habitation:string
 } 
 export const useAuthStore = defineStore({
   id: "auth",
@@ -41,12 +43,11 @@ export const useAuthStore = defineStore({
     isAuthenticated: false,
     token: null as string | null,
     error_message: "" as string,
-
     ListeDistricts: [] as dossierRole[],
     stateModules: [] as dossierRole[],
     stateRole: [] as dossierRole[],
     stateUtilisateur: [] as dossierUtilisateur[],
-    
+    statePersonnel: [] as dossierUtilisateur[],
   }),
   getters: {
    errorMessage(): string {
@@ -63,11 +64,83 @@ export const useAuthStore = defineStore({
     },
     gettersUtilisateur(state) {
       return state.stateUtilisateur;
+    },
+    gettersPersonnel(state) {
+      return state.statePersonnel;
     }
-    
   },
   actions: {
 
+ async creerNouveauUser(infor: dossierUtilisateur){ //fonction d'ajout des information global du budget
+                try {
+                    const response = await apiUrl.post("/creerNouveauUtilisateur",
+                        infor, // on lui passe l'interface de section
+                        {
+                        headers: authHeader(),
+                      });
+                 
+                  this.stateUtilisateur.push(response.data)
+                 // console.log(response.status);
+                  //  if (response.data.status == 201) {
+                    
+                  // }
+                     toast.success(`Enregistrement effectuer avec succès`);
+                     this.getUtilisateur();
+                }
+                catch (error) {
+                    console.log('erreur survenue', error);
+                    toast.error(`Erreur lors de l'ajout : ${error}`);
+                }
+        },
+
+async getPersonnel(){
+                try {
+                    const response = await apiUrl.get("/listepersonnel",{ 
+                      headers: authHeader(),
+                      
+                    });
+                  
+                  this.statePersonnel = response.data || [];
+                  
+                } catch (error) {
+                    console.log('erreur survenue', error);
+                   
+                }
+    },
+
+async SupprimerPersonnel(id: number){ //fonction de suppression
+                try {
+                    await apiUrl.delete(`/supprimerpersonnel/${id}`,{
+                        headers: authHeader(),
+                    });
+                    this.statePersonnel = this.statePersonnel.filter((item) => item.id !== id);
+                    toast.success("Suppression éffectuer avec succès");
+                    this.getRole();
+                } catch (error) {
+                    console.error("Erreur de suppression: ", error);
+                    toast.error("Échec de la suppression");
+                }
+            
+            },
+
+ async modifierPersonnel(credentials: dossierRole) {
+      try {
+        const response = await apiUrl.put(`/modificationpersonnel/${credentials.id}`,
+          credentials, { headers: authHeader(), }
+        );
+        const index = this.statePersonnel.findIndex(
+          (item) => item.id === credentials.id
+        );
+        if (index !== -1) {
+          this.statePersonnel[index] = response.data;
+        }
+        this.getPersonnel();
+        toast.success("Modification effectuée avec succès");
+      } catch (error) {
+        console.error("Erreur de mise à jour: ", error);
+        toast.error("Échec de la mise à jour de l'Sous budget");
+      }
+    },
     // actions gestion des role
     
      async getRole(){
@@ -146,7 +219,8 @@ export const useAuthStore = defineStore({
                     });
                     this.stateUtilisateur.push(response.data)
                      toast.success(`Enregistrement effectuer avec succès`);
-                     this.getUtilisateur();
+                  this.getUtilisateur();
+                  this.getPersonnel();
                 }
                 catch (error) {
                     console.log('erreur survenue', error);
@@ -158,11 +232,11 @@ export const useAuthStore = defineStore({
         const response = await apiUrl.put(`/modificationUtilisateur/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
-        const index = this.stateRole.findIndex(
+        const index = this.stateUtilisateur.findIndex(
           (item) => item.id === credentials.id
         );
         if (index !== -1) {
-          this.stateRole[index] = response.data;
+          this.stateUtilisateur[index] = response.data;
         }
         this.getUtilisateur();
         toast.success("Modification effectuée avec succès");
@@ -252,6 +326,10 @@ export const useAuthStore = defineStore({
          localStorage.setItem(
           "userid",
           JSON.stringify(response.data.userid),
+         );
+         localStorage.setItem(
+          "prenomuser",
+          JSON.stringify(response.data.prenomsuser),
       );
        // localStorage.setItem("user", JSON.stringify(response.data.user));
        } catch (error) {

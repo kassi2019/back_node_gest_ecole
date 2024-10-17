@@ -323,6 +323,7 @@ function supprimer(id: any) {
     }
   });
 }
+
 onMounted(() => {
   
   storefonction.getFonction();

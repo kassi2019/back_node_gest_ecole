@@ -6,7 +6,39 @@ input[type=text], select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  text-transform: capitalize;
 }
+input[type=email], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  
+}
+
+ /* select {
+  width: 100% !important;
+ 
+  padding: 10px 10px !important;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+} */
+.frome_champs {
+  width: 100% !important;
+  padding: 12px 20px !important;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 input[type=number], select {
   width: 100%;
   padding: 12px 20px;
@@ -15,7 +47,9 @@ input[type=number], select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  text-transform: capitalize;
 }
+
 input[type=date], select {
   width: 100%;
   padding: 12px 20px;
