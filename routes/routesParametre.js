@@ -17,6 +17,8 @@ const typeMatiereController = require('../controllers/typeMatiereCtrl');
 const associeStructureController = require('../controllers/associeStructureCtrl');
 const sousClasseController = require('../controllers/sousClasseCtrl');
 const affectationClasseController = require('../controllers/affectationClasseCtrl');
+const personnelController = require('../controllers/personnelCtrl');
+const etudiantController = require('../controllers/etudiantCtrl');
 const router = express.Router();
 
 router.post('/enregistrementStructure', checkAuthMiddleware.checkAuth, structureController.enregistrementStructure);
@@ -158,6 +160,25 @@ router.get('/listeAffectationClasse', checkAuthMiddleware.checkAuth, affectation
 router.put("/modificationAffectationClasse/:id", checkAuthMiddleware.checkAuth, affectationClasseController.modificationAffectationClasse);
 router.delete("/supprimerAffectationClasse/:id", checkAuthMiddleware.checkAuth, affectationClasseController.supprimerAffectationClasse);
 router.get('/listeAffectationClasseGroupe', checkAuthMiddleware.checkAuth, affectationClasseController.listeAffectationClasseGroupe);
-
 router.post('/AffectationClasse', checkAuthMiddleware.checkAuth, affectationClasseController.AffectationClasse);
+
+
+// route gestion du personnel
+
+router.get('/listepersonnel', checkAuthMiddleware.checkAuth, personnelController.listePersonnel);
+router.put("/modificationpersonnel/:id", checkAuthMiddleware.checkAuth, personnelController.modificationPersonnel);
+router.delete("/supprimerpersonnel/:id", checkAuthMiddleware.checkAuth, personnelController.supprimerPersonnel);
+router.post('/creerNouveauUtilisateur', checkAuthMiddleware.checkAuth, personnelController.creerNouveauUtilisateur);
+
+
+// route gestion des etudiant
+
+// router.get('/listepersonnel', checkAuthMiddleware.checkAuth, etudiantController.listePersonnel);
+// router.put("/modificationpersonnel/:id", checkAuthMiddleware.checkAuth, etudiantController.modificationPersonnel);
+// router.delete("/supprimerpersonnel/:id", checkAuthMiddleware.checkAuth, etudiantController.supprimerPersonnel);
+router.post('/enregistrementEtudiant', checkAuthMiddleware.checkAuth, etudiantController.enregistrementEtudiant);
+
+
+
+
 module.exports = router;

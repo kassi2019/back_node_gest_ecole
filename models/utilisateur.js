@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Utilisateur.hasMany(models.Structure);
       Utilisateur.hasMany(models.anneeScolaire);
-
+Utilisateur.hasMany(models.Personnel);
     }
   }
   Utilisateur.init({
@@ -24,14 +24,14 @@ module.exports = (sequelize, DataTypes) => {
     role_id: DataTypes.STRING,
     matricule: DataTypes.STRING,
     prenoms: DataTypes.STRING,
-    date_naissance: DataTypes.DATE,
-    lieu_naissance: DataTypes.STRING,
-    fonction_id: DataTypes.STRING,
+    //date_naissance: DataTypes.DATE,
+    //lieu_naissance: DataTypes.STRING,
+    //fonction_id: DataTypes.STRING,
     matricule: DataTypes.STRING,
     //emploi_id: DataTypes.STRING,
-    salaire: DataTypes.STRING,
-    date_entre: DataTypes.DATE,
-    statut: DataTypes.STRING,
+    //salaire: DataTypes.STRING,
+   // date_entre: DataTypes.DATE,
+    // statut: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Utilisateur',
