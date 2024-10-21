@@ -12,7 +12,6 @@ module.exports = {
             code: req.body.code,
             libelle: req.body.libelle,
             utilisateurId:req.userData.userId
-          
         }
       
         if (!post.code || !post.libelle) {

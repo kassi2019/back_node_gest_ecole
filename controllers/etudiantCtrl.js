@@ -13,13 +13,37 @@ module.exports = {
     matricule: req.body.matricule,
     nom: req.body.nom,
     prenoms: req.body.prenoms,
-    date_naissance: req.body.date_naissance,
-    lieu_naissance: req.body.lieu_naissance,
+    //date_naissance: req.body.date_naissance,
+
+    
+        }
+      
+        if (!post.matricule || !post.civilite || !post.nom || !post.prenoms) {
+            return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
+        }
+        models.Etudiant.findOne({ where: { matricule: post.matricule } }).then(result => {
+            if (result) {
+                res.status(409).json({
+                    message: "Code existe déja",
+                });
+            } else {
+                models.Etudiant.create(
+                    
+                    {
+                        nom: req.body.nom,
+                        matricule : req.body.matricule,
+                        civilite : req.body.civilite,
+                        prenoms : req.body.prenoms,
+                        date_naissance : req.body.date_naissance,
+                        lieu_naissance: req.body.lieu_naissance,             
     lieu_habitation: req.body.lieu_habitation,
     nationalite: req.body.nationalite,
     telephone_etudiant: req.body.telephone_etudiant,
-    etablissement_id: req.body.etablissement_id,
-    autre_etablissement: req.body.autre_etablissement,
+                        etablissement_id: req.body.etablissement_id,
+    utilisateurId:req.userData.userId,
+                        ancienne_classe: req.body.ancienne_classe,
+                        ancienne_moyenne: req.body.ancienne_moyenne,
+    ancien_etablissement: req.body.ancien_etablissement,
         nom_prenom_pere: req.body.nom_prenom_pere,
     nom_prenom_mere:req.body.nom_prenom_mere,
         profession_pere: req.body.profession_pere,
@@ -42,21 +66,11 @@ adresse_postal_tuteur:req.body.adresse_postal_tuteur,
     telephone_domicile_tuteur: req.body.telephone_domicile_tuteur,
     telephone_mobile_tuteur: req.body.telephone_mobile_tuteur,
         email_tuteur: req.body.email_tuteur,
-    profession_tuteur: req.body.profession_tuteur,
-        }
-      
-        if (!post.matricule || !post.civilite || !post.nom || !post.prenoms) {
-            return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
-        }
-        models.Etudiant.findOne({ where: { matricule: post.matricule } }).then(result => {
-            if (result) {
-                res.status(409).json({
-                    message: "Code existe déja",
-                });
-            } else {
-                models.Etudiant.create(
-                    post
-                
+        profession_tuteur: req.body.profession_tuteur,
+                    }
+                        
+
+
                 ).then(result => {
                     res.status(201).json({
                         message: "Enregistrement effectue avec success",
@@ -64,14 +78,14 @@ adresse_postal_tuteur:req.body.adresse_postal_tuteur,
                 }).catch(error => {
                     console.log(error);
                     res.status(500).json({
-                        message: "Un probleme est survenu lors de l'enregistrement!",
+                        message: "Un probleme est survenu lors de l'enregistrement!5",
                     });
                 });
             }
         }).catch(error => {
             console.log(error);
             res.status(500).json({
-                message: "Un probleme est survenu lors de l'enregistrement!",
+                message: "Un probleme est survenu lors de l'enregistrement!9",
             });
         });
         
@@ -84,7 +98,7 @@ adresse_postal_tuteur:req.body.adresse_postal_tuteur,
             res.status(200).json(result);
         }).catch(error => {
             res.status(500).json({
-                message: "Un probleme est survenu lors de l'enregistrement!"
+                message: "Un probleme est survenu lors de l'affichage!"
             });
         });
     },
@@ -94,30 +108,45 @@ adresse_postal_tuteur:req.body.adresse_postal_tuteur,
         const id = req.params.id;
     
         const updateRole = {
-    civilite: req.body.civilite,
-    matricule: req.body.matricule,
     nom: req.body.nom,
-    prenoms: req.body.prenoms,
-    date_naissance: req.body.date_naissance,
-    lieu_naissance: req.body.lieu_naissance,
+                        matricule : req.body.matricule,
+                        civilite : req.body.civilite,
+                        prenoms : req.body.prenoms,
+                        date_naissance : req.body.date_naissance,
+                        lieu_naissance: req.body.lieu_naissance,             
     lieu_habitation: req.body.lieu_habitation,
     nationalite: req.body.nationalite,
     telephone_etudiant: req.body.telephone_etudiant,
-    etablissement_id: req.body.etablissement_id,
-    autre_etablissement: req.body.autre_etablissement,
-    nom_prenom_pere: req.body.nom_prenom_pere,
-    profession_pere: req.body.profession_pere,
+                        etablissement_id: req.body.etablissement_id,
+    utilisateurId:req.userData.userId,
+                        ancienne_classe: req.body.ancienne_classe,
+                        ancienne_moyenne: req.body.ancienne_moyenne,
+    ancien_etablissement: req.body.ancien_etablissement,
+        nom_prenom_pere: req.body.nom_prenom_pere,
+    nom_prenom_mere:req.body.nom_prenom_mere,
+        profession_pere: req.body.profession_pere,
+        telephone_bureau_pere: req.body.telephone_bureau_pere,
+        telephone_domicile_pere: req.body.telephone_domicile_pere,
+        telephone_mobile_pere:req.body.telephone_mobile_pere,
     telephone_domicile_mere: req.body.telephone_domicile_mere,
     telephone_mobile_mere: req.body.telephone_mobile_mere,
-    email_mere: req.body.email_mere,
-    lieu_habitation_mere: req.body.lieu_habitation_mere,
+        email_mere: req.body.email_mere,
+        adresse_postal_pere:req.body.adresse_postal_pere,
+        adresse_postal_mere:req.body.adresse_postal_mere,
+adresse_postal_tuteur:req.body.adresse_postal_tuteur,
+        email_pere: req.body.email_pere,
+         profession_mere: req.body.profession_mere,
+    telephone_bureau_mere: req.body.telephone_bureau_mere,
+        lieu_habitation_mere: req.body.lieu_habitation_mere,
+    lieu_habitation_tuteur: req.body.lieu_habitation_tuteur,
     nom_prenom_tuteur: req.body.nom_prenom_tuteur,
     telephone_bureau_tuteur: req.body.telephone_bureau_tuteur,
     telephone_domicile_tuteur: req.body.telephone_domicile_tuteur,
     telephone_mobile_tuteur: req.body.telephone_mobile_tuteur,
-    email_tuteur: req.body.email_tuteur,
+        email_tuteur: req.body.email_tuteur,
+        profession_tuteur: req.body.profession_tuteur,
         }
-        if (!updateRole.matricule || !updateRole.nom || !updateRole.prenoms) {
+        if (!req.body.matricule || !req.body.nom || !req.body.prenoms) {
             return res.status(400).json({ 'error': 'Veuillez rensegne les champs' });
         }
                 models.Etudiant.update(updateRole, {where: {id:id}}).then(result => {

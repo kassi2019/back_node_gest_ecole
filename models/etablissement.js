@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Etablissement.init({
+      code: DataTypes.STRING,
       libelle: DataTypes.STRING,
       boite_postal: DataTypes.STRING,
       fondateur: DataTypes.STRING,

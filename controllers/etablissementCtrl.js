@@ -9,6 +9,7 @@ module.exports = {
     enregistrementEtablissement: function (req, res) {
     //    console.log(req.userData.userId);
         const post = {
+            code: req.body.code,
             libelle: req.body.libelle,
             boite_postal: req.body.boite_postal,
             fondateur: req.body.fondateur,
@@ -66,6 +67,7 @@ module.exports = {
         const id = req.params.id;
     
         const updateEtablissement = {
+            code: req.body.code,
             libelle: req.body.libelle,
             boite_postal: req.body.boite_postal,
             fondateur: req.body.fondateur,

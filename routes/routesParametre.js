@@ -177,8 +177,9 @@ router.post('/creerNouveauUtilisateur', checkAuthMiddleware.checkAuth, personnel
 // router.put("/modificationpersonnel/:id", checkAuthMiddleware.checkAuth, etudiantController.modificationPersonnel);
 // router.delete("/supprimerpersonnel/:id", checkAuthMiddleware.checkAuth, etudiantController.supprimerPersonnel);
 router.post('/enregistrementEtudiant', checkAuthMiddleware.checkAuth, etudiantController.enregistrementEtudiant);
-
-
+router.get('/listeEtudiant', checkAuthMiddleware.checkAuth, etudiantController.listeEtudiant);
+router.put("/modificationEtudiant/:id", checkAuthMiddleware.checkAuth, etudiantController.modificationEtudiant);
+router.delete("/supprimerEtudiant/:id", checkAuthMiddleware.checkAuth, etudiantController.supprimerEtudiant);
 
 
 module.exports = router;

@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Utilisateur.hasMany(models.Structure);
       Utilisateur.hasMany(models.anneeScolaire);
-Utilisateur.hasMany(models.Personnel);
+      Utilisateur.hasMany(models.Personnel);
+      Utilisateur.hasMany(models.Etudiant);
     }
   }
   Utilisateur.init({

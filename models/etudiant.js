@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  // class Etudiant extends Model {
+  // class Utilisateur extends Model {
   class Etudiant extends Model {
     /**
      * Helper method for defining associations.
@@ -12,23 +12,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-    //   Etudiant.hasMany(models.Structure);
-    //   Etudiant.hasMany(models.anneeScolaire);
-Etudiant.belongsTo(models.Utilisateur);
+      Etudiant.belongsTo(models.Utilisateur);
     }
   }
-    Etudiant.init({
+  Etudiant.init({
     civilite: DataTypes.STRING,
     matricule: DataTypes.STRING,
     nom: DataTypes.STRING,
     prenoms: DataTypes.STRING,
-    date_naissance: DataTypes.DATE,
-    lieu_naissance: DataTypes.STRING,
-    lieu_habitation: DataTypes.STRING,
+      date_naissance: DataTypes.STRING,
+   lieu_naissance: DataTypes.STRING,
+  lieu_habitation: DataTypes.STRING,
     nationalite: DataTypes.STRING,
     telephone_etudiant: DataTypes.STRING,
-    etablissement_id: DataTypes.STRING,
-    autre_etablissement: DataTypes.STRING,
+      
+    utilisateurId:DataTypes.INTEGER,
+      ancien_etablissement: DataTypes.STRING,
+      ancienne_moyenne: DataTypes.STRING,
+     ancienne_classe: DataTypes.STRING,
     nom_prenom_pere: DataTypes.STRING,
     nom_prenom_mere:DataTypes.STRING,
     profession_pere: DataTypes.STRING,
@@ -42,7 +43,7 @@ telephone_domicile_pere: DataTypes.STRING,
         adresse_postal_mere:DataTypes.STRING,
 adresse_postal_tuteur:DataTypes.STRING,
         email_pere: DataTypes.STRING,
-         profession_mere: DataTypes.STRING,
+        profession_mere: DataTypes.STRING,
     telephone_bureau_mere: DataTypes.STRING,
         lieu_habitation_mere: DataTypes.STRING,
     lieu_habitation_tuteur: DataTypes.STRING,
@@ -50,9 +51,8 @@ adresse_postal_tuteur:DataTypes.STRING,
     telephone_bureau_tuteur: DataTypes.STRING,
     telephone_domicile_tuteur: DataTypes.STRING,
     telephone_mobile_tuteur: DataTypes.STRING,
-        email_tuteur: DataTypes.STRING,
-    profession_tuteur: DataTypes.STRING,
-
+    email_tuteur: DataTypes.STRING,
+      profession_tuteur: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Etudiant',
