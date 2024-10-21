@@ -395,13 +395,13 @@ onMounted(() => {
 });
 </script>
 <style scoped>
-.imagelogo {
+/* .imagelogo {
   border-radius: 50%;
   width: 7%;
   height: 10%;
   border: 2px solid #000;
   float: left;
-}
+} */
 
 /* .imgperso{
 

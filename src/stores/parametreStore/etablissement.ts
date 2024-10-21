@@ -8,7 +8,8 @@ import apiUrl from "@/config/axios";
 
 
 interface dossieretablissement {
-    id: number;
+  id: number;
+  code: string;
     libelle: string;
     boite_postal: string;
     fondateur: string;

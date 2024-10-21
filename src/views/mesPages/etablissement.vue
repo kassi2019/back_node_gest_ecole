@@ -32,7 +32,8 @@
                         <thead class="thead-dark">
                           <tr>
                             <th scope="col">N°</th>
-                            <th scope="col" style="width: 45%">
+                            <th scope="col">Sigle</th>
+                            <th scope="col" style="width: 40%">
                               Nom établissement
                             </th>
                             <th scope="col" style="width: 15%">Boite postal</th>
@@ -55,6 +56,9 @@
                           >
                             <td style="border: 1px solid #000">
                               {{ index + 1 }}
+                            </td>
+                            <td style="border: 1px solid #000">
+                              {{ item.code }}
                             </td>
                             <td style="border: 1px solid #000">
                               {{ item.libelle }}
@@ -107,7 +111,7 @@
         aria-hidden="true"
         ref="modalRef"
       >
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">
@@ -121,18 +125,24 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Nom établissement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="form.libelle"
-                />
-              </div>
-
-              <div class="mb-3">
+              <form class="row g-3">
+                <div class="col-md-2">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Sigle</label
+                  >
+                  <input type="text" class="form-control" v-model="form.code" />
+                </div>
+                <div class="col-md-10">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Nom établissement</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="form.libelle"
+                  />
+                </div>
+                 <div class="col-md-6">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Boite postal</label
                 >
@@ -143,7 +153,7 @@
                 />
               </div>
 
-              <div class="mb-3">
+              <div class="col-md-6">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Fondateur</label
                 >
@@ -153,7 +163,7 @@
                   v-model="form.fondateur"
                 />
               </div>
-              <div class="mb-3">
+              <div class="col-md-12">
                 <label for="exampleFormControlInput1" class="form-label"
                   >N° agrement</label
                 >
@@ -163,6 +173,7 @@
                   v-model="form.numero_agrement"
                 />
               </div>
+              </form>
             </div>
             <div class="modal-footer">
               <button
@@ -197,7 +208,7 @@
       aria-hidden="true"
       ref="modalModification"
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Modifier Etablissement</h5>
@@ -209,20 +220,24 @@
             ></button>
           </div>
           <div class="modal-body">
-         
-            <form class="row g-3 needs-validation">
-                <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label"
-                  >Nom établissement</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="formmod.libelle"
-                />
-              </div>
-
-              <div class="mb-3">
+          <form class="row g-3">
+                <div class="col-md-2">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Sigle</label
+                  >
+                  <input type="text" class="form-control" v-model="formmod.code" />
+                </div>
+                <div class="col-md-10">
+                  <label for="exampleFormControlInput1" class="form-label"
+                    >Nom établissement</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="formmod.libelle"
+                  />
+                </div>
+                 <div class="col-md-6">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Boite postal</label
                 >
@@ -233,7 +248,7 @@
                 />
               </div>
 
-              <div class="mb-3">
+              <div class="col-md-6">
                 <label for="exampleFormControlInput1" class="form-label"
                   >Fondateur</label
                 >
@@ -243,7 +258,7 @@
                   v-model="formmod.fondateur"
                 />
               </div>
-              <div class="mb-3">
+              <div class="col-md-12">
                 <label for="exampleFormControlInput1" class="form-label"
                   >N° agrement</label
                 >
@@ -253,7 +268,7 @@
                   v-model="formmod.numero_agrement"
                 />
               </div>
-            </form>
+              </form>
           </div>
           <div class="modal-footer">
             <button
@@ -298,19 +313,22 @@ const showModal = () => {
 };
 
 const form: any = reactive({
+  code: "",
   libelle: "",
   boite_postal: "",
   fondateur: "",
   numero_agrement: "",
 });
 const formmod: any = reactive({
+  code: "",
   libelle: "",
   boite_postal: "",
   fondateur: "",
   numero_agrement: "",
 });
 function ViderChamps() {
-  (form.libelle = ""),
+  (form.code = ""),
+    (form.libelle = ""),
     (form.boite_postal = ""),
     (form.fondateur = ""),
     (form.numero_agrement = "");
@@ -324,6 +342,7 @@ function EnregistrementEtablissement() {
   //if (!$v.value.$invalid) {
   try {
     let obj: any = {
+      code: form.code,
       libelle: form.libelle,
       boite_postal: form.boite_postal,
       fondateur: form.fondateur,
@@ -351,6 +370,7 @@ const showModalDecision = (id: number) => {
     (item: { id: number }) => item.id === id
   );
   if (d_data) {
+    formmod.code = d_data.code;
     formmod.libelle = d_data.libelle;
     formmod.boite_postal = d_data.boite_postal;
     formmod.fondateur = d_data.fondateur;

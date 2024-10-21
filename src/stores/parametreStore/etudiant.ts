@@ -16,9 +16,11 @@ interface dossieretudiant {
    date_naissance: Date;
    lieu_naissance: string;
    lieu_habitation: string;
-   nationalite: string;
+  nationalite: string;
+  ancienne_classe: string;
+  ancienne_moyenne: string;
+  ancien_etablissement: string;
    telephone_etudiant: number;
-   etablissement_id: string;
    nom_prenom_pere: string;
    profession_pere: number,
    telephone_domicile_mere: string,
@@ -61,7 +63,7 @@ export const etudiantStore = defineStore("etudiant",{
   actions: {
      async getetudiant(){
                 try {
-                    const response = await apiUrl.get("/listeetudiant",{ 
+                    const response = await apiUrl.get("/listeEtudiant",{ 
                       headers: authHeader(),
                       
                     });
@@ -91,7 +93,7 @@ async ajouteretudiant(infor: dossieretudiant){ //etudiant d'ajout des informatio
         
  async Supprimeretudiant(id: number){ //etudiant de suppression
                 try {
-                    await apiUrl.delete(`/supprimeretudiant/${id}`,{
+                    await apiUrl.delete(`/supprimerEtudiant/${id}`,{
                         headers: authHeader(),
                     });
                     this.stateetudiant = this.stateetudiant.filter((item) => item.id !== id);
@@ -106,7 +108,7 @@ async ajouteretudiant(infor: dossieretudiant){ //etudiant d'ajout des informatio
 
  async modifieretudiant(credentials: dossieretudiant) {
       try {
-        const response = await apiUrl.put(`/modificationetudiant/${credentials.id}`,
+        const response = await apiUrl.put(`/modificationEtudiant/${credentials.id}`,
           credentials, { headers: authHeader(), }
         );
         const index = this.stateetudiant.findIndex(

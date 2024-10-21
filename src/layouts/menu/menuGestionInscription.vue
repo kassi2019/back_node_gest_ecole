@@ -51,6 +51,7 @@
               ><span class="menu-title" data-i18n="">Création étudiant</span></a
             >
           </li>
+          
           <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/inscriprion')"
