@@ -19,6 +19,8 @@ const sousClasseController = require('../controllers/sousClasseCtrl');
 const affectationClasseController = require('../controllers/affectationClasseCtrl');
 const personnelController = require('../controllers/personnelCtrl');
 const etudiantController = require('../controllers/etudiantCtrl');
+const inscriptionController = require('../controllers/inscriptionCtrl');
+const typeversementController = require('../controllers/typeversementCtrl');
 const router = express.Router();
 
 router.post('/enregistrementStructure', checkAuthMiddleware.checkAuth, structureController.enregistrementStructure);
@@ -181,5 +183,20 @@ router.get('/listeEtudiant', checkAuthMiddleware.checkAuth, etudiantController.l
 router.put("/modificationEtudiant/:id", checkAuthMiddleware.checkAuth, etudiantController.modificationEtudiant);
 router.delete("/supprimerEtudiant/:id", checkAuthMiddleware.checkAuth, etudiantController.supprimerEtudiant);
 
+// route gestion des inscriptions
+
+router.post('/enregistrementInscription', checkAuthMiddleware.checkAuth, inscriptionController.enregistrementInscription);
+router.get('/listeInscription', checkAuthMiddleware.checkAuth, inscriptionController.listeInscription);
+router.put("/modificationInscription/:id", checkAuthMiddleware.checkAuth, inscriptionController.modificationInscription);
+router.delete("/supprimerInscription/:id", checkAuthMiddleware.checkAuth, inscriptionController.supprimerInscription);
+
+
+
+// route gestion des inscriptions
+
+router.post('/enregistrementTypeVersement', checkAuthMiddleware.checkAuth, typeversementController.enregistrementTypeVersement);
+router.get('/listeTypeVersement', checkAuthMiddleware.checkAuth, typeversementController.listeTypeVersement);
+router.put("/modificationTypeVersement/:id", checkAuthMiddleware.checkAuth, typeversementController.modificationTypeVersement);
+router.delete("/supprimerTypeVersement/:id", checkAuthMiddleware.checkAuth, typeversementController.supprimerTypeVersement);
 
 module.exports = router;

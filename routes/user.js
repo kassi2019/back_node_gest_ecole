@@ -15,4 +15,7 @@ router.get("/listeAffecter", checkAuthMiddleware.checkAuth, affectationControlle
 router.put("/modificationAffectation/:id", checkAuthMiddleware.checkAuth, affectationController.modificationAffectation);
 router.delete("/supprimerAffectation/:id", checkAuthMiddleware.checkAuth, affectationController.supprimerAffectation);
 
+
+router.post('/affichageUtilisateur', userController.affichageUtilisateur);
+
 module.exports = router;

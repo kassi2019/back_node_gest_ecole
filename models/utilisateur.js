@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Utilisateur.hasMany(models.anneeScolaire);
       Utilisateur.hasMany(models.Personnel);
       Utilisateur.hasMany(models.Etudiant);
+      Utilisateur.hasMany(models.TypeVersement);
     }
   }
   Utilisateur.init({
@@ -28,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     //date_naissance: DataTypes.DATE,
     //lieu_naissance: DataTypes.STRING,
     //fonction_id: DataTypes.STRING,
-    matricule: DataTypes.STRING,
+    //matricule: DataTypes.STRING,
     //emploi_id: DataTypes.STRING,
     //salaire: DataTypes.STRING,
    // date_entre: DataTypes.DATE,

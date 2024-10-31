@@ -1,7 +1,99 @@
 const models = require('../models');
 const bcryptjs = require('bcryptjs');
+const nodemailer = require('nodemailer')
+// const transporter = require('../config/email');
 const jwt = require('jsonwebtoken');
+const Mailgen = require('mailgen');
+
+
+
 module.exports = {
+    affichageUtilisateur: function (req, res) {
+        const { userEmail } = req.body;
+        let config = {
+            service: 'gmail',
+            auth: {
+                
+                 user: "fkassi92@gmail.com",
+                pass: "ndmh pibw ecar tupv",
+            }
+        }
+        let transporter = nodemailer.createTransport(config);
+
+        let MailGenerator = new Mailgen({
+            theme: "default",
+            product: {
+                name: "Mailgen",
+                link:'https://mailgen.js/'
+            }
+})
+        let response = {
+            body: {
+                name:"kassi",
+                intro: "Your bill has arrived",
+                table: {
+                    data: [
+                        {
+                            item: "Nodemailer Stack Book",
+                            description: "A Backend application",
+                            price: "$10.9947",
+                        }
+                    ]
+                },
+                outro:"looking forward to do more business"
+    }
+        }
+        
+        let mail = MailGenerator.generate(response)
+        let message = {
+            from: "fkassi92@gmail.com",
+            to: userEmail,
+            subject: "place Order",
+            html:mail
+        }
+        transporter.sendMail(message).then(() => {
+             return res.status(201).json({
+            msg: "you should receive an email",
+            info: info.messageId,
+            preview:nodemailer.getTestMessageUrl(info)
+        })
+        }).catch(error => {
+    return res.status(500).json({error})
+})
+   // res.status(201).json("Signup successfully...!")
+},
+     creationUtilisateur : function (req, res) {
+    let testAccount =  nodemailer.createTestAccount();
+
+    let transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  secure: false, // true for port 465, false for other ports
+  auth: {
+    user: "maddison53@ethereal.email",
+    pass: "jn7jnAPss4f63QBp6D",
+  },
+    });
+    let message = {
+    from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
+    to: "bar@example.com, baz@example.com", // list of receivers
+    subject: "Hello ✔", // Subject line
+    text: "Successfully Register with us", // plain text body
+    html: "<b>Successfully Register with us</b>", // html body
+    };
+    
+    transporter.sendMail(message).then((info) => {    
+        return res.status(201).json({
+            msg: "you should receive an email",
+            info: info.messageId,
+            preview:nodemailer.getTestMessageUrl(info)
+        })
+    }).catch(error => {
+    return res.status(500).json({error})
+})
+
+   // res.status(201).json("Signup successfully...!")
+},
  signUp : function (req, res){
     
     //Sign up
@@ -14,7 +106,7 @@ module.exports = {
          } else {
             bcryptjs.genSalt(10, function(err, salt){
                 bcryptjs.hash(req.body.password, salt, function(err, hash){
-                    const user = {
+                    const user1 = {
                         name: req.body.name,
                         matricule: req.body.matricule,
                         prenoms: req.body.prenoms,
@@ -39,7 +131,7 @@ module.exports = {
                         lieu_habitation: req.body.lieu_habitation,
                         // utilisateurId:req.userData.userId
                     }
-                    if (!req.body.role_id) {
+                    if (!user1.role_id) {
                         models.Personnel.create(perso).then(result => {
                         res.status(201).json({
                             message: "Enregistrement effectuer avec success",
@@ -51,7 +143,8 @@ module.exports = {
                         });
                     });
                     } else {
-                        models.Utilisateur.create(user).then(result => {
+                        
+                        models.Utilisateur.create(user1).then(result => {
                         res.status(201).json({
                             message: "Utilisateur crée avec sucess",
                         });
@@ -61,9 +154,61 @@ module.exports = {
                             message: "un problème est survenu lors de l'enregistrement52!",
                         });
                     });
-                    models.Personnel.create(perso);
+                     models.Personnel.create(perso);
+
+//  const { userEmail } = user1.email;
+        let config = {
+            service: 'gmail',
+            auth: {
+                
+                 user: "fkassi92@gmail.com",
+                pass: "ndmh pibw ecar tupv",
+            }
+        }
+        let transporter = nodemailer.createTransport(config);
+
+        let MailGenerator = new Mailgen({
+            theme: "default",
+            product: {
+                name: "Mailgen",
+                link:'https://mailgen.js/'
+            }
+})
+        let response = {
+            body: {
+                name:"kassi",
+                intro: "Your bill has arrived",
+                table: {
+                    data: [
+                        {
+                            item: "Nodemailer Stack Book",
+                            description: "A Backend application",
+                            price: "$10.9947",
+                        }
+                    ]
+                },
+                outro:"looking forward to do more business"
+    }
+        }
+        
+        let mail = MailGenerator.generate(response)
+        let message = {
+            from: "fkassi92@gmail.com",
+            to: user1.email,
+            subject: "place Order",
+            html:mail
+        }
+        transporter.sendMail(message).then(() => {
+             return res.status(201).json({
+            msg: "you should receive an email",
+            info: info.messageId,
+            preview:nodemailer.getTestMessageUrl(info)
+        })
+        }).catch(error => {
+    return res.status(500).json({error})
+})
                     }
-                  
+
                 });
             });
         }
@@ -225,6 +370,6 @@ module.exports = {
 }
 
 // module.exports = {
-//     signUp: signUp,
-//     login: login
+//     // creationUtilisateur,
+//     affichageUtilisateur
 // } 
