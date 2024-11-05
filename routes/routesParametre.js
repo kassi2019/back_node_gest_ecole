@@ -189,7 +189,7 @@ router.post('/enregistrementInscription', checkAuthMiddleware.checkAuth, inscrip
 router.get('/listeInscription', checkAuthMiddleware.checkAuth, inscriptionController.listeInscription);
 router.put("/modificationInscription/:id", checkAuthMiddleware.checkAuth, inscriptionController.modificationInscription);
 router.delete("/supprimerInscription/:id", checkAuthMiddleware.checkAuth, inscriptionController.supprimerInscription);
-
+router.get('/listeInscription1', checkAuthMiddleware.checkAuth, inscriptionController.listeInscription78);
 
 
 // route gestion des inscriptions

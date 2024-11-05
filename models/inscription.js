@@ -13,11 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
      Inscription.belongsTo(models.Utilisateur);
+    Inscription.belongsTo(models.Classe);
+    Inscription.belongsTo(models.anneeScolaire)
     }
   }
   Inscription.init({
-    anne_scolaire: DataTypes.STRING,
-    classe_id: DataTypes.STRING,
+    anneeScolaireId: DataTypes.STRING,
+    ClasseId: DataTypes.STRING,
       bourssier: DataTypes.STRING,
       transport: DataTypes.STRING,
       montant_scolaire: DataTypes.STRING,
