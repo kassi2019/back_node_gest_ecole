@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
      Inscription.belongsTo(models.Utilisateur);
-    Inscription.belongsTo(models.Classe);
+      Inscription.belongsTo(models.Classe);
+      Inscription.belongsTo(models.Etudiant);
     Inscription.belongsTo(models.anneeScolaire)
     }
   }
@@ -23,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       bourssier: DataTypes.STRING,
       transport: DataTypes.STRING,
       montant_scolaire: DataTypes.STRING,
-      date_versement: DataTypes.STRING,
+      date_versement: DataTypes.DATE,
       type_versement_id: DataTypes.STRING,
       montant_verse: DataTypes.STRING,
-      etudiant_id: DataTypes.STRING,
+      EtudiantId: DataTypes.STRING,
       frais_inscription: DataTypes.STRING,
       utilisateurId: DataTypes.INTEGER,
     statut: DataTypes.INTEGER,
