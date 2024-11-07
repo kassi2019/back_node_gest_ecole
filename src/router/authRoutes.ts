@@ -24,8 +24,26 @@ import Affectation from "@/views/mesPages/affectation.vue";
 import SousClasse from "@/views/mesPages/sousClasse.vue";
 import affectationClasse from "@/views/mesPages/affectationClasse.vue";
 import etudiant from "@/views/mesPages/etudiant.vue";
-
+import inscription from "@/views/mesPages/inscription.vue";
+import typeVersement from "@/views/mesPages/typeVersement.vue";
+import tableauInscriptionParEtudiant from "@/views/mesPages/tableauInscriptionParEtudiant.vue";
 const AuthRoutes = [
+   {
+    path: "/tableauInscriptionParEtudiant/:id",
+    name: "tableauInscriptionParEtudiant",
+    component: tableauInscriptionParEtudiant,
+
+  },
+  {
+    path: "/typeVersement",
+    name: "typeVersement",
+    component: typeVersement,
+  },
+  {
+    path: "/inscription",
+    name: "inscription",
+    component: inscription,
+  },
   {
     path: "/etudiant",
     name: "etudiant",

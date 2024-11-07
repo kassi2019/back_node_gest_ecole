@@ -10,6 +10,7 @@ import TheDefault from "@/layouts/TheDefault.vue";
 import Vue3FormWizard from 'vue3-form-wizard'
 import router from "./router";
 import VueSweetalert2 from "vue-sweetalert2";
+import 'vue-search-select/dist/VueSearchSelect.css';
 import 'vue3-form-wizard/dist/style.css'
 import moment from 'moment';
 import money from 'v-money3';

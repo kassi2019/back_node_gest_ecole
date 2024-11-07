@@ -38,6 +38,16 @@ input[type=email], select {
   border-radius: 4px;
   box-sizing: border-box;
 }
+.money3{
+  width: 100% !important;
+  height: 50% !important;
+  padding: 12px 20px !important;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 .imagelogo {
   border-radius: 50%;
   width: 7%;

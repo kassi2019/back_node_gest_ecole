@@ -1,6 +1,6 @@
 <template>
   <div>
-<div class="app-content content">
+    <div class="app-content content">
       <div class="content-wrapper">
         <div class="content-body">
           <div class="row card pull-up">
@@ -36,11 +36,15 @@
                             <th scope="col" style="width: 10%">Matricule</th>
                             <th scope="col" style="width: 15%">Nom</th>
                             <th scope="col" style="width: 40%">Prénoms</th>
-                            <th scope="col" style="width: 12%">Date naissance</th>
-                            <th scope="col" style="width: 12%">Lieu naissance</th>
+                            <th scope="col" style="width: 12%">
+                              Date naissance
+                            </th>
+                            <th scope="col" style="width: 12%">
+                              Lieu naissance
+                            </th>
                             <th
                               scope="col"
-                              style="text-align: center !important;width: 12%"
+                              style="text-align: center !important; width: 12%"
                             >
                               Action
                             </th>
@@ -48,7 +52,9 @@
                         </thead>
                         <tbody>
                           <tr
-                            v-for="(item, index) in storeEtudiant.getteretudiant"
+                            v-for="(
+                              item, index
+                            ) in storeEtudiant.getteretudiant"
                             :key="item.id"
                           >
                             <td style="border: 1px solid #000">
@@ -69,7 +75,7 @@
                             <td style="border: 1px solid #000">
                               {{ item.date_naissance }}
                             </td>
-                             <td style="border: 1px solid #000">
+                            <td style="border: 1px solid #000">
                               {{ item.lieu_naissance }}
                             </td>
                             <td style="border: 1px solid #000">
@@ -77,7 +83,7 @@
                                 type="button"
                                 class="btn btn-primary btn-sm"
                                 title="Modifier"
-                               @click="showModalDecision(item.id)"
+                                @click="showModalDecision(item.id)"
                               >
                                 <i class="la la-pencil-square"></i>
                               </button>
@@ -85,7 +91,7 @@
                                 type="button"
                                 class="btn btn-danger btn-sm"
                                 title="Supprimer"
-                                 @click="supprimer(item.id)"
+                                @click="supprimer(item.id)"
                               >
                                 <i class="la la-trash"></i>
                               </button>
@@ -133,1032 +139,861 @@
               ></button>
             </div>
             <div class="modal-body">
-             <form-wizard shape="square" color="#3498db">
-                    <tab-content title="IDENTITE DE L’ELEVE ">
-                      <!-- <img
+              <form-wizard shape="square" color="#3498db">
+                <tab-content title="IDENTITE DE L’ELEVE ">
+                  <!-- <img
                         src="/theme-assets/images/portrait/small/avatar-s-19.png"
                         width="50"
                         height="50"
                         class="imagelogo"
                       /><br/><br/><br/><br/><br/> -->
-                      <form class="row g-3">
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Civilité</label
-                          >
-                          <select
-                            class="form-select form-select-lg mb-3 frome_champs"
-                            aria-label="form-select-lg example"
-                            v-model="form.civilite"
-                          >
-                            <option selected></option>
-                            <option value="Mr">Monsieur</option>
-                            <option value="Mme">Madame</option>
-                          </select>
-                        </div>
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Matricule</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            :value="genererMatricule()"
-                            readonly
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Nom</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="basicInput"
-                            v-model="form.nom"
-                          />
-                        </div>
-                        <div class="col-md-5">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Prénoms</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="form.prenoms"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Date naissance</label
-                          >
-                          <input
-                            type="date"
-                            class="form-control"
-                            v-model="form.date_naissance"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Lieu naissance</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="form.lieu_naissance"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Lieu d'habitation</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="form.lieu_habitation"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Nationalité</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="form.nationalite"
-                          />
-                        </div>
-                        <div class="col-md-4">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Télephone de l'enfant ( WhatsApp )</label
-                          >
-                          <input
-                            type="number"
-                            class="form-control"
-                            v-model="form.telephone_etudiant"
-                          />
-                        </div>
-                        <div class="col-md-4">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Ancien Etablissement</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="form.ancien_etablissement"
-                          />
-                        </div>
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Ancien Classe
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="form.ancienne_classe"
-                          />
-                        </div>
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Ancienne moyenne</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="form.ancienne_moyenne"
-                          />
-                        </div>
-                      </form>
-                    </tab-content>
-                    <tab-content title="IDENTITE SUR LES PARENTS">
-                      <fieldset class="border p-4 rounded">
-                        <form class="row g-3">
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="exampleRadios"
-                                id="exampleRadios2"
-                                value="0"
-                                v-model="form.info_parent"
-                              />
-                              <label
-                                class="form-check-label"
-                                for="exampleRadios2"
-                              >
-                                Info sur le père
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="exampleRadios"
-                                id="exampleRadios2"
-                                value="1"
-                                v-model="form.info_parent"
-                              />
-                              <label
-                                class="form-check-label"
-                                for="exampleRadios2"
-                              >
-                                Info sur la mère
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="exampleRadios"
-                                id="exampleRadios2"
-                                value="2"
-                                v-model="form.info_parent"
-                              />
-                              <label
-                                class="form-check-label"
-                                for="exampleRadios2"
-                              >
-                                info sur le tuteur
-                              </label>
-                            </div>
-                          </div>
-                        </form>
-                      </fieldset>
-                      <fieldset
-                        class="border p-4 rounded"
-                        v-if="form.info_parent == 0"
+                  <form class="row g-3">
+                    <div class="col-md-2">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Civilité</label
                       >
-                        <!-- <legend class="w-auto px-2">
+                      <select
+                        class="form-select form-select-lg mb-3 frome_champs"
+                        aria-label="form-select-lg example"
+                        v-model="form.civilite"
+                      >
+                        <option selected></option>
+                        <option value="Mr">Monsieur</option>
+                        <option value="Mme">Madame</option>
+                      </select>
+                    </div>
+                    <div class="col-md-2">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Matricule</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        :value="genererMatricule()"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Nom</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="basicInput"
+                        v-model="form.nom"
+                      />
+                    </div>
+                    <div class="col-md-5">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Prénoms</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="form.prenoms"
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Date naissance</label
+                      >
+                      <input
+                        type="date"
+                        class="form-control"
+                        v-model="form.date_naissance"
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Lieu naissance</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="form.lieu_naissance"
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Lieu d'habitation</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="form.lieu_habitation"
+                      />
+                    </div>
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Nationalité</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="form.nationalite"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télephone de l'enfant ( WhatsApp )</label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        v-model="form.telephone_etudiant"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Ancien Etablissement</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="form.ancien_etablissement"
+                      />
+                    </div>
+                    <div class="col-md-2">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Ancienne Classe
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="form.ancienne_classe"
+                      />
+                    </div>
+                    <div class="col-md-2">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Ancienne moyenne</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="form.ancienne_moyenne"
+                      />
+                    </div>
+                  </form>
+                </tab-content>
+                <tab-content title="IDENTITE SUR LES PARENTS">
+                  <fieldset class="border p-4 rounded">
+                    <form class="row g-3">
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="exampleRadios"
+                            id="exampleRadios2"
+                            value="0"
+                            v-model="form.info_parent"
+                          />
+                          <label class="form-check-label" for="exampleRadios2">
+                            Info sur le père
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="exampleRadios"
+                            id="exampleRadios2"
+                            value="1"
+                            v-model="form.info_parent"
+                          />
+                          <label class="form-check-label" for="exampleRadios2">
+                            Info sur la mère
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="exampleRadios"
+                            id="exampleRadios2"
+                            value="2"
+                            v-model="form.info_parent"
+                          />
+                          <label class="form-check-label" for="exampleRadios2">
+                            info sur le tuteur
+                          </label>
+                        </div>
+                      </div>
+                    </form>
+                  </fieldset>
+                  <fieldset
+                    class="border p-4 rounded"
+                    v-if="form.info_parent == 0"
+                  >
+                    <!-- <legend class="w-auto px-2">
                           Information Sur le père
                         </legend> -->
-                        <form class="row g-3">
-                          <div class="col-md-9">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Nom et Prénoms du père</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.nom_prenom_pere"
-                            />
-                          </div>
+                    <form class="row g-3">
+                      <div class="col-md-9">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Nom et Prénoms du père</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.nom_prenom_pere"
+                        />
+                      </div>
 
-                          <div class="col-md-3">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Profession du père</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.profession_pere"
-                            />
-                          </div>
+                      <div class="col-md-3">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Profession du père</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.profession_pere"
+                        />
+                      </div>
 
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone domicile</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_domicile_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone Bureau</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_bureau_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone mobile ( WhatsApp)</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_mobile_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Email</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.email_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Adresse Postal</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.adresse_postal_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Lieu d'Habitation</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.lieu_habitation_pere"
-                            />
-                          </div>
-                        </form>
-                      </fieldset>
-                      <fieldset
-                        class="border p-4 rounded"
-                        v-if="form.info_parent == 1"
-                      >
-                        <!-- <legend class="w-auto px-2">
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone domicile</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_domicile_pere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone Bureau</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_bureau_pere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone mobile ( WhatsApp)</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_mobile_pere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Email</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.email_pere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Adresse Postal</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.adresse_postal_pere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Lieu d'Habitation</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.lieu_habitation_pere"
+                        />
+                      </div>
+                    </form>
+                  </fieldset>
+                  <fieldset
+                    class="border p-4 rounded"
+                    v-if="form.info_parent == 1"
+                  >
+                    <!-- <legend class="w-auto px-2">
                           Information Sur la mère
                         </legend> -->
-                        <form class="row g-3">
-                          <div class="col-md-9">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Nom && Prénoms de la mère</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.nom_prenom_mere"
-                            />
-                          </div>
+                    <form class="row g-3">
+                      <div class="col-md-9">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Nom && Prénoms de la mère</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.nom_prenom_mere"
+                        />
+                      </div>
 
-                          <div class="col-md-3">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Profession
-                            </label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.profession_mere"
-                            />
-                          </div>
+                      <div class="col-md-3">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Profession
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.profession_mere"
+                        />
+                      </div>
 
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone domicile</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_domicile_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone Bureau</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_bureau_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone mobile ( WhatsApp)</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_mobile_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Email</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.email_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Adresse Postal</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.adresse_postal_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Lieu d'Habitation</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.lieu_habitation_mere"
-                            />
-                          </div>
-                        </form>
-                      </fieldset>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone domicile</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_domicile_mere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone Bureau</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_bureau_mere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone mobile ( WhatsApp)</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_mobile_mere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Email</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.email_mere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Adresse Postal</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.adresse_postal_mere"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Lieu d'Habitation</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.lieu_habitation_mere"
+                        />
+                      </div>
+                    </form>
+                  </fieldset>
 
-                      <fieldset
-                        class="border p-4 rounded"
-                        v-if="form.info_parent == 2"
-                      >
-                        <!-- <legend class="w-auto px-2">
+                  <fieldset
+                    class="border p-4 rounded"
+                    v-if="form.info_parent == 2"
+                  >
+                    <!-- <legend class="w-auto px-2">
                           Information Sur le Tuteur
                         </legend> -->
-                        <form class="row g-3">
-                          <div class="col-md-9">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Nom && Prénoms du Tuteur</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.nom_prenom_tuteur"
-                            />
-                          </div>
-
-                          <div class="col-md-3">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Profession</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.profession_tuteur"
-                            />
-                          </div>
-
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone domicile</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_domicile_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone Bureau</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_bureau_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone mobile ( WhatsApp)</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.telephone_mobile_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Email</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.email_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Adresse Postal</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.adresse_postal_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Lieu d'Habitation</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="form.lieu_habitation_tuteur"
-                            />
-                          </div>
-                        </form>
-                      </fieldset>
-                    </tab-content>
-
-                    <tab-content title="RECAP DES INFORMATIONS">
-                      <div class="table-responsive">
-                        <div class="formtitre">Information sur l'entié</div>
-                        <table class="table">
-                          <thead class="" style="border: 1px solid #000">
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                CIVILITE
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.civilite }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                MATRICULE
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ genererMatricule() }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                NOM
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.nom }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                PRENOMS
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.prenoms }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                DATE DE NAISSANCE
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.date_naissance }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                LIEU NAISSANCE
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.lieu_naissance }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                LIEU HABITATION
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.lieu_habitation }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                NATIONALITE
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.nationalite }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                TELEPHONE DE L' ENTITE
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.telephone_etudiant }}
-                              </td>
-                            </tr>
-                          </thead>
-                        </table>
-
-                        <div class="formtitre">Information sur le pere</div>
-                        <table class="table">
-                          <thead class="">
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Nom et Prénoms du père
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.nom_prenom_pere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Profession du père
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.profession_pere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Télphone domicile
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.telephone_domicile_pere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Télphone mobile ( WhatsApp)
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.telephone_mobile_pere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Email
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.email_pere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Adresse Postal
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.adresse_postal_pere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Lieu d'Habitation
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.lieu_habitation_pere }}
-                              </td>
-                            </tr>
-                          </thead>
-                        </table>
-
-                        <div class="formtitre">Information sur la mère</div>
-                        <table class="table">
-                          <thead class="">
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Nom et Prénoms du mère
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.nom_prenom_mere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Profession du mère
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.profession_mere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Télphone domicile
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.telephone_domicile_mere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Télphone mobile ( WhatsApp)
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.telephone_mobile_mere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Email
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.email_mere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Adresse Postal
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.adresse_postal_mere }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Lieu d'Habitation
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.lieu_habitation_mere }}
-                              </td>
-                            </tr>
-                          </thead>
-                        </table>
-
-                        <div class="formtitre">Information sur le tuteur</div>
-                        <table class="table">
-                          <thead class="">
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Nom et Prénoms du tuteur
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.nom_prenom_tuteur }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Profession du tuteur
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.profession_tuteur }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Télphone domicile
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.telephone_domicile_tuteur }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Télphone mobile ( WhatsApp)
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.telephone_mobile_tuteur }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Email
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.email_tuteur }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Adresse Postal
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.adresse_postal_tuteur }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th
-                                scope="col"
-                                style="width: 23%; border: 1px solid #000"
-                              >
-                                Lieu d'Habitation
-                              </th>
-                              <td
-                                style="border: 1px solid #000"
-                                class="miseforme"
-                              >
-                                :{{ form.lieu_habitation_tuteur }}
-                              </td>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
-                    </tab-content>
-
-                    <template v-slot:footer="props">
-                      <div class="wizard-footer-left">
-                        <wizard-button
-                          v-if="props.activeTabIndex > 0"
-                          @click.native="props.prevTab()"
-                          :style="props.fillButtonStyle"
+                    <form class="row g-3">
+                      <div class="col-md-9">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Nom && Prénoms du Tuteur</label
                         >
-                          Précedent
-                        </wizard-button>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.nom_prenom_tuteur"
+                        />
                       </div>
-                      <div class="wizard-footer-right">
-                        <wizard-button
-                          v-if="!props.isLastStep"
-                          @click="props.nextTab()"
-                          class="wizard-footer-right"
-                          :style="props.fillButtonStyle"
-                        >
-                          Suivant
-                        </wizard-button>
 
-                        <wizard-button
-                          v-else
-                          @click="EnregistrementEtudiant()"
-                          class="wizard-footer-right finish-button"
-                          :style="props.fillButtonStyle"
+                      <div class="col-md-3">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Profession</label
                         >
-                          Enregistrer
-                        </wizard-button>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.profession_tuteur"
+                        />
                       </div>
-                    </template>
-                  </form-wizard>
+
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone domicile</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_domicile_tuteur"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone Bureau</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_bureau_tuteur"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Télphone mobile ( WhatsApp)</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.telephone_mobile_tuteur"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Email</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.email_tuteur"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Adresse Postal</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.adresse_postal_tuteur"
+                        />
+                      </div>
+                      <div class="col-md-4">
+                        <label for="exampleFormControlInput1" class="form-label"
+                          >Lieu d'Habitation</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="form.lieu_habitation_tuteur"
+                        />
+                      </div>
+                    </form>
+                  </fieldset>
+                </tab-content>
+
+                <tab-content title="RECAP DES INFORMATIONS">
+                  <div class="table-responsive">
+                    <div class="formtitre">Information sur l'entié</div>
+                    <table class="table">
+                      <thead class="" style="border: 1px solid #000">
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            CIVILITE
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.civilite }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            MATRICULE
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ genererMatricule() }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            NOM
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.nom }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            PRENOMS
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.prenoms }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            DATE DE NAISSANCE
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.date_naissance }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            LIEU NAISSANCE
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.lieu_naissance }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            LIEU HABITATION
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.lieu_habitation }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            NATIONALITE
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.nationalite }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            TELEPHONE DE L' ENTITE
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.telephone_etudiant }}
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+
+                    <div class="formtitre">Information sur le pere</div>
+                    <table class="table">
+                      <thead class="">
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Nom et Prénoms du père
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.nom_prenom_pere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Profession du père
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.profession_pere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Télphone domicile
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.telephone_domicile_pere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Télphone mobile ( WhatsApp)
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.telephone_mobile_pere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Email
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.email_pere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Adresse Postal
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.adresse_postal_pere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Lieu d'Habitation
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.lieu_habitation_pere }}
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+
+                    <div class="formtitre">Information sur la mère</div>
+                    <table class="table">
+                      <thead class="">
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Nom et Prénoms du mère
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.nom_prenom_mere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Profession du mère
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.profession_mere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Télphone domicile
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.telephone_domicile_mere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Télphone mobile ( WhatsApp)
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.telephone_mobile_mere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Email
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.email_mere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Adresse Postal
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.adresse_postal_mere }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Lieu d'Habitation
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.lieu_habitation_mere }}
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+
+                    <div class="formtitre">Information sur le tuteur</div>
+                    <table class="table">
+                      <thead class="">
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Nom et Prénoms du tuteur
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.nom_prenom_tuteur }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Profession du tuteur
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.profession_tuteur }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Télphone domicile
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.telephone_domicile_tuteur }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Télphone mobile ( WhatsApp)
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.telephone_mobile_tuteur }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Email
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.email_tuteur }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Adresse Postal
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.adresse_postal_tuteur }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th
+                            scope="col"
+                            style="width: 23%; border: 1px solid #000"
+                          >
+                            Lieu d'Habitation
+                          </th>
+                          <td style="border: 1px solid #000" class="miseforme">
+                            :{{ form.lieu_habitation_tuteur }}
+                          </td>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                </tab-content>
+
+                <template v-slot:footer="props">
+                  <div class="wizard-footer-left">
+                    <wizard-button
+                      v-if="props.activeTabIndex > 0"
+                      @click.native="props.prevTab()"
+                      :style="props.fillButtonStyle"
+                    >
+                      Précedent
+                    </wizard-button>
+                  </div>
+                  <div class="wizard-footer-right">
+                    <wizard-button
+                      v-if="!props.isLastStep"
+                      @click="props.nextTab()"
+                      class="wizard-footer-right"
+                      :style="props.fillButtonStyle"
+                    >
+                      Suivant
+                    </wizard-button>
+
+                    <wizard-button
+                      v-else
+                      @click="EnregistrementEtudiant()"
+                      class="wizard-footer-right finish-button"
+                      :style="props.fillButtonStyle"
+                    >
+                      Enregistrer
+                    </wizard-button>
+                  </div>
+                </template>
+              </form-wizard>
             </div>
           </div>
         </div>
@@ -1190,586 +1025,503 @@
           </div>
           <div class="modal-body">
             <form-wizard shape="square" color="#3498db">
-                    <tab-content title="IDENTITE DE L’ELEVE ">
-                      <!-- <img
+              <tab-content title="IDENTITE DE L’ELEVE ">
+                <!-- <img
                         src="/theme-assets/images/portrait/small/avatar-s-19.png"
                         width="50"
                         height="50"
                         class="imagelogo"
                       /><br/><br/><br/><br/><br/> -->
-                      <form class="row g-3">
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Civilité</label
-                          >
-                          <select
-                            class="form-select form-select-lg mb-3 frome_champs"
-                            aria-label="form-select-lg example"
-                            v-model="formmod.civilite"
-                          >
-                            <option selected></option>
-                            <option value="Mr">Monsieur</option>
-                            <option value="Mme">Madame</option>
-                          </select>
-                        </div>
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Matricule</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.matricule"
-                            readonly
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Nom</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="basicInput"
-                            v-model="formmod.nom"
-                          />
-                        </div>
-                        <div class="col-md-5">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Prénoms</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.prenoms"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Date naissance</label
-                          >
-                          <input
-                            type="date"
-                            class="form-control"
-                            v-model="formmod.date_naissance"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Lieu naissance</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.lieu_naissance"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Lieu d'habitation</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.lieu_habitation"
-                          />
-                        </div>
-                        <div class="col-md-3">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Nationalité</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.nationalite"
-                          />
-                        </div>
-                        <div class="col-md-4">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Télephone de l'enfant ( WhatsApp )</label
-                          >
-                          <input
-                            type="number"
-                            class="form-control"
-                            v-model="formmod.telephone_etudiant"
-                          />
-                        </div>
-                        <div class="col-md-4">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Ancien Etablissement</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.ancien_etablissement"
-                          />
-                        </div>
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Ancien Classe
-                          </label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.ancienne_classe"
-                          />
-                        </div>
-                        <div class="col-md-2">
-                          <label
-                            for="exampleFormControlInput1"
-                            class="form-label"
-                            >Ancienne moyenne</label
-                          >
-                          <input
-                            type="text"
-                            class="form-control"
-                            v-model="formmod.ancienne_moyenne"
-                          />
-                        </div>
-                      </form>
-                    </tab-content>
-                    <tab-content title="IDENTITE SUR LES PARENTS">
-                      <fieldset class="border p-4 rounded">
-                        <form class="row g-3">
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="exampleRadios"
-                                id="exampleRadios2"
-                                value="0"
-                                v-model="formmod.info_parent"
-                              />
-                              <label
-                                class="form-check-label"
-                                for="exampleRadios2"
-                              >
-                                Info sur le père
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="exampleRadios"
-                                id="exampleRadios2"
-                                value="1"
-                                v-model="formmod.info_parent"
-                              />
-                              <label
-                                class="form-check-label"
-                                for="exampleRadios2"
-                              >
-                                Info sur la mère
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="exampleRadios"
-                                id="exampleRadios2"
-                                value="2"
-                                v-model="formmod.info_parent"
-                              />
-                              <label
-                                class="form-check-label"
-                                for="exampleRadios2"
-                              >
-                                info sur le tuteur
-                              </label>
-                            </div>
-                          </div>
-                        </form>
-                      </fieldset>
-                      <fieldset
-                        class="border p-4 rounded"
-                        v-if="formmod.info_parent == 0"
-                      >
-                        <!-- <legend class="w-auto px-2">
+                <form class="row g-3">
+                  <div class="col-md-2">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Civilité</label
+                    >
+                    <select
+                      class="form-select form-select-lg mb-3 frome_champs"
+                      aria-label="form-select-lg example"
+                      v-model="formmod.civilite"
+                    >
+                      <option selected></option>
+                      <option value="Mr">Monsieur</option>
+                      <option value="Mme">Madame</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Matricule</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.matricule"
+                      readonly
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Nom</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="basicInput"
+                      v-model="formmod.nom"
+                    />
+                  </div>
+                  <div class="col-md-5">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Prénoms</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.prenoms"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Date naissance</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      v-model="formmod.date_naissance"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Lieu naissance</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.lieu_naissance"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Lieu d'habitation</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.lieu_habitation"
+                    />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Nationalité</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.nationalite"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Télephone de l'enfant ( WhatsApp )</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      v-model="formmod.telephone_etudiant"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Ancien Etablissement</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.ancien_etablissement"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Ancien Classe
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.ancienne_classe"
+                    />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="exampleFormControlInput1" class="form-label"
+                      >Ancienne moyenne</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="formmod.ancienne_moyenne"
+                    />
+                  </div>
+                </form>
+              </tab-content>
+              <tab-content title="IDENTITE SUR LES PARENTS">
+                <fieldset class="border p-4 rounded">
+                  <form class="row g-3">
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                          id="exampleRadios2"
+                          value="0"
+                          v-model="formmod.info_parent"
+                        />
+                        <label class="form-check-label" for="exampleRadios2">
+                          Info sur le père
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                          id="exampleRadios2"
+                          value="1"
+                          v-model="formmod.info_parent"
+                        />
+                        <label class="form-check-label" for="exampleRadios2">
+                          Info sur la mère
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="exampleRadios"
+                          id="exampleRadios2"
+                          value="2"
+                          v-model="formmod.info_parent"
+                        />
+                        <label class="form-check-label" for="exampleRadios2">
+                          info sur le tuteur
+                        </label>
+                      </div>
+                    </div>
+                  </form>
+                </fieldset>
+                <fieldset
+                  class="border p-4 rounded"
+                  v-if="formmod.info_parent == 0"
+                >
+                  <!-- <legend class="w-auto px-2">
                           Information Sur le père
                         </legend> -->
-                        <form class="row g-3">
-                          <div class="col-md-9">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Nom et Prénoms du père</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.nom_prenom_pere"
-                            />
-                          </div>
-
-                          <div class="col-md-3">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Profession du père</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.profession_pere"
-                            />
-                          </div>
-
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone domicile</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_domicile_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone Bureau</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_bureau_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone mobile ( WhatsApp)</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_mobile_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Email</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.email_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Adresse Postal</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.adresse_postal_pere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Lieu d'Habitation</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.lieu_habitation_pere"
-                            />
-                          </div>
-                        </form>
-                      </fieldset>
-                      <fieldset
-                        class="border p-4 rounded"
-                        v-if="formmod.info_parent == 1"
+                  <form class="row g-3">
+                    <div class="col-md-9">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Nom et Prénoms du père</label
                       >
-                        <!-- <legend class="w-auto px-2">
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.nom_prenom_pere"
+                      />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Profession du père</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.profession_pere"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone domicile</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_domicile_pere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone Bureau</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_bureau_pere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone mobile ( WhatsApp)</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_mobile_pere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Email</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.email_pere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Adresse Postal</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.adresse_postal_pere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Lieu d'Habitation</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.lieu_habitation_pere"
+                      />
+                    </div>
+                  </form>
+                </fieldset>
+                <fieldset
+                  class="border p-4 rounded"
+                  v-if="formmod.info_parent == 1"
+                >
+                  <!-- <legend class="w-auto px-2">
                           Information Sur la mère
                         </legend> -->
-                        <form class="row g-3">
-                          <div class="col-md-9">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Nom && Prénoms de la mère</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.nom_prenom_mere"
-                            />
-                          </div>
-
-                          <div class="col-md-3">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Profession
-                            </label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.profession_mere"
-                            />
-                          </div>
-
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone domicile</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_domicile_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone Bureau</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_bureau_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone mobile ( WhatsApp)</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_mobile_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Email</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.email_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Adresse Postal</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.adresse_postal_mere"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Lieu d'Habitation</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.lieu_habitation_mere"
-                            />
-                          </div>
-                        </form>
-                      </fieldset>
-
-                      <fieldset
-                        class="border p-4 rounded"
-                        v-if="formmod.info_parent == 2"
+                  <form class="row g-3">
+                    <div class="col-md-9">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Nom && Prénoms de la mère</label
                       >
-                        <!-- <legend class="w-auto px-2">
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.nom_prenom_mere"
+                      />
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Profession
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.profession_mere"
+                      />
+                    </div>
+
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone domicile</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_domicile_mere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone Bureau</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_bureau_mere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone mobile ( WhatsApp)</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_mobile_mere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Email</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.email_mere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Adresse Postal</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.adresse_postal_mere"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Lieu d'Habitation</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.lieu_habitation_mere"
+                      />
+                    </div>
+                  </form>
+                </fieldset>
+
+                <fieldset
+                  class="border p-4 rounded"
+                  v-if="formmod.info_parent == 2"
+                >
+                  <!-- <legend class="w-auto px-2">
                           Information Sur le Tuteur
                         </legend> -->
-                        <form class="row g-3">
-                          <div class="col-md-9">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Nom && Prénoms du Tuteur</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.nom_prenom_tuteur"
-                            />
-                          </div>
+                  <form class="row g-3">
+                    <div class="col-md-9">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Nom && Prénoms du Tuteur</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.nom_prenom_tuteur"
+                      />
+                    </div>
 
-                          <div class="col-md-3">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Profession</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.profession_tuteur"
-                            />
-                          </div>
+                    <div class="col-md-3">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Profession</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.profession_tuteur"
+                      />
+                    </div>
 
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone domicile</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_domicile_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone Bureau</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_bureau_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Télphone mobile ( WhatsApp)</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.telephone_mobile_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Email</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.email_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Adresse Postal</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.adresse_postal_tuteur"
-                            />
-                          </div>
-                          <div class="col-md-4">
-                            <label
-                              for="exampleFormControlInput1"
-                              class="form-label"
-                              >Lieu d'Habitation</label
-                            >
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="formmod.lieu_habitation_tuteur"
-                            />
-                          </div>
-                        </form>
-                      </fieldset>
-                    </tab-content>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone domicile</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_domicile_tuteur"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone Bureau</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_bureau_tuteur"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Télphone mobile ( WhatsApp)</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.telephone_mobile_tuteur"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Email</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.email_tuteur"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Adresse Postal</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.adresse_postal_tuteur"
+                      />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleFormControlInput1" class="form-label"
+                        >Lieu d'Habitation</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="formmod.lieu_habitation_tuteur"
+                      />
+                    </div>
+                  </form>
+                </fieldset>
+              </tab-content>
 
-                    <template v-slot:footer="props">
-                      <div class="wizard-footer-left">
-                        <wizard-button
-                          v-if="props.activeTabIndex > 0"
-                          @click.native="props.prevTab()"
-                          :style="props.fillButtonStyle"
-                        >
-                          Précedent
-                        </wizard-button>
-                      </div>
-                      <div class="wizard-footer-right">
-                        <wizard-button
-                          v-if="!props.isLastStep"
-                          @click="props.nextTab()"
-                          class="wizard-footer-right"
-                          :style="props.fillButtonStyle"
-                        >
-                          Suivant
-                        </wizard-button>
+              <template v-slot:footer="props">
+                <div class="wizard-footer-left">
+                  <wizard-button
+                    v-if="props.activeTabIndex > 0"
+                    @click.native="props.prevTab()"
+                    :style="props.fillButtonStyle"
+                  >
+                    Précedent
+                  </wizard-button>
+                </div>
+                <div class="wizard-footer-right">
+                  <wizard-button
+                    v-if="!props.isLastStep"
+                    @click="props.nextTab()"
+                    class="wizard-footer-right"
+                    :style="props.fillButtonStyle"
+                  >
+                    Suivant
+                  </wizard-button>
 
-                        <wizard-button
-                          v-else
-                          @click="modificationEtudiant()"
-                          class="wizard-footer-right finish-button"
-                          :style="props.fillButtonStyle"
-                          
-                        >
-                          Modifier
-                        </wizard-button>
-                      </div>
-                    </template>
-                  </form-wizard>
+                  <wizard-button
+                    v-else
+                    @click="modificationEtudiant()"
+                    class="wizard-footer-right finish-button"
+                    :style="props.fillButtonStyle"
+                  >
+                    Modifier
+                  </wizard-button>
+                </div>
+              </template>
+            </form-wizard>
           </div>
-          
         </div>
       </div>
     </div>
@@ -1891,6 +1643,12 @@ const config = {
 //   }
 //   return "";
 // }
+
+
+
+
+
+
 const showModalDecision = (id: number) => {
   const d_data = storeEtudiant.getteretudiant.find(
     (item: { id: number }) => item.id === id
@@ -1900,47 +1658,47 @@ const showModalDecision = (id: number) => {
     // formmod.libelle = d_data.libelle;
     formmod.id = d_data.id;
 
-    formmod.civilite= d_data.civilite;
-  formmod.matricule= d_data.matricule;
-  formmod.nom= d_data.nom;
+    formmod.civilite = d_data.civilite;
+    formmod.matricule = d_data.matricule;
+    formmod.nom = d_data.nom;
 
-  formmod.prenoms= d_data.prenoms;
-  formmod.date_naissance= d_data.date_naissance;
-  formmod.telephone_bureau_mere= d_data.telephone_bureau_mere;
-  formmod.email_pere= d_data.email_pere;
+    formmod.prenoms = d_data.prenoms;
+    formmod.date_naissance = d_data.date_naissance;
+    formmod.telephone_bureau_mere = d_data.telephone_bureau_mere;
+    formmod.email_pere = d_data.email_pere;
 
-  formmod.adresse_postal_pere= d_data.adresse_postal_pere;
-  formmod.adresse_postal_mere= d_data.adresse_postal_mere;
-  formmod.adresse_postal_tuteur= d_data.adresse_postal_tuteur;
+    formmod.adresse_postal_pere = d_data.adresse_postal_pere;
+    formmod.adresse_postal_mere = d_data.adresse_postal_mere;
+    formmod.adresse_postal_tuteur = d_data.adresse_postal_tuteur;
 
-  formmod.lieu_naissance= d_data.lieu_naissance;
-  formmod.lieu_habitation= d_data.lieu_habitation;
-  formmod.nationalite= d_data.nationalite;
-  formmod.telephone_etudiant= d_data.telephone_etudiant;
-  formmod.ancien_etablissement= d_data.ancien_etablissement;
-  formmod.ancienne_classe= d_data.ancienne_classe;
-  formmod.ancienne_moyenne= d_data.ancienne_moyenne;
-  formmod.nom_prenom_pere= d_data.nom_prenom_pere;
-  formmod.profession_pere= d_data.profession_pere;
-  formmod.telephone_mobile_pere= d_data.telephone_mobile_pere;
-  formmod.telephone_domicile_pere= d_data.telephone_domicile_pere;
-  formmod.telephone_bureau_pere= d_data.telephone_bureau_pere;
-  formmod.telephone_domicile_mere= d_data.telephone_domicile_mere;
-  formmod.telephone_mobile_mere= d_data.telephone_mobile_mere;
-  formmod.email_mere= d_data.email_mere;
-  formmod.lieu_habitation_mere= d_data.lieu_habitation_mere;
-  formmod.lieu_habitation_pere= d_data.lieu_habitation_pere;
-  formmod.lieu_habitation_tuteur= d_data.lieu_habitation_tuteur;
-  formmod.nom_prenom_tuteur= d_data.nom_prenom_tuteur;
-  formmod.telephone_bureau_tuteur= d_data.telephone_bureau_tuteur;
-  formmod.telephone_domicile_tuteur= d_data.telephone_domicile_tuteur;
-  formmod.telephone_mobile_tuteur= d_data.telephone_mobile_tuteur;
-  formmod.email_tuteur= d_data.email_tuteur;
-  formmod.profession_mere= d_data.profession_mere;
-  formmod.profession_mere= d_data.profession_mere;
+    formmod.lieu_naissance = d_data.lieu_naissance;
+    formmod.lieu_habitation = d_data.lieu_habitation;
+    formmod.nationalite = d_data.nationalite;
+    formmod.telephone_etudiant = d_data.telephone_etudiant;
+    formmod.ancien_etablissement = d_data.ancien_etablissement;
+    formmod.ancienne_classe = d_data.ancienne_classe;
+    formmod.ancienne_moyenne = d_data.ancienne_moyenne;
+    formmod.nom_prenom_pere = d_data.nom_prenom_pere;
+    formmod.profession_pere = d_data.profession_pere;
+    formmod.telephone_mobile_pere = d_data.telephone_mobile_pere;
+    formmod.telephone_domicile_pere = d_data.telephone_domicile_pere;
+    formmod.telephone_bureau_pere = d_data.telephone_bureau_pere;
+    formmod.telephone_domicile_mere = d_data.telephone_domicile_mere;
+    formmod.telephone_mobile_mere = d_data.telephone_mobile_mere;
+    formmod.email_mere = d_data.email_mere;
+    formmod.lieu_habitation_mere = d_data.lieu_habitation_mere;
+    formmod.lieu_habitation_pere = d_data.lieu_habitation_pere;
+    formmod.lieu_habitation_tuteur = d_data.lieu_habitation_tuteur;
+    formmod.nom_prenom_tuteur = d_data.nom_prenom_tuteur;
+    formmod.telephone_bureau_tuteur = d_data.telephone_bureau_tuteur;
+    formmod.telephone_domicile_tuteur = d_data.telephone_domicile_tuteur;
+    formmod.telephone_mobile_tuteur = d_data.telephone_mobile_tuteur;
+    formmod.email_tuteur = d_data.email_tuteur;
+    formmod.profession_mere = d_data.profession_mere;
+    formmod.profession_mere = d_data.profession_mere;
     formmod.profession_tuteur = d_data.profession_tuteur;
-    
-  formmod.nom_prenom_mere = d_data.nom_prenom_mere;
+
+    formmod.nom_prenom_mere = d_data.nom_prenom_mere;
     if (modalModification.value) {
       const modalInstance = new Modal(modalModification.value);
       modalInstance.show();

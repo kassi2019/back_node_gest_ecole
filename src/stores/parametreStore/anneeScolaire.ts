@@ -10,7 +10,7 @@ import apiUrl from "@/config/axios";
 interface dossierAnneeScolaire {
     id: number;
     annee: string;
-    statut: string;
+    statut: number;
 }
   
 export const anneeScolaireStore = defineStore("anneeSoclaire",{

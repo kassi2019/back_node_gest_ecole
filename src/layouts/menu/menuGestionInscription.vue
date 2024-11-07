@@ -54,7 +54,7 @@
           
           <li
             class="nav-item"
-            @click.prevent="activedOptionMenu(2, '/inscriprion')"
+            @click.prevent="activedOptionMenu(2, '/inscription')"
           >
             <a href=""
               ><i class="la la-list-ol"></i
@@ -217,7 +217,7 @@ function activedOptionMenu(value: number, route_name: string) {
   menu_active.value = value;
   router.replace(route_name);
   setTimeout(() => {
-    window.location.reload();
+    //window.location.reload();
   }, 5);
 }
 </script>

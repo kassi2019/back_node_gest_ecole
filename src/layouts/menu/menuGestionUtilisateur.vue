@@ -112,6 +112,16 @@
               ><span class="menu-title" data-i18n="">Fonction</span></a
             >
           </li>
+          
+          <li
+            class="nav-item"
+            @click.prevent="activedOptionMenu(2, '/typeVersement')"
+          >
+            <a href=""
+              ><i class="la la-unsorted"></i
+              ><span class="menu-title" data-i18n="">Type versement</span></a
+            >
+          </li>
           <!-- <li
             class="nav-item"
             @click.prevent="activedOptionMenu(2, '/emploi')"
